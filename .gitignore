@@ -1,2 +1,9 @@
-/.vscode
-/build
+/*
+!.gitignore
+!/examples
+!/include
+!/src
+!CMakeLists.txt
+!CMakePresets.json
+!LICENSE.md
+!README.md

@@ -1,3 +1,17 @@
+// Copyright 2025 XavierHarkonnen9 and Enlarium
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <descent/utilities/platform.h>
 #if defined(DESCENT_PLATFORM_LINUX)
 #define _GNU_SOURCE
@@ -485,8 +499,20 @@ int thread_join(Thread t, int *code) {
 		uint32_t state      = thread_context_state(meta);
 		uint32_t generation = thread_context_generation(meta);
 
-		if (generation > expected_generation) return THREAD_ERROR_HANDLE_INVALID;
-		if (generation < expected_generation) return THREAD_ERROR_HANDLE_CLOSED;
+		// If the generation of the index is greater than the generation of the handle,
+		// the handle refers to an thread that has been closed.
+		if (generation > expected_generation) {
+			debug_thread_log(__FUNCTION__, "[%016llX] thread %016llX is already closed", thread_self(), t);
+			return THREAD_ERROR_HANDLE_CLOSED;
+		}
+
+		// If the generation of the index is less than the generation of the handle,
+		// the handle refers to a "future" thread. This indicates that the handle
+		// has been tampered with.
+		if (generation < expected_generation) {
+			debug_thread_log(__FUNCTION__, "[%016llX] thread %016llX refers to future thread", thread_self(), t);
+			return THREAD_ERROR_HANDLE_INVALID;
+		}
 
 		switch (state) {
 			case THREAD_STATE_RESERVED:
@@ -578,8 +604,20 @@ int thread_detach(Thread t) {
 		uint32_t state      = thread_context_state(meta);
 		uint32_t generation = thread_context_generation(meta);
 
-		if (generation > expected_generation) return THREAD_ERROR_HANDLE_INVALID;
-		if (generation < expected_generation) return THREAD_ERROR_HANDLE_CLOSED;
+		// If the generation of the index is greater than the generation of the handle,
+		// the handle refers to an thread that has been closed.
+		if (generation > expected_generation) {
+			debug_thread_log(__FUNCTION__, "[%016llX] thread %016llX is already closed", thread_self(), t);
+			return THREAD_ERROR_HANDLE_CLOSED;
+		}
+
+		// If the generation of the index is less than the generation of the handle,
+		// the handle refers to a "future" thread. This indicates that the handle
+		// has been tampered with.
+		if (generation < expected_generation) {
+			debug_thread_log(__FUNCTION__, "[%016llX] thread %016llX refers to future thread", thread_self(), t);
+			return THREAD_ERROR_HANDLE_INVALID;
+		}
 
 		switch (state) {
 			case THREAD_STATE_RESERVED:
@@ -655,7 +693,6 @@ int thread_sleep(unsigned long long milliseconds) {
 	Sleep((DWORD)milliseconds);
 	return 0;
 #endif
-
 }
 
 /* Ways to Wait

@@ -23,4 +23,4 @@ add_compile_definitions(_POSIX_C_SOURCE=200809L)
 message(STATUS "Build Flags: ${CMAKE_C_FLAGS}")
 
 add_subdirectory(src)
-add_subdirectory(exec)
+add_subdirectory(examples)
