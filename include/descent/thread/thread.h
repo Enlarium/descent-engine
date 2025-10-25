@@ -3,6 +3,14 @@
 
 #include <stdint.h>
 
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
 #include <descent/utilities/platform.h>
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 #define TLS _Thread_local
@@ -164,5 +172,13 @@ int thread_equal(Thread t1, Thread t2);
  * @return 0 on success, non-zero on failure.
  */
 int thread_yield(void);
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+
 
 #endif

@@ -5,7 +5,11 @@ project(descent LANGUAGES C)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED True)
 
-### Require out-of-source builds
+# Options
+option(DESCENT_BUILD_TESTS "Build Descent test programs" OFF)
+option(DESCENT_BUILD_EXAMPLES "Build Descent example programs" OFF)
+
+# Require out-of-source builds
 file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/CMakeLists.txt" LOC_PATH)
 if(EXISTS "${LOC_PATH}")
 message(FATAL_ERROR "You cannot build in a source directory (or any directory with a CMakeLists.txt file). Please make a build subdirectory. Feel free to remove CMakeCache.txt and CMakeFiles.")
@@ -19,8 +23,20 @@ set(DESCENT_INCLUDE_DIRS
 	${CMAKE_SOURCE_DIR}/include
 )
 
+# Global compile definitions
 add_compile_definitions(_POSIX_C_SOURCE=200809L)
-message(STATUS "Build Flags: ${CMAKE_C_FLAGS}")
 
+# Subdirectories
 add_subdirectory(src)
-add_subdirectory(examples)
+
+# Examples
+if(DESCENT_BUILD_EXAMPLES)
+	add_subdirectory(examples)
+endif()
+
+# Tests
+if(DESCENT_BUILD_TESTS)
+	enable_testing()
+	add_subdirectory(tests)
+endif()
+

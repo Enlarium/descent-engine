@@ -39,15 +39,9 @@
 
 
 
+// Thread State Progression:
 // UNUSED --choose-> RESERVED --wrapper(init)-> RUNNING --wrapper(exit)-> FINISHED --join/detach-> UNUSED
 // RUNNING --detach-> DETACHED --wrapper(exit)-> UNUSED
-
-/*TODO
-- Improve busy-wait - use hash of self to randomize no-wait vs busy-wait vs yield? NOP intrinsics of varying length?
-	Add an exponential backoff strategy (e.g., a few NOPs, then sched_yield, then sleeping for small intervals) to reduce contention and CPU usage.
-- Consider caching SetThreadDescription function pointer on Windows
-- Remove name from basic thread creator
-*/
 
 
 

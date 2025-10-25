@@ -8,6 +8,23 @@
 #include <windows.h>
 #endif
 
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
+/**
+ * @struct RecursiveMutex
+ * @brief A recursive mutex allowing the same thread to lock multiple times.
+ *
+ * Recursive mutexes allow a thread that already holds the lock to acquire it again
+ * without deadlocking.
+ * 
+ * @note This mutex is intra-process only. It cannot be shared between processes.
+ */
 typedef struct {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	pthread_mutex_t  _recursive_mutex;
@@ -16,6 +33,13 @@ typedef struct {
 #endif
 } RecursiveMutex;
 
+
+
+/**
+ * @brief Initialize a recursive mutex.
+ * @param m Pointer to the RecursiveMutex to initialize.
+ * @return 0 on success, non-zero on failure.
+ */
 static inline int recursive_mutex_init(RecursiveMutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	pthread_mutexattr_t attr;
@@ -30,6 +54,11 @@ static inline int recursive_mutex_init(RecursiveMutex *m) {
 #endif
 }
 
+/**
+ * @brief Destroy a recursive mutex.
+ * @param m Pointer to the RecursiveMutex to destroy.
+ * @return 0 on success, non-zero on failure.
+ */
 static inline int recursive_mutex_destroy(RecursiveMutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_mutex_destroy(&m->_recursive_mutex);
@@ -39,6 +68,13 @@ static inline int recursive_mutex_destroy(RecursiveMutex *m) {
 #endif
 }
 
+/**
+ * @brief Lock a recursive mutex.
+ * @param m Pointer to the RecursiveMutex.
+ * @return 0 on success, non-zero on failure.
+ *
+ * Blocks until the mutex can be acquired. A thread can lock multiple times safely.
+ */
 static inline int recursive_mutex_lock(RecursiveMutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_mutex_lock(&m->_recursive_mutex);
@@ -48,6 +84,11 @@ static inline int recursive_mutex_lock(RecursiveMutex *m) {
 #endif
 }
 
+/**
+ * @brief Attempt to lock a recursive mutex without blocking.
+ * @param m Pointer to the RecursiveMutex.
+ * @return 0 if lock acquired, non-zero if already held by another thread.
+ */
 static inline int recursive_mutex_trylock(RecursiveMutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_mutex_trylock(&m->_recursive_mutex);
@@ -56,6 +97,14 @@ static inline int recursive_mutex_trylock(RecursiveMutex *m) {
 #endif
 }
 
+/**
+ * @brief Unlock a recursive mutex.
+ * @param m Pointer to the RecursiveMutex.
+ * @return 0 on success, non-zero on failure.
+ *
+ * Each call to unlock decrements the lock count; the mutex is fully released
+ * only when the count reaches zero.
+ */
 static inline int recursive_mutex_unlock(RecursiveMutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_mutex_unlock(&m->_recursive_mutex);
@@ -64,5 +113,13 @@ static inline int recursive_mutex_unlock(RecursiveMutex *m) {
 	return 0;
 #endif
 }
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+
 
 #endif

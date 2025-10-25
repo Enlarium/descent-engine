@@ -9,6 +9,13 @@
 #endif
 
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 #define RWLOCK_INITIALIZER { PTHREAD_RWLOCK_INITIALIZER }
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
@@ -16,6 +23,14 @@
 #endif
 
 
+/**
+ * @struct RWLock
+ * @brief A read-write lock for synchronizing access to shared resources.
+ *
+ * Supports multiple readers or one writer at a time.
+ * 
+ * @note This lock is intra-process only. It cannot be shared between processes.
+ */
 typedef struct {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	pthread_rwlock_t _rwlock;
@@ -25,6 +40,12 @@ typedef struct {
 } RWLock;
 
 
+
+/**
+ * @brief Initialize a read-write lock.
+ * @param l Pointer to the RWLock to initialize.
+ * @return 0 on success, non-zero on failure.
+ */
 static inline int rwlock_init(RWLock *l) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_rwlock_init(&l->_rwlock, NULL);
@@ -34,6 +55,11 @@ static inline int rwlock_init(RWLock *l) {
 #endif
 }
 
+/**
+ * @brief Destroy a read-write lock.
+ * @param l Pointer to the RWLock to destroy.
+ * @return 0 on success, non-zero on failure.
+ */
 static inline int rwlock_destroy(RWLock *l) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_rwlock_destroy(&l->_rwlock);
@@ -43,6 +69,13 @@ static inline int rwlock_destroy(RWLock *l) {
 #endif
 }
 
+/**
+ * @brief Acquire a read (shared) lock.
+ * @param l Pointer to the RWLock.
+ * @return 0 on success, non-zero on failure.
+ *
+ * Multiple threads can hold a read lock simultaneously.
+ */
 static inline int rwlock_read_lock(RWLock *l) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_rwlock_rdlock(&l->_rwlock);
@@ -52,6 +85,11 @@ static inline int rwlock_read_lock(RWLock *l) {
 #endif
 }
 
+/**
+ * @brief Attempt to acquire a read (shared) lock without blocking.
+ * @param l Pointer to the RWLock.
+ * @return 0 if lock acquired, non-zero if already held.
+ */
 static inline int rwlock_read_trylock(RWLock *l) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_rwlock_tryrdlock(&l->_rwlock);
@@ -60,6 +98,12 @@ static inline int rwlock_read_trylock(RWLock *l) {
 #endif
 }
 
+
+/**
+ * @brief Release a read (shared) lock.
+ * @param l Pointer to the RWLock.
+ * @return 0 on success, non-zero on failure.
+ */
 static inline int rwlock_read_unlock(RWLock *l) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_rwlock_unlock(&l->_rwlock);
@@ -69,6 +113,13 @@ static inline int rwlock_read_unlock(RWLock *l) {
 #endif
 }
 
+/**
+ * @brief Acquire a write (exclusive) lock.
+ * @param l Pointer to the RWLock.
+ * @return 0 on success, non-zero on failure.
+ *
+ * Only one thread can hold the write lock at a time. Blocks readers and other writers.
+ */
 static inline int rwlock_write_lock(RWLock *l) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_rwlock_wrlock(&l->_rwlock);
@@ -78,6 +129,11 @@ static inline int rwlock_write_lock(RWLock *l) {
 #endif
 }
 
+/**
+ * @brief Attempt to acquire a write (exclusive) lock without blocking.
+ * @param l Pointer to the RWLock.
+ * @return 0 if lock acquired, non-zero if already held.
+ */
 static inline int rwlock_write_trylock(RWLock *l) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_rwlock_trywrlock(&l->_rwlock);
@@ -86,6 +142,11 @@ static inline int rwlock_write_trylock(RWLock *l) {
 #endif
 }
 
+/**
+ * @brief Release a write (exclusive) lock.
+ * @param l Pointer to the RWLock.
+ * @return 0 on success, non-zero on failure.
+ */
 static inline int rwlock_write_unlock(RWLock *l) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_rwlock_unlock(&l->_rwlock);
@@ -94,5 +155,13 @@ static inline int rwlock_write_unlock(RWLock *l) {
 	return 0;
 #endif
 }
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+
 
 #endif

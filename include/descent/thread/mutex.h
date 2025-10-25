@@ -9,6 +9,13 @@
 #endif
 
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 #define MUTEX_INITIALIZER { PTHREAD_MUTEX_INITIALIZER }
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
@@ -16,6 +23,16 @@
 #endif
 
 
+
+/**
+ * @struct Mutex
+ * @brief A non-recursive mutex.
+ *
+ * This mutex allows only one thread to hold the lock at a time. It is non-recursive,
+ * meaning a thread attempting to lock it multiple times without unlocking will deadlock.
+ * 
+ * @note This mutex is intra-process only. It cannot be shared between processes.
+ */
 typedef struct {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	pthread_mutex_t _mutex;
@@ -24,6 +41,13 @@ typedef struct {
 #endif
 } Mutex;
 
+
+
+/**
+ * @brief Initialize a mutex.
+ * @param m Pointer to the Mutex to initialize.
+ * @return 0 on success, non-zero on failure.
+ */
 static inline int mutex_init(Mutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_mutex_init(&m->_mutex, NULL);
@@ -33,6 +57,11 @@ static inline int mutex_init(Mutex *m) {
 #endif
 }
 
+/**
+ * @brief Destroy a mutex.
+ * @param m Pointer to the Mutex to destroy.
+ * @return 0 on success, non-zero on failure.
+ */
 static inline int mutex_destroy(Mutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_mutex_destroy(&m->_mutex);
@@ -42,6 +71,13 @@ static inline int mutex_destroy(Mutex *m) {
 #endif
 }
 
+/**
+ * @brief Lock a mutex.
+ * @param m Pointer to the Mutex to lock.
+ * @return 0 on success, non-zero on failure.
+ *
+ * Blocks until the mutex is acquired.
+ */
 static inline int mutex_lock(Mutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_mutex_lock(&m->_mutex);
@@ -51,6 +87,11 @@ static inline int mutex_lock(Mutex *m) {
 #endif
 }
 
+/**
+ * @brief Attempt to lock a mutex without blocking.
+ * @param m Pointer to the Mutex.
+ * @return 0 if the lock was acquired, non-zero if the mutex is already held by another thread.
+ */
 static inline int mutex_trylock(Mutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_mutex_trylock(&m->_mutex);
@@ -59,6 +100,11 @@ static inline int mutex_trylock(Mutex *m) {
 #endif
 }
 
+/**
+ * @brief Unlock a mutex.
+ * @param m Pointer to the Mutex.
+ * @return 0 on success, non-zero on failure.
+ */
 static inline int mutex_unlock(Mutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	return !!pthread_mutex_unlock(&m->_mutex);
@@ -67,5 +113,13 @@ static inline int mutex_unlock(Mutex *m) {
 	return 0;
 #endif
 }
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+
 
 #endif

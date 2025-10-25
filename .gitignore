@@ -1,8 +1,10 @@
 /*
 !.gitignore
+!/.github
 !/examples
 !/include
 !/src
+!/tests
 !CMakeLists.txt
 !CMakePresets.json
 !LICENSE.md
