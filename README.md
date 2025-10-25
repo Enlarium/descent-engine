@@ -1,6 +1,6 @@
 # Descent Engine
 
-![Cross-Platform Build and Test](https://github.com/Enlarium/descent-engine/actions/workflows/main.yml/badge.svg)
+[![Cross-Platform Build and Test](https://github.com/Enlarium/descent-engine/actions/workflows/build.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build.yml)
 
 **Descent Engine** is an in-development game engine written primarily in C, with optional C++ support. It’s currently in an early stage - only the threading library is functional and in testing.
 
