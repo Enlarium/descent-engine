@@ -90,6 +90,8 @@ Other CMake presets exist for other compilers and build configurations. From `/b
 cmake --list-presets=configure ..
 ```
 
+If you're building without CMake, define _POSIX_C_SOURCE=200809L for Linux and FreeBSD, and _DARWIN_C_SOURCE for MacOS.
+
 ## Documentation
 
 Documentation is in progress.

@@ -24,7 +24,15 @@ set(DESCENT_INCLUDE_DIRS
 )
 
 # Global compile definitions
-add_compile_definitions(_POSIX_C_SOURCE=200809L)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+	add_compile_definitions(_POSIX_C_SOURCE=200809L)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+	add_compile_definitions(_DARWIN_C_SOURCE)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+	add_compile_definitions(_POSIX_C_SOURCE=200809L)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+	# TODO: Windows-specific flags
+endif()
 
 # Subdirectories
 add_subdirectory(src)

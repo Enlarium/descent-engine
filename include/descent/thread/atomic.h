@@ -8,7 +8,6 @@
 #include <stdatomic.h>
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
 #include <windows.h>
-#include <winnt.h>
 #endif
 
 #include "mutex.h"
