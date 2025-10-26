@@ -148,4 +148,10 @@
 #error "This platform does not define a byte ordering!"
 #endif
 
+#if (defined(DESCENT_PLATFORM_LINUX) || defined(DESCENT_PLATFORM_FREEBSD)) && (!defined(_POSIX_C_SOURCE) || _POSIX_C_SOURCE < 200809L)
+#error "Descent Engine requires that _POSIX_C_SOURCE be defined as at least 200809L on Linux and FreeBSD"
+#elif defined(DESCENT_PLATFORM_MACOS) && !defined(_DARWIN_C_SOURCE)
+#error "Descent Engine requires that _DARWIN_C_SOURCE be defined on macOS"
+#endif
+
 #endif

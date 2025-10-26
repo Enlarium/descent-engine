@@ -21,6 +21,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <limits.h>
 
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 #include <pthread.h>

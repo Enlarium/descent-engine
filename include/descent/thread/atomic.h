@@ -549,9 +549,9 @@ static inline uint64_t atomic_load_64(const atomic_64 *object) {
  */
 static inline uintptr_t atomic_load_ptr(atomic_ptr *object) {
 #ifdef DESCENT_POINTER_32
-	return atomic_load_32(object);
+	return atomic_load_32((atomic_32 *)object);
 #else
-	return atomic_load_64(object);
+	return atomic_load_64((atomic_64 *)object);
 #endif
 }
 
@@ -592,9 +592,9 @@ static inline void atomic_store_64(atomic_64 *object, uint64_t desired) {
  */
 static inline void atomic_store_ptr(atomic_ptr *object, uintptr_t desired) {
 #ifdef DESCENT_POINTER_32
-	atomic_store_32(object, desired);
+	atomic_store_32((atomic_32 *)object, (uint32_t) desired);
 #else
-	atomic_store_64(object, desired);
+	atomic_store_64((atomic_64 *)object, (uint64_t) desired);
 #endif
 }
 

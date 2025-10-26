@@ -12,17 +12,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check CMake version
-        run: cmake --version
-
       - name: Configure
         run: cmake -S . -B build -G "Unix Makefiles" -DDESCENT_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
-        run: cmake --build build --config Release -j$(nproc)
-
-      - name: Prepare test output directory
-        run: mkdir -p build/macos-latest
+        run: cmake --build build --config Release -j$(sysctl -n hw.ncpu)
 
       - name: Run tests
         run: ctest --test-dir build --output-on-failure --verbose
