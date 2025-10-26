@@ -1,0 +1,249 @@
+{
+	"version": 3,
+	"cmakeMinimumRequired": {
+		"major": 3,
+		"minor": 19,
+		"patch": 0
+	},
+	"configurePresets": [
+		{
+			"name": "base",
+			"hidden": true,
+			"description": "Base configuration",
+			"binaryDir": "${sourceDir}/build/${presetName}",
+			"cacheVariables": {
+				"BUILD_SHARED_LIBS": "OFF",
+				"CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+				"Vulkan_INCLUDE_DIR": "/usr/include/vulkan",
+				"EXTERN_C_FLAGS": "-O2 -march=native -fPIC",
+				"EXTERN_CXX_FLAGS": "-O2 -march=native -fPIC -fno-exceptions",
+				"EXTERN_MACROS": "-DVULKAN_HPP_NO_EXCEPTIONS -DSPDLOG_NO_EXCEPTIONS"
+			}
+		},
+		{
+			"name": "base-debug",
+			"hidden": true,
+			"description": "Base debug configuration for GCC and Clang",
+			"inherits": "base",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug",
+				"CMAKE_C_FLAGS":   "-Og -g -fsanitize=undefined -fno-inline -pipe -std=c11 -Wall -Wextra -pedantic-errors -Werror -DDEBUG",
+				"CMAKE_CXX_FLAGS": "-Og -g -fsanitize=undefined -fno-inline -pipe -std=c11 -Wall -Wextra -pedantic-errors -Werror -DDEBUG -fno-exceptions -fno-rtti -DVULKAN_HPP_NO_EXCEPTIONS -DSPDLOG_NO_EXCEPTIONS"
+			}
+		},
+		{
+			"name": "base-release",
+			"hidden": true,
+			"description": "Base release configuration for GCC and Clang",
+			"inherits": "base",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release",
+				"CMAKE_C_FLAGS":   "-march=native -O3 -flto=auto -pipe -Wall -Wextra -pedantic-errors -Wconversion -Werror -DNDEBUG",
+				"CMAKE_CXX_FLAGS": "-march=native -O3 -flto=auto -pipe -Wall -Wextra -pedantic-errors -Wconversion -Werror -DNDEBUG -fno-exceptions -fno-rtti -DVULKAN_HPP_NO_EXCEPTIONS -DSPDLOG_NO_EXCEPTIONS",
+				"CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON"
+			}
+		},
+		{
+			"name": "base-perf",
+			"hidden": true,
+			"description": "Base performance-testing configuration for GCC and Clang",
+			"inherits": "base",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release",
+				"CMAKE_C_FLAGS":   "-march=native -g -O2 -flto=auto -pipe -Wall -Wextra -pedantic-errors -Wconversion -Werror -DNDEBUG",
+				"CMAKE_CXX_FLAGS": "-march=native -g -O2 -flto=auto -pipe -Wall -Wextra -pedantic-errors -Wconversion -Werror -DNDEBUG -fno-exceptions -fno-rtti -DVULKAN_HPP_NO_EXCEPTIONS -DSPDLOG_NO_EXCEPTIONS",
+				"CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON"
+			}
+		},
+		{
+			"name": "gcc-debug",
+			"displayName": "GCC Debug",
+			"description": "Debug build options for GCC",
+			"inherits": "base-debug",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "gcc",
+				"CMAKE_CXX_COMPILER": "g++"
+			}
+		},
+		{
+			"name": "gcc",
+			"displayName": "GCC Release",
+			"description": "Release build options for GCC",
+			"inherits": "base-release",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "gcc",
+				"CMAKE_CXX_COMPILER": "g++"
+			}
+		},
+		{
+			"name": "gcc-perf",
+			"displayName": "GCC Performance Testing",
+			"description": "Performance-testing build options for GCC",
+			"inherits": "base-perf",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "gcc",
+				"CMAKE_CXX_COMPILER": "g++"
+			}
+		},
+		{
+			"name": "cygwin-debug",
+			"displayName": "Cygwin Debug",
+			"description": "Debug build options for Cygwin",
+			"inherits": "gcc-debug",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "gcc",
+				"CMAKE_CXX_COMPILER": "g++",
+				"CMAKE_SYSTEM_NAME": "Cygwin"
+			}
+		},
+		{
+			"name": "cygwin",
+			"displayName": "Cygwin Release",
+			"description": "Release build options for Cygwin",
+			"inherits": "gcc",
+			"cacheVariables": {
+				"CMAKE_SYSTEM_NAME": "Cygwin"
+			}
+		},
+		{
+			"name": "cygwin-perf",
+			"displayName": "GCC Performance Testing",
+			"description": "Performance-testing build options for GCC",
+			"inherits": "gcc-perf",
+			"cacheVariables": {
+				"CMAKE_SYSTEM_NAME": "Cygwin"
+			}
+		},
+		{
+			"name": "mingw-debug",
+			"displayName": "MinGW Debug",
+			"description": "Debug build options for MinGW",
+			"inherits": "gcc-debug",
+			"cacheVariables": {
+				"CMAKE_SYSTEM_NAME": "MinGW"
+			}
+		},
+		{
+			"name": "mingw",
+			"displayName": "MinGW Release",
+			"description": "Release build options for MinGW",
+			"inherits": "gcc",
+			"cacheVariables": {
+				"CMAKE_SYSTEM_NAME": "MinGW"
+			}
+		},
+		{
+			"name": "mingw-perf",
+			"displayName": "MinGW Performance Testing",
+			"description": "Performance-testing build options for MinGW",
+			"inherits": "gcc-perf",
+			"cacheVariables": {
+				"CMAKE_SYSTEM_NAME": "MinGW"
+			}
+		},
+		{
+			"name": "clang-debug",
+			"displayName": "Clang Debug",
+			"description": "Debug build options for Clang",
+			"inherits": "base-debug",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "clang",
+				"CMAKE_CXX_COMPILER": "clang++"
+			}
+		},
+		{
+			"name": "clang",
+			"displayName": "Clang Release",
+			"description": "Release build options for Clang",
+			"inherits": "base-release",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "clang",
+				"CMAKE_CXX_COMPILER": "clang++"
+			}
+		},
+		{
+			"name": "clang-perf",
+			"displayName": "Clang Performance Testing",
+			"description": "Performance-testing build options for Clang",
+			"inherits": "base-perf",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "clang",
+				"CMAKE_CXX_COMPILER": "clang++"
+			}
+		},
+		{
+			"name": "apple-clang-debug",
+			"displayName": "Apple Clang Debug",
+			"description": "Debug build options for Apple's Clang",
+			"inherits": "clang-debug"
+		},
+		{
+			"name": "apple-clang",
+			"displayName": "Apple Clang Release",
+			"description": "Release build options for Apple's Clang",
+			"inherits": "clang"
+		},
+		{
+			"name": "apple-clang-perf",
+			"displayName": "Apple-Clang Performance Testing",
+			"description": "Performance-testing build options for Apple's Clang",
+			"inherits": "clang-perf"
+		},
+		{
+			"name": "intel-debug",
+			"displayName": "Intel Debug",
+			"description": "Debug build options for Intel compiler",
+			"inherits": "base-debug",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "icc",
+				"CMAKE_CXX_COMPILER": "icpc"
+			}
+		},
+		{
+			"name": "intel",
+			"displayName": "Intel Release",
+			"description": "Release build options for Intel compiler",
+			"inherits": "base-release",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "icc",
+				"CMAKE_CXX_COMPILER": "icpc"
+			}
+		},
+		{
+			"name": "intel-perf",
+			"displayName": "Intel Performance Testing",
+			"description": "Performance-testing build options for Intel compiler",
+			"inherits": "base-perf",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "icc",
+				"CMAKE_CXX_COMPILER": "icpc"
+			}
+		},
+		{
+			"name": "msvc-debug",
+			"displayName": "MSVC Debug",
+			"description": "Debug build options for MSVC",
+			"inherits": "base-debug",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "cl",
+				"CMAKE_CXX_COMPILER": "cl",
+				"CMAKE_C_FLAGS":   "/DDEBUG /Od /Zi /Gm- /RTC1 /GS /EHsc",
+				"CMAKE_CXX_FLAGS": "/DDEBUG /Od /Zi /Gm- /RTC1 /GS /EHsc /GR- /MTd",
+				"WARNING_FLAGS": "/W4 /WX"
+			}
+		},
+		{
+			"name": "msvc",
+			"displayName": "MSVC Release",
+			"description": "Release build options for MSVC",
+			"inherits": "base-release",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "cl",
+				"CMAKE_CXX_COMPILER": "cl",
+				"CMAKE_C_FLAGS":   "/DNDEBUG /O2 /GL /OPT:REF /OPT:ICF",
+				"CMAKE_CXX_FLAGS": "/DNDEBUG /O2 /GL /OPT:REF /OPT:ICF /EHsc",
+				"WARNING_FLAGS": "/W4 /WX"
+			}
+		}
+	]
+}
