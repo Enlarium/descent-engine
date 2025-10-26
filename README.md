@@ -131,6 +131,7 @@ Other platforms (Windows, macOS, BSD) are partially implemented and unverified.
 
 ## Related Files
 
+- [LICENSE.md](./LICENSE.md) - Project License
 - [ROADMAP.md](./ROADMAP.md) - Full feature and milestone roadmap
-- [CODING_STANDARDS.md](./CODING_STANDARDS.md) - C/C++ style guide
+- [CODING_STANDARDS.md](./CODING_STANDARDS.md) - C style guide
 <!-- - [docs/](./docs/) - Engine documentation (WIP) -->
