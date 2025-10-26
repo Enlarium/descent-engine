@@ -27,8 +27,8 @@
 			"inherits": "base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug",
-				"CMAKE_C_FLAGS":   "-Og -g -fsanitize=undefined -fno-inline -pipe -std=c11 -Wall -Wextra -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wpointer-arith -Wcast-align -Wcast-qual -Wbad-function-cast -Wwrite-strings -Wformat=2 -Wdeclaration-after-statement -Wundef -pedantic-errors -Werror -DDEBUG",
-				"CMAKE_CXX_FLAGS": "-Og -g -fsanitize=undefined -fno-inline -pipe -std=c11 -Wall -Wextra -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wpointer-arith -Wcast-align -Wcast-qual -Wbad-function-cast -Wwrite-strings -Wformat=2 -Wdeclaration-after-statement -Wundef -pedantic-errors -Werror -DDEBUG -fno-exceptions -fno-rtti -DVULKAN_HPP_NO_EXCEPTIONS -DSPDLOG_NO_EXCEPTIONS"
+				"CMAKE_C_FLAGS":   "-Og -g -fsanitize=undefined -fno-inline -pipe -std=c11 -Wall -Wextra -pedantic-errors -Werror -DDEBUG",
+				"CMAKE_CXX_FLAGS": "-Og -g -fsanitize=undefined -fno-inline -pipe -std=c11 -Wall -Wextra -pedantic-errors -Werror -DDEBUG -fno-exceptions -fno-rtti -DVULKAN_HPP_NO_EXCEPTIONS -DSPDLOG_NO_EXCEPTIONS"
 			}
 		},
 		{

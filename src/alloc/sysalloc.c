@@ -38,7 +38,7 @@
 
 // TODO: Swapping to disk
 
-size_t block_size() {
+size_t block_size(void) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 
 	// This function call can be assumed to never fail, and page size is always a power of two
@@ -57,7 +57,7 @@ size_t block_size() {
 }
 
 Alloc sysalloc(size_t size) {
-	Alloc result = {};
+	Alloc result = {0};
 	
 	if (size > DESCENT_MAX_ALLOC) return result;
 

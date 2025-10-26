@@ -8,7 +8,7 @@ typedef struct {
 	size_t size;
 } Alloc;
 
-size_t block_size();
+size_t block_size(void);
 
 Alloc sysalloc(size_t size);
 

@@ -7,5 +7,7 @@
 !/tests
 !CMakeLists.txt
 !CMakePresets.json
+!CODING_STANDARDS.md
 !LICENSE.md
 !README.md
+!ROADMAP.md

@@ -1,4 +1,4 @@
-name: Cross-Platform Build and Test
+name: Build and Test
 
 on:
   push:
@@ -16,6 +16,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Prepare test output directory
+        run: mkdir -p build/${{ matrix.os }}
+
       - name: Set up CMake
         uses: threeal/cmake-action@v2.1.0
 
@@ -27,8 +30,16 @@ jobs:
 
       - name: Run tests (Linux/macOS)
         if: runner.os != 'Windows'
-        run: ctest --test-dir build --output-on-failure
+        run: |
+          ctest --test-dir build --output-on-failure --junit-output build/${{ matrix.os }}/test-results.xml
 
       - name: Run tests (Windows)
         if: runner.os == 'Windows'
-        run: ctest --test-dir build --output-on-failure -C Release
+        run: |
+          ctest --test-dir build --output-on-failure -C Release --junit-output build/${{ matrix.os }}/test-results.xml
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results-${{ matrix.os }}
+          path: build/${{ matrix.os }}/test-results.xml

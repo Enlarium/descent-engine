@@ -49,8 +49,8 @@
 #define DESCENT_MAX_THREADS 32
 #endif
 
-// The main thread will be parsed as invalid, so it can't be joined or detached
-#define THREAD_SELF_MAIN    ((Thread) 0xFFFFFFFFFFFFFFFF)
+// Any unmanaged threads will be parsed as invalid, so they can't be joined or detached
+#define THREAD_SELF_UNMANAGED    ((Thread) 0xFFFFFFFFFFFFFFFF)
 #define THREAD_NAME_LENGTH 16
 #define THREAD_META_INVALID (((uint64_t) THREAD_STATE_INVALID) << 32 | UINT32_MAX)
 
@@ -88,8 +88,8 @@ typedef struct {
 
 static ThreadContext thread_pool[DESCENT_MAX_THREADS] = {0};
 
-// All threads "start" as main, but update themselves when they initialize
-static TLS Thread self = THREAD_SELF_MAIN;
+// All managed threads start as unmanaged, but update themselves when they initialize
+static TLS Thread self = THREAD_SELF_UNMANAGED;
 
 
 
@@ -108,11 +108,6 @@ static inline Thread thread_construct(uint32_t index, uint32_t generation) {
 static inline int thread_valid(Thread t) {
 	uint32_t index = thread_index(t);
 	return (index < DESCENT_MAX_THREADS);
-}
-
-static inline uint64_t thread_context_meta(Thread t) {
-	uint32_t index = thread_index(t);
-	return (thread_valid(t) ? atomic_load_64(&thread_pool[index].meta) : THREAD_META_INVALID);
 }
 
 static inline uint32_t thread_context_generation(uint64_t meta) {
@@ -334,7 +329,7 @@ Thread thread_self(void) {
 }
 
 const char* thread_name(void) {
-	if (self == THREAD_SELF_MAIN) return "Main Thread";
+	if (self == THREAD_SELF_UNMANAGED) return "Unmanaged Thread";
 	return thread_pool[thread_index(self)].name;
 }
 
@@ -355,7 +350,7 @@ const char *thread_error(int e) {
 		case THREAD_SUCCESS:                return "THREAD_SUCCESS";
 		case THREAD_ERROR_NO_SLOTS:         return "THREAD_ERROR_NO_SLOTS";
 		case THREAD_ERROR_HANDLE_INVALID:   return "THREAD_ERROR_HANDLE_INVALID";
-		case THREAD_ERROR_HANDLE_MAIN:      return "THREAD_ERROR_HANDLE_MAIN";
+		case THREAD_ERROR_HANDLE_UNMANAGED: return "THREAD_ERROR_HANDLE_UNMANAGED";
 		case THREAD_ERROR_HANDLE_DETACHED:  return "THREAD_ERROR_HANDLE_DETACHED";
 		case THREAD_ERROR_HANDLE_CLOSED:    return "THREAD_ERROR_HANDLE_CLOSED";
 		case THREAD_ERROR_FUNCTION_INVALID: return "THREAD_ERROR_FUNCTION_INVALID";
@@ -416,7 +411,7 @@ int thread_create_attr(Thread *t, ThreadFunction f, void *arg, const ThreadAttri
 
 	if (attributes.stack_size) {
 		// Round up to minimum size
-		size_t stack_size = ((size_t) attributes.stack_size) > PTHREAD_STACK_MIN ? attributes.stack_size : PTHREAD_STACK_MIN;
+		size_t stack_size = (size_t) ((long) attributes.stack_size > PTHREAD_STACK_MIN ? attributes.stack_size : PTHREAD_STACK_MIN);
 
 		// Round up to page size
 		long page_size = sysconf(_SC_PAGESIZE);
@@ -471,9 +466,9 @@ void thread_exit(int code) {
 int thread_join(Thread t, int *code) {
 	debug_thread_log(__FUNCTION__, "[%016llX] called on thread %016llX", thread_self(), t);
 
-	if (t == THREAD_SELF_MAIN) {
-		debug_thread_log(__FUNCTION__, "[%016llX] cannot join main thread", thread_self());
-		return THREAD_ERROR_HANDLE_MAIN;
+	if (t == THREAD_SELF_UNMANAGED) {
+		debug_thread_log(__FUNCTION__, "[%016llX] cannot join unmanaged thread", thread_self());
+		return THREAD_ERROR_HANDLE_UNMANAGED;
 	}
 
 	if (!thread_valid(t)) {
@@ -534,7 +529,7 @@ int thread_join(Thread t, int *code) {
 		thread_yield();
 	}
 
-	thread_join_state_complete:
+	thread_join_state_complete:;
 
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 
@@ -575,9 +570,9 @@ int thread_join(Thread t, int *code) {
 int thread_detach(Thread t) {
 	debug_thread_log(__FUNCTION__, "[%016llX] called on thread %016llX", thread_self(), t);
 
-	if (t == THREAD_SELF_MAIN) {
-		debug_thread_log(__FUNCTION__, "[%016llX] cannot detach main thread", thread_self());
-		return THREAD_ERROR_HANDLE_MAIN;
+	if (t == THREAD_SELF_UNMANAGED) {
+		debug_thread_log(__FUNCTION__, "[%016llX] cannot detach unmanaged thread", thread_self());
+		return THREAD_ERROR_HANDLE_UNMANAGED;
 	}
 
 	if (!thread_valid(t)) {
@@ -639,7 +634,7 @@ int thread_detach(Thread t) {
 		thread_yield();
 	}
 
-	thread_detach_state_complete:
+	thread_detach_state_complete:;
 
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	if (pthread_detach(handle)) {
@@ -663,7 +658,7 @@ int thread_detach(Thread t) {
 }
 
 int thread_equal(Thread t1, Thread t2) {
-	return (t1 == t2) && (thread_valid(t1) || (t1 == THREAD_SELF_MAIN));
+	return (t1 == t2) && (thread_valid(t1) || (t1 == THREAD_SELF_UNMANAGED));
 }
 
 int thread_yield(void) {

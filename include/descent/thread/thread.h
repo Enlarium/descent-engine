@@ -5,6 +5,12 @@
 
 
 
+// Threads created through the Descent thread system must not be manipulated
+// the underlying thread API or other thread libraries. Doing so results in
+// undefined behavior.
+
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -27,7 +33,7 @@ typedef enum {
 	THREAD_SUCCESS           = 0,  /**< Operation succeeded */
 	THREAD_ERROR_NO_SLOTS,         /**< No thread slots available */
 	THREAD_ERROR_HANDLE_INVALID,   /**< Thread handle is invalid */
-	THREAD_ERROR_HANDLE_MAIN,      /**< Operation not allowed on main thread */
+	THREAD_ERROR_HANDLE_UNMANAGED, /**< Operation not allowed on unmanaged thread */
 	THREAD_ERROR_HANDLE_DETACHED,  /**< Operation not allowed on detached thread */
 	THREAD_ERROR_HANDLE_CLOSED,    /**< Operation on a closed thread */
 	THREAD_ERROR_FUNCTION_INVALID, /**< Thread function pointer is invalid */

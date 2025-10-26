@@ -1,0 +1,34 @@
+name: Build and Test (Linux)
+
+on:
+  push:
+    branches: [main, dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up CMake
+        uses: threeal/cmake-action@v2.1.0
+
+      - name: Configure
+        run: cmake -S . -B build -DDESCENT_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Prepare test output directory
+        run: mkdir -p build/ubuntu-latest
+
+      - name: Run tests
+        run: ctest --test-dir build --output-on-failure --junit-output build/ubuntu-latest/test-results.xml
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results-linux
+          path: build/ubuntu-latest/test-results.xml

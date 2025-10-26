@@ -4,6 +4,6 @@
 
 // Minimal test - code compiles and links
 
-int main() {
+int main(void) {
 	return 0;
 }
