@@ -26,9 +26,3 @@ jobs:
 
       - name: Run tests
         run: ctest --test-dir build --output-on-failure --verbose
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results-linux
-          path: build/ubuntu-latest/test-results.xml
