@@ -31,7 +31,13 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 elseif(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
 	add_compile_definitions(_POSIX_C_SOURCE=200809L)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-	# TODO: Windows-specific flags
+if(MSVC)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        add_compile_definitions(_WIN64)
+    else()
+        add_compile_definitions(_WIN32)
+    endif()
+endif()
 endif()
 
 # Subdirectories
