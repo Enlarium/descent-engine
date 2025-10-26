@@ -1,8 +1,8 @@
 # Descent Engine
 
-[![Linux](https://github.com/Enlarium/descent-engine/actions/workflows/build-linux.yml/badge.svg?branch=main)](https://github.com/Enlarium/descent-engine/actions/workflows/build-linux.yml)
-[![macOS](https://github.com/Enlarium/descent-engine/actions/workflows/build-macos.yml/badge.svg?branch=main)](https://github.com/Enlarium/descent-engine/actions/workflows/build-macos.yml)
-[![Windows](https://github.com/Enlarium/descent-engine/actions/workflows/build-windows.yml/badge.svg?branch=main)](https://github.com/Enlarium/descent-engine/actions/workflows/build-windows.yml)
+[![Linux](https://github.com/Enlarium/descent-engine/actions/workflows/build-linux.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-linux.yml)
+[![macOS](https://github.com/Enlarium/descent-engine/actions/workflows/build-macos.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-macos.yml)
+[![Windows](https://github.com/Enlarium/descent-engine/actions/workflows/build-windows.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-windows.yml)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](./LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20freeBSD%20%7C%20macOS%20%7C%20Windows-lightgrey.svg)]()
