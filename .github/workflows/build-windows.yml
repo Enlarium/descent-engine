@@ -25,7 +25,7 @@ jobs:
         run: mkdir build\windows-latest
 
       - name: Run tests
-        run: ctest --test-dir build --output-on-failure -C Release --junit-output build/windows-latest/test-results.xml
+        run: ctest --test-dir build --output-on-failure --verbose
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
