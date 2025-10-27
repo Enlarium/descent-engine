@@ -3,6 +3,10 @@
 
 #include <stdint.h>
 
+#if defined(DESCENT_PLATFORM_ARCHITECTURE_FAMILY_X86)
+#include <immintrin.h>
+#endif
+
 
 
 // Threads created through the Descent thread system must not be manipulated
@@ -174,10 +178,23 @@ int thread_detach(Thread t);
 int thread_equal(Thread t1, Thread t2);
 
 /**
- * @brief Yield the processor to allow other threads to run.
- * @return 0 on success, non-zero on failure.
+ * @brief Provide a CPU pause hint. Does not yield execution.
  */
-int thread_yield(void);
+static inline void thread_pause(void) {
+#if defined(DESCENT_PLATFORM_COMPILER_TYPE_GCC) || defined(DESCENT_PLATFORM_COMPILER_TYPE_CLANG)
+#if defined(DESCENT_PLATFORM_ARCHITECTURE_FAMILY_X86)
+	__builtin_ia32_pause();
+#elif defined(DESCENT_PLATFORM_ARCHITECTURE_FAMILY_ARM)
+	__asm__ __volatile__("yield" ::: "memory");
+#endif
+#elif defined(DESCENT_PLATFORM_COMPILER_MSVC)
+#if defined(DESCENT_PLATFORM_ARCHITECTURE_FAMILY_X86)
+	_mm_pause();
+#elif defined(DESCENT_PLATFORM_ARCHITECTURE_FAMILY_ARM)
+	__yield();
+#endif
+#endif
+}
 
 
 

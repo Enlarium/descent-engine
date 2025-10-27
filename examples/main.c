@@ -24,7 +24,6 @@
 int tf(void *arg) {
 	(void) arg;
 	debug_log(thread_name(), "[%016llX] hello", thread_self());
-	for (int i = 0; i < 10; ++i) thread_yield();
 	return 0;
 }
 
@@ -50,7 +49,7 @@ int main (void) {
 			e = thread_create_attr(&t[j], tf, NULL, &attr);
 			if (e) printf("Could not create new thread (%s)\n", thread_error(e));
 		}
-		thread_yield();
+		thread_pause();
 		for (int j = 0; j < tcount; ++j) {
 			e = thread_join(t[j], &result);
 			if (e) printf("Could not detach thread (%s)\n", thread_error(e));

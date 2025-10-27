@@ -4,11 +4,8 @@
 ## Planned Features
 
 - **Threading Library**
-	- More synchronization primitives:
-		- Spin-locks
-		- Semaphores
-		- Condition variables
-		- Inter-process lock variants
+	- Dynamic TLS
+	- Call Once
 	- Futures and promises
 	- Thread job system
 		- Work-stealing and task scheduling

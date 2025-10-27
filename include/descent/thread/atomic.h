@@ -1,5 +1,5 @@
-#ifndef DESCENT_ATOMIC_H
-#define DESCENT_ATOMIC_H
+#ifndef DESCENT_THREAD_ATOMIC_H
+#define DESCENT_THREAD_ATOMIC_H
 
 #include <stdint.h>
 

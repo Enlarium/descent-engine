@@ -23,13 +23,13 @@ extern "C" {
  * Recursive mutexes allow a thread that already holds the lock to acquire it again
  * without deadlocking.
  * 
- * @note This mutex is intra-process only. It cannot be shared between processes.
+ * @note This mechanism is intra-process only. It cannot be shared between processes.
  */
 typedef struct {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	pthread_mutex_t  _recursive_mutex;
+	pthread_mutex_t  _mutex;
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	CRITICAL_SECTION _recursive_mutex;
+	CRITICAL_SECTION _mutex;
 #endif
 } RecursiveMutex;
 
@@ -37,33 +37,37 @@ typedef struct {
 
 /**
  * @brief Initialize a recursive mutex.
- * @param m Pointer to the RecursiveMutex to initialize.
+ * @param m Pointer to the RecursiveMutex.
  * @return 0 on success, non-zero on failure.
  */
 static inline int recursive_mutex_init(RecursiveMutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 	pthread_mutexattr_t attr;
-	pthread_mutexattr_init(&attr);
-	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-	int result = !!pthread_mutex_init(&m->_recursive_mutex, &attr);
-	pthread_mutexattr_destroy(&attr);
-	return result;
+	if (!pthread_mutexattr_init(&attr)) {
+		if (pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE)) return 1;
+		
+		int result = !!pthread_mutex_init(&m->_mutex, &attr);
+		pthread_mutexattr_destroy(&attr);
+		return result;
+	}
+	return 1;
+
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	InitializeCriticalSection(&m->_recursive_mutex);
+	InitializeCriticalSection(&m->_mutex);
 	return 0;
 #endif
 }
 
 /**
  * @brief Destroy a recursive mutex.
- * @param m Pointer to the RecursiveMutex to destroy.
+ * @param m Pointer to the RecursiveMutex.
  * @return 0 on success, non-zero on failure.
  */
 static inline int recursive_mutex_destroy(RecursiveMutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_destroy(&m->_recursive_mutex);
+	return !!pthread_mutex_destroy(&m->_mutex);
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	DeleteCriticalSection(&m->_recursive_mutex);
+	DeleteCriticalSection(&m->_mutex);
 	return 0;
 #endif
 }
@@ -77,9 +81,9 @@ static inline int recursive_mutex_destroy(RecursiveMutex *m) {
  */
 static inline int recursive_mutex_lock(RecursiveMutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_lock(&m->_recursive_mutex);
+	return !!pthread_mutex_lock(&m->_mutex);
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	EnterCriticalSection(&m->_recursive_mutex);
+	EnterCriticalSection(&m->_mutex);
 	return 0;
 #endif
 }
@@ -91,9 +95,9 @@ static inline int recursive_mutex_lock(RecursiveMutex *m) {
  */
 static inline int recursive_mutex_trylock(RecursiveMutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_trylock(&m->_recursive_mutex);
+	return !!pthread_mutex_trylock(&m->_mutex);
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !TryEnterCriticalSection(&m->_recursive_mutex);
+	return !TryEnterCriticalSection(&m->_mutex);
 #endif
 }
 
@@ -107,9 +111,9 @@ static inline int recursive_mutex_trylock(RecursiveMutex *m) {
  */
 static inline int recursive_mutex_unlock(RecursiveMutex *m) {
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_unlock(&m->_recursive_mutex);
+	return !!pthread_mutex_unlock(&m->_mutex);
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	LeaveCriticalSection(&m->_recursive_mutex);
+	LeaveCriticalSection(&m->_mutex);
 	return 0;
 #endif
 }

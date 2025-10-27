@@ -15,10 +15,15 @@
 #ifndef DESCENT_THREAD_H
 #define DESCENT_THREAD_H
 
-#include "thread/thread.h"
 #include "thread/atomic.h"
-#include "thread/rwlock.h"
+#include "thread/barrier.h"
+#include "thread/condition.h"
 #include "thread/mutex.h"
 #include "thread/recursive_mutex.h"
+#include "thread/rwlock.h"
+#include "thread/semaphore.h"
+#include "thread/spinlock.h"
+#include "thread/thread.h"
+#include "thread/ticket_lock.h"
 
 #endif

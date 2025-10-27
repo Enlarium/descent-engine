@@ -1,8 +1,8 @@
 # Descent Engine
 
-[![Linux](https://github.com/Enlarium/descent-engine/actions/workflows/build-linux.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-linux.yml)
-[![macOS](https://github.com/Enlarium/descent-engine/actions/workflows/build-macos.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-macos.yml)
-[![Windows](https://github.com/Enlarium/descent-engine/actions/workflows/build-windows.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-windows.yml)
+[![Build and Test (Linux)](https://github.com/Enlarium/descent-engine/actions/workflows/build-linux.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-linux.yml)
+[![Build and Test (macOS)](https://github.com/Enlarium/descent-engine/actions/workflows/build-macos.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-macos.yml)
+[![Build and Test (Windows)](https://github.com/Enlarium/descent-engine/actions/workflows/build-windows.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-windows.yml)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](./LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20freeBSD%20%7C%20macOS%20%7C%20Windows-lightgrey.svg)]()
@@ -31,7 +31,7 @@ Descent Engine aims to provide:
 - Cross-platform abstraction over POSIX threads and Windows threads.
 - Thread creation, joining, detaching, priorities, and CPU affinity.
 - Atomic operations for 32- and 64-bit types.
-- Intra-process mutexes, recursive mutexes, and read-write locks.
+- Intra-process spinlocks, ticket locks, condition variables, mutexes, recursive mutexes, read-write locks, semaphores, and barriers.
 
 ### Allocation Library (In-Progress)
 
