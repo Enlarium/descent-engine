@@ -19,3 +19,5 @@ EXTRACT_PRIVATE        = YES   # if you want internal functions too
 # Generate HTML documentation
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
+
+CREATE_SUBDIRS = YES
