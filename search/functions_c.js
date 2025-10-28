@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['semaphore_5fdestroy_0',['semaphore_destroy',['../d6/dc6/semaphore_8h.html#a8a2a625eaff6d4ba87e93c2131e827f7',1,'semaphore.h']]],
+  ['semaphore_5finit_1',['semaphore_init',['../d6/dc6/semaphore_8h.html#abf5d872b125d372a12c256b101368379',1,'semaphore.h']]],
+  ['semaphore_5fpost_2',['semaphore_post',['../d6/dc6/semaphore_8h.html#ac59c4c9109f61cb2ad4110fbeaa843fd',1,'semaphore.h']]],
+  ['semaphore_5ftrywait_3',['semaphore_trywait',['../d6/dc6/semaphore_8h.html#a02cf40ea75cbdd308e59c4cc3915ef97',1,'semaphore.h']]],
+  ['semaphore_5fwait_4',['semaphore_wait',['../d6/dc6/semaphore_8h.html#adcd68bac2a3531d0f9aa870f6d608954',1,'semaphore.h']]],
+  ['sign_5f16_5',['sign_16',['../d2/d35/arithmetic_8h.html#a0a2a9406abf6b4e0d183f7b0b921605d',1,'arithmetic.h']]],
+  ['sign_5f32_6',['sign_32',['../d2/d35/arithmetic_8h.html#a95ad481d341185146113384df70ef8da',1,'arithmetic.h']]],
+  ['sign_5f64_7',['sign_64',['../d2/d35/arithmetic_8h.html#ae677cede8f71d746d46f5e926cd62780',1,'arithmetic.h']]],
+  ['sign_5f8_8',['sign_8',['../d2/d35/arithmetic_8h.html#a40667b4af7adb56845849b9c54c93650',1,'arithmetic.h']]],
+  ['spinlock_5finit_9',['spinlock_init',['../df/d63/spinlock_8h.html#acb6ab2ce0ad46596c80adafab93f4ef4',1,'spinlock.h']]],
+  ['spinlock_5flock_10',['spinlock_lock',['../df/d63/spinlock_8h.html#a28a2fc6ce9b5f37cc8e759429b87d69c',1,'spinlock.h']]],
+  ['spinlock_5ftrylock_11',['spinlock_trylock',['../df/d63/spinlock_8h.html#accf0f30f0fa2f69a3ebefb094fb744da',1,'spinlock.h']]],
+  ['spinlock_5funlock_12',['spinlock_unlock',['../df/d63/spinlock_8h.html#a8ffd7aeb2bfcdfce5df481d77b71019b',1,'spinlock.h']]],
+  ['sub_5fexflow_5f16_13',['sub_exflow_16',['../d2/d35/arithmetic_8h.html#a105e4cad1f41b6720c3d54e4a4b89bd6',1,'arithmetic.h']]],
+  ['sub_5fexflow_5f32_14',['sub_exflow_32',['../d2/d35/arithmetic_8h.html#a2b8a9a7bad079876bee7d9b254595322',1,'arithmetic.h']]],
+  ['sub_5fexflow_5f64_15',['sub_exflow_64',['../d2/d35/arithmetic_8h.html#ae84108cd361086c9b943da7a7a4cfe35',1,'arithmetic.h']]],
+  ['sub_5fexflow_5f8_16',['sub_exflow_8',['../d2/d35/arithmetic_8h.html#ac0a526cfa4a0e64d1746191e64071ec5',1,'arithmetic.h']]],
+  ['sysalloc_17',['sysalloc',['../d1/da1/sysalloc_8h.html#a4226da62546197c371fd38df14694fc2',1,'sysalloc.h']]],
+  ['sysfree_18',['sysfree',['../d1/da1/sysalloc_8h.html#a9eb8a5ec20a4e07d3d2580bcb92391b0',1,'sysalloc.h']]]
+];

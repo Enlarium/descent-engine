@@ -1,0 +1,11 @@
+<map id="include/descent/utilities/builtin/other.h" name="include/descent/utilities/builtin/other.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="16,5,193,45"/>
+<area shape="rect" id="Node000002" href="$dc/d65/api_8h.html" title=" " alt="" coords="19,93,190,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,46,107,79,102,79,102,46"/>
+<area shape="rect" id="Node000003" href="$de/d03/platform_8h.html" title=" " alt="" coords="5,181,204,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,134,107,167,102,167,102,134"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="6,255,94,280"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="98,209,69,245,65,242,94,205"/>
+<area shape="rect" id="Node000005" href="$de/d3c/macros_8h.html" title=" " alt="" coords="118,255,201,280"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="116,205,144,242,140,245,112,209"/>
+</map>

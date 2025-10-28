@@ -1,0 +1,16 @@
+<map id="include/descent/utilities/builtin/arithmetic.h" name="include/descent/utilities/builtin/arithmetic.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="131,5,309,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,101,88,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,48,83,97,81,92,181,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="113,101,183,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,47,169,91,165,88,202,44"/>
+<area shape="rect" id="Node000004" href="$dc/d65/api_8h.html" title=" " alt="" coords="208,93,379,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="238,44,270,81,266,85,234,47"/>
+<area shape="rect" id="Node000005" href="$de/d03/platform_8h.html" title=" " alt="" coords="255,181,454,207"/>
+<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="310,38,356,58,376,73,393,92,400,112,397,133,388,154,376,172,372,169,383,151,392,132,394,113,388,95,373,77,353,62,308,43"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="310,132,339,169,335,172,306,135"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="256,255,344,280"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="348,209,319,245,315,242,344,205"/>
+<area shape="rect" id="Node000007" href="$de/d3c/macros_8h.html" title=" " alt="" coords="368,255,451,280"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="366,205,394,242,390,245,362,209"/>
+</map>
