@@ -1,0 +1,21 @@
+# Project information
+PROJECT_NAME           = "Descent Engine"
+PROJECT_BRIEF          = "Descent Engine"
+OUTPUT_DIRECTORY       = docs/doxygen
+
+# Input files
+INPUT                  = include
+FILE_PATTERNS          = *.h
+
+# Recursively search directories
+RECURSIVE              = YES
+
+# Language settings
+OPTIMIZE_OUTPUT_FOR_C  = YES
+EXTRACT_ALL            = YES
+EXTRACT_STATIC         = YES
+EXTRACT_PRIVATE        = YES   # if you want internal functions too
+
+# Generate HTML documentation
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
