@@ -10,21 +10,11 @@
 
 #include "condition.h"
 
-
+#define MUTEX_INITIALIZER {0} // TODO: needs checks
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
-
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-#define MUTEX_INITIALIZER { PTHREAD_MUTEX_INITIALIZER }
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-#define MUTEX_INITIALIZER { SRWLOCK_INIT }
-#endif
-
-
 
 /**
  * @struct Mutex
@@ -35,43 +25,21 @@ extern "C" {
  * 
  * @note This mechanism is intra-process only. It cannot be shared between processes.
  */
-typedef struct {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	pthread_mutex_t _mutex;
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	SRWLOCK _mutex;
-#endif
-} Mutex;
-
-
+DESCENT_OPAQUE_DEFINE(Mutex, DESCENT_OPAQUE_SIZE_MUTEX)
 
 /**
  * @brief Initialize a mutex.
  * @param m Pointer to the Mutex.
  * @return 0 on success, non-zero on failure.
  */
-static inline int mutex_init(Mutex *m) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_init(&m->_mutex, NULL);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	InitializeSRWLock(&m->_mutex);
-	return 0;
-#endif
-}
+int mutex_init(Mutex *m);
 
 /**
  * @brief Destroy a mutex.
  * @param m Pointer to the Mutex.
  * @return 0 on success, non-zero on failure.
  */
-static inline int mutex_destroy(Mutex *m) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_destroy(&m->_mutex);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	(void)m;
-	return 0;
-#endif
-}
+int mutex_destroy(Mutex *m);
 
 /**
  * @brief Lock a mutex.
@@ -80,41 +48,21 @@ static inline int mutex_destroy(Mutex *m) {
  *
  * Blocks until the mutex is acquired.
  */
-static inline int mutex_lock(Mutex *m) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_lock(&m->_mutex);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	AcquireSRWLockExclusive(&m->_mutex);
-	return 0;
-#endif
-}
+int mutex_lock(Mutex *m);
 
 /**
  * @brief Attempt to lock a mutex without blocking.
  * @param m Pointer to the Mutex.
  * @return 0 if the lock was acquired, non-zero if the mutex is already held by another thread.
  */
-static inline int mutex_trylock(Mutex *m) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_trylock(&m->_mutex);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !TryAcquireSRWLockExclusive(&m->_mutex);
-#endif
-}
+int mutex_trylock(Mutex *m);
 
 /**
  * @brief Unlock a mutex.
  * @param m Pointer to the Mutex.
  * @return 0 on success, non-zero on failure.
  */
-static inline int mutex_unlock(Mutex *m) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_unlock(&m->_mutex);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	ReleaseSRWLockExclusive(&m->_mutex);
-	return 0;
-#endif
-}
+int mutex_unlock(Mutex *m);
 
 /**
  * @brief Wait for a condition to be signaled.
@@ -126,20 +74,10 @@ static inline int mutex_unlock(Mutex *m) {
  * @param m Pointer to the Mutex.
  * @return 0 on success, non-zero on failure.
  */
-static inline int condition_wait(Condition *c, Mutex *m) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_cond_wait(&c->_condition, &m->_mutex);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !SleepConditionVariableSRW(&c->_condition, &m->_mutex, INFINITE, 0);
-#endif
-}
-
-
+int condition_wait(Condition *c, Mutex *m);
 
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif

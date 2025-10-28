@@ -8,17 +8,17 @@
 #include <stdatomic.h>
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
 #include <windows.h>
+// TODO: I don't care how hacky I have to be, I want this monstrosity out of my interface.
 #endif
 
-#include "mutex.h"
-
-
-
 // Check whether true 64-bit atomic operations are available on Windows
+#ifdef DESCENT_PLATFORM_TYPE_WINDOWS
 #if defined(DESCENT_PLATFORM_WINDOWS_64) || (_WIN32_WINNT >= 0x0600)
 #define DESCENT_WINDOWS_INTERLOCKED_64 1
 #else
+#include "mutex.h"
 #define DESCENT_WINDOWS_INTERLOCKED_64 0
+#endif
 #endif
 
 // Check the pointer type size
@@ -31,6 +31,28 @@
 
 
 // All memory ordering is sequentially consistent to ensure cross-platform behavior is consistent
+
+/* TODO
+atomic_load_ptr should accept a const pointer
+atomic_load_32 / _64 take const atomic_* *, but atomic_load_ptr is atomic_ptr *. Make it const atomic_ptr * for consistency and to match semantics.
+
+Potential mismatch between typedefs & casts on Windows fallback
+When DESCENT_WINDOWS_INTERLOCKED_64 == 0 (atomic_64 is a struct with a mutex), you cast pointer-sized atomics to atomic_64 * in atomic_compare_exchange_ptr, atomic_exchange_ptr, etc. That is OK only when the underlying atomic_ptr representation matches the atomic_64 layout (which it does not when atomic_ptr is volatile uintptr_t). The code already uses #ifdef DESCENT_POINTER_32 to choose 32 vs 64 flows; but the cast ((atomic_64 *)object) is unsafe if atomic_ptr is volatile uintptr_t but atomic_64 is struct. In practice, the code only uses that cast if pointers are 64-bit and you're calling the 64-bit helper — but when DESCENT_WINDOWS_INTERLOCKED_64 == 0 we must ensure the pointer-sized atomic is stored in the same struct layout. Fix: make atomic_ptr typedef in the WIN fallback match the 64-bit atomic_64 wrapper when you need the mutex fallback (i.e., define atomic_ptr as atomic_64 in that case).
+
+Missing static assertions for sizes & alignment
+Add _Static_assert checks so mistakes/ABI mismatches are caught at compile time (e.g. sizeof(uintptr_t) vs pointer size, sizeof(long) vs uint32_t assumptions if you rely on casting between LONG and uint32_t).
+
+DESCENT_POINTER_32 logic is odd
+You define DESCENT_POINTER_32 only for 32-bit pointers; there’s no explicit DESCENT_POINTER_64 macro. That’s okay (absence means 64-bit), but make this explicit in comments and the code so future maintainers don't get surprised.
+
+Windows Interlocked types
+Casting atomic_* to LONG* / LONG64* is common but depends on sizes (e.g. LONG is 32-bit). Static assertions help; also prefer explicit casts to volatile LONG* to match Interlocked parameter requirements.
+
+Consistency of const on load/store APIs
+Some load/store functions have different const qualifiers;
+
+Add unit tests
+*/
 
 
 

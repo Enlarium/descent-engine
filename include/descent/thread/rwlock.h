@@ -22,6 +22,8 @@ extern "C" {
 #define RWLOCK_INITIALIZER { SRWLOCK_INIT }
 #endif
 
+// static initialization functions, no init?
+
 
 
 /**

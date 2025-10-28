@@ -15,12 +15,17 @@
 #ifndef DESCENT_UTILITIES_PLATFORM_H
 #define DESCENT_UTILITIES_PLATFORM_H
 
-// Project Headers
-#include "macros.h"
+#include <features.h>
+
 // Platform-Specific Headers
 #ifdef __APPLE__
 #include <TargetConditionals.h>
 #endif
+
+// Project Headers
+#include "macros.h"
+
+
 
 // Platform
 
@@ -72,16 +77,12 @@
 #define DESCENT_PLATFORM_COMPILER_VERSION STRINGIFY(__GNUC__) "." STRINGIFY(__GNUC_MINOR__) "." STRINGIFY(__GNUC_PATCHLEVEL__)
 #define DESCENT_PLATFORM_COMPILER_CYGWIN_GCC
 #define DESCENT_PLATFORM_COMPILER_TYPE_GCC
-#ifndef DESCENT_PLATFORM_TYPE_POSIX
 #define DESCENT_PLATFORM_TYPE_POSIX
-#endif
 #elif defined(__MINGW32__) || defined(__MINGW64__)
 #define DESCENT_PLATFORM_COMPILER_VERSION STRINGIFY(__GNUC__) "." STRINGIFY(__GNUC_MINOR__) "." STRINGIFY(__GNUC_PATCHLEVEL__)
 #define DESCENT_PLATFORM_COMPILER_MINGW_GCC
 #define DESCENT_PLATFORM_COMPILER_TYPE_GCC
-#ifndef DESCENT_PLATFORM_TYPE_POSIX
-#define DESCENT_PLATFORM_TYPE_POSIX
-#endif
+#define DESCENT_PLATFORM_TYPE_POSIX_PARTIAL
 #elif defined(_MSC_VER)
 #define DESCENT_PLATFORM_COMPILER_VERSION STRINGIFY(_MSC_FULL_VER / 1000000) "." STRINGIFY((_MSC_FULL_VER / 10000) % 100) "." STRINGIFY(_MSC_FULL_VER % 10000)
 #define DESCENT_PLATFORM_COMPILER_MSVC
@@ -155,5 +156,54 @@
 #elif defined(DESCENT_PLATFORM_MACOS) && !defined(_DARWIN_C_SOURCE)
 #error "Descent Engine requires that _DARWIN_C_SOURCE be defined on macOS"
 #endif
+
+// C implementation
+
+// Need to detect size of synchronization primitives and platform-specific types.
+// mingw and cygwin may require additional consideration.
+
+#if defined(DESCENT_PLATFORM_TYPE_POSIX)
+#if defined(DESCENT_PLATFORM_LINUX)
+#ifdef __GLIBC__
+#if DESCENT_PLATFORM_ARCHITECTURE_SIZE == 32
+#define DESCENT_PLATFORM_ABI_GLIBC_32
+#else
+#define DESCENT_PLATFORM_ABI_GLIBC_64
+#endif
+#else
+#if DESCENT_PLATFORM_ARCHITECTURE_SIZE == 32
+#define DESCENT_PLATFORM_ABI_MUSL_32
+#else
+#define DESCENT_PLATFORM_ABI_MUSL_64
+#endif
+#endif
+#elif defined(DESCENT_PLATFORM_FREEBSD)
+#if DESCENT_PLATFORM_ARCHITECTURE_SIZE == 32
+#define DESCENT_PLATFORM_ABI_FREEBSD_32
+#else
+#define DESCENT_PLATFORM_ABI_FREEBSD_64
+#endif
+#elif defined(DESCENT_PLATFORM_MACOS)
+#if DESCENT_PLATFORM_ARCHITECTURE_SIZE == 32
+#define DESCENT_PLATFORM_ABI_MACOS_32
+#else
+#define DESCENT_PLATFORM_ABI_MACOS_64
+#endif
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+#if DESCENT_PLATFORM_ARCHITECTURE_SIZE == 32
+#define DESCENT_PLATFORM_ABI_CYGWIN_32
+#else
+#define DESCENT_PLATFORM_ABI_CYGWIN_64
+#endif
+#endif
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+#if DESCENT_PLATFORM_ARCHITECTURE_SIZE == 32
+#define DESCENT_PLATFORM_ABI_WINDOWS_32
+#else
+#define DESCENT_PLATFORM_ABI_WINDOWS_64
+#endif
+#endif
+
+
 
 #endif

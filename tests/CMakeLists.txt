@@ -1,17 +1,2 @@
-set(EXECUTABLE_NAME "descent-test-compile")
-
-add_executable(${EXECUTABLE_NAME}
-	test-compile.c
-)
-
-target_include_directories(${EXECUTABLE_NAME} PRIVATE
-	${DESCENT_INCLUDE_DIRS}
-)
-
-target_link_libraries(${EXECUTABLE_NAME} PRIVATE
-	descent-utilities
-	descent-thread
-	descent-alloc
-)
-
-add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})
+add_subdirectory(compile)
+add_subdirectory(type_size)

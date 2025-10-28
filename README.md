@@ -30,6 +30,8 @@ Descent Engine aims to provide:
 
 - Cross-platform abstraction over POSIX threads and Windows threads.
 - Thread creation, joining, detaching, priorities, and CPU affinity.
+- Thread-local storage.
+- Call-once functions across threads.
 - Atomic operations for 32- and 64-bit types.
 - Intra-process spinlocks, ticket locks, condition variables, mutexes, recursive mutexes, read-write locks, semaphores, and barriers.
 

@@ -1,6 +1,11 @@
 set(LIBRARY_NAME "descent-thread")
 
 add_library(${LIBRARY_NAME}
+	barrier.c
+	call_once.c
+	condition.c
+	mutex.c
+	recursive_mutex.c
 	thread.c
 )
 

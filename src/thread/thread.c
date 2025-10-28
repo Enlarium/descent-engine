@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <descent/utilities/platform.h>
-#if defined(DESCENT_PLATFORM_LINUX)
+// Don't want to include platform.h yet because it will stop us from using _GNU_SOURCE
+#if defined(__linux__) && !defined(__ANDROID__)
 #define _GNU_SOURCE
 #endif
 
@@ -24,6 +24,7 @@
 #include <string.h>
 #include <limits.h>
 
+#include <descent/utilities/platform.h>
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 #include <pthread.h>
 #include <sched.h>

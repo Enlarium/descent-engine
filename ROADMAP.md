@@ -5,10 +5,11 @@
 
 - **Threading Library**
 	- Dynamic TLS
-	- Call Once
 	- Futures and promises
 	- Thread job system
 		- Work-stealing and task scheduling
+	- Timeouts
+	- Inter-process synchronization
 - **Allocation Library**
 	- Master arena for large-scale memory management
 	- Tiered sub-allocators for engine segments
@@ -23,6 +24,7 @@
 	- Cross-platform bit-level operations
 	- Logging, debugging, and assertion utilities
 	- Timing and profiling helpers
+- **Testing**
 
 ## Future Milestones
 
