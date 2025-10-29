@@ -82,103 +82,54 @@ $(document).ready(function() { init_codefold(1); });
   <div class="headertitle"><div class="title">semaphore.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="../../d6/dc6/semaphore_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef DESCENT_THREAD_SEMAPHORE_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define DESCENT_THREAD_SEMAPHORE_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;../utilities/platform.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#if defined(DESCENT_PLATFORM_TYPE_POSIX)</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="code" href="../../d6/dc6/semaphore_8h.html">semaphore.h</a>&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;windows.h&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<a href="../../d6/dc6/semaphore_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">// Copyright 2025 XavierHarkonnen9 and Enlarium</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// </span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">// you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">// </span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">// </span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">// Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">// limitations under the License.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#ifndef DESCENT_THREAD_SEMAPHORE_H</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define DESCENT_THREAD_SEMAPHORE_H</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="foldopen" id="foldopen00028" data-start="{" data-end="};">
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="../../d7/dee/structSemaphore.html">   28</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#if defined(DESCENT_PLATFORM_TYPE_POSIX)</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    sem_t _semaphore;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    HANDLE _semaphore;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>} <a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a>;</div>
-</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;../utilities/opaque.h&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a>, DESCENT_OPAQUE_SIZE_SEMAPHORE)</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#abf5d872b125d372a12c256b101368379">   45</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#abf5d872b125d372a12c256b101368379">semaphore_init</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> initial_count) {</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#if defined(DESCENT_PLATFORM_TYPE_POSIX)</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">return</span> !!sem_init(&amp;s-&gt;_semaphore, 0, initial_count);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    s-&gt;_semaphore = CreateSemaphoreW(NULL, (LONG)initial_count, LONG_MAX, NULL);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">return</span> !s-&gt;_semaphore;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
-</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="foldopen" id="foldopen00060" data-start="{" data-end="}">
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a8a2a625eaff6d4ba87e93c2131e827f7">   60</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a8a2a625eaff6d4ba87e93c2131e827f7">semaphore_destroy</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s) {</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#if defined(DESCENT_PLATFORM_TYPE_POSIX)</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">return</span> !!sem_destroy(&amp;s-&gt;_semaphore);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordflow">return</span> !CloseHandle(s-&gt;_semaphore);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>}</div>
-</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#adcd68bac2a3531d0f9aa870f6d608954">   77</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#adcd68bac2a3531d0f9aa870f6d608954">semaphore_wait</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s) {</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#if defined(DESCENT_PLATFORM_TYPE_POSIX)</span></div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordflow">return</span> !!sem_wait(&amp;s-&gt;_semaphore);</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="preprocessor">#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordflow">return</span> WaitForSingleObject(s-&gt;_semaphore, INFINITE) != WAIT_OBJECT_0;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>}</div>
-</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="foldopen" id="foldopen00093" data-start="{" data-end="}">
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a02cf40ea75cbdd308e59c4cc3915ef97">   93</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a02cf40ea75cbdd308e59c4cc3915ef97">semaphore_trywait</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s) {</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#if defined(DESCENT_PLATFORM_TYPE_POSIX)</span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordflow">return</span> !!sem_trywait(&amp;s-&gt;_semaphore);</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordflow">return</span> WaitForSingleObject(s-&gt;_semaphore, 0) != WAIT_OBJECT_0;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}</div>
-</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="foldopen" id="foldopen00109" data-start="{" data-end="}">
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#ac59c4c9109f61cb2ad4110fbeaa843fd">  109</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#ac59c4c9109f61cb2ad4110fbeaa843fd">semaphore_post</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s) {</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="preprocessor">#if defined(DESCENT_PLATFORM_TYPE_POSIX)</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordflow">return</span> !!sem_post(&amp;s-&gt;_semaphore);</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)</span></div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keywordflow">return</span> !ReleaseSemaphore(s-&gt;_semaphore, 1, NULL);</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}</div>
-</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>}</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="asemaphore_8h_html"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html">semaphore.h</a></div></div>
-<div class="ttc" id="asemaphore_8h_html_a02cf40ea75cbdd308e59c4cc3915ef97"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a02cf40ea75cbdd308e59c4cc3915ef97">semaphore_trywait</a></div><div class="ttdeci">static int semaphore_trywait(Semaphore *s)</div><div class="ttdoc">Try to wait (non-blocking) on a semaphore.</div><div class="ttdef"><b>Definition</b> semaphore.h:93</div></div>
-<div class="ttc" id="asemaphore_8h_html_a8a2a625eaff6d4ba87e93c2131e827f7"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a8a2a625eaff6d4ba87e93c2131e827f7">semaphore_destroy</a></div><div class="ttdeci">static int semaphore_destroy(Semaphore *s)</div><div class="ttdoc">Destroy a semaphore.</div><div class="ttdef"><b>Definition</b> semaphore.h:60</div></div>
-<div class="ttc" id="asemaphore_8h_html_abf5d872b125d372a12c256b101368379"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#abf5d872b125d372a12c256b101368379">semaphore_init</a></div><div class="ttdeci">static int semaphore_init(Semaphore *s, unsigned int initial_count)</div><div class="ttdoc">Initialize a semaphore.</div><div class="ttdef"><b>Definition</b> semaphore.h:45</div></div>
-<div class="ttc" id="asemaphore_8h_html_ac59c4c9109f61cb2ad4110fbeaa843fd"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#ac59c4c9109f61cb2ad4110fbeaa843fd">semaphore_post</a></div><div class="ttdeci">static int semaphore_post(Semaphore *s)</div><div class="ttdoc">Post (increment) a semaphore.</div><div class="ttdef"><b>Definition</b> semaphore.h:109</div></div>
-<div class="ttc" id="asemaphore_8h_html_adcd68bac2a3531d0f9aa870f6d608954"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#adcd68bac2a3531d0f9aa870f6d608954">semaphore_wait</a></div><div class="ttdeci">static int semaphore_wait(Semaphore *s)</div><div class="ttdoc">Lock a semaphore.</div><div class="ttdef"><b>Definition</b> semaphore.h:77</div></div>
-<div class="ttc" id="astructSemaphore_html"><div class="ttname"><a href="../../d7/dee/structSemaphore.html">Semaphore</a></div><div class="ttdoc">A counting semaphore.</div><div class="ttdef"><b>Definition</b> semaphore.h:28</div></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">   42</a></span>int <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">semaphore_init</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> initial_count);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">   50</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">semaphore_destroy</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">   61</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">semaphore_wait</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">   71</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">semaphore_trywait</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">   81</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">semaphore_post</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>}</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:36</div></div>
+<div class="ttc" id="asemaphore_8h_html_a07287bd97e9a8ff58cca28be78c12574"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">semaphore_trywait</a></div><div class="ttdeci">int semaphore_trywait(Semaphore *s)</div><div class="ttdoc">Try to wait (non-blocking) on a semaphore.</div></div>
+<div class="ttc" id="asemaphore_8h_html_a3be15d37293a67059e227cbb2cf89d46"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">semaphore_post</a></div><div class="ttdeci">int semaphore_post(Semaphore *s)</div><div class="ttdoc">Post (increment) a semaphore.</div></div>
+<div class="ttc" id="asemaphore_8h_html_a5d062bad60a9a7c0e9d72927f0e47f13"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">semaphore_wait</a></div><div class="ttdeci">int semaphore_wait(Semaphore *s)</div><div class="ttdoc">Lock a semaphore.</div></div>
+<div class="ttc" id="asemaphore_8h_html_aabb6d7a8035bbecb88d8dea83010cddd"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">semaphore_destroy</a></div><div class="ttdeci">int semaphore_destroy(Semaphore *s)</div><div class="ttdoc">Destroy a semaphore.</div></div>
+<div class="ttc" id="asemaphore_8h_html_acdec61669af08ade8f22b7883a674b5a"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">semaphore_init</a></div><div class="ttdeci">int semaphore_init(Semaphore *s, unsigned int initial_count)</div><div class="ttdoc">Initialize a semaphore.</div></div>
+<div class="ttc" id="astructSemaphore_html"><div class="ttname"><a href="../../d7/dee/structSemaphore.html">Semaphore</a></div><div class="ttdoc">A counting semaphore.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

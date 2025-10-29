@@ -82,34 +82,48 @@ $(document).ready(function() { init_codefold(1); });
   <div class="headertitle"><div class="title">barrier.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="../../df/d9a/barrier_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef DESCENT_THREAD_BARRIER_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define DESCENT_THREAD_BARRIER_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;../utilities/opaque.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../d7/d8a/structBarrier.html">Barrier</a>, DESCENT_OPAQUE_SIZE_BARRIER)</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="../../df/d9a/barrier_8h.html#a2c2be2f41e4661c3536730ebc3842122">   28</a></span>int <a class="code hl_function" href="../../df/d9a/barrier_8h.html#a2c2be2f41e4661c3536730ebc3842122">barrier_init</a>(<a class="code hl_struct" href="../../d7/d8a/structBarrier.html">Barrier</a> *b, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> count);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="../../df/d9a/barrier_8h.html#ac213f5028f188df97e3f19a07239ec9d">   36</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../df/d9a/barrier_8h.html#ac213f5028f188df97e3f19a07239ec9d">barrier_destroy</a>(<a class="code hl_struct" href="../../d7/d8a/structBarrier.html">Barrier</a> *b);</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="../../df/d9a/barrier_8h.html#a5edd8403e0cf9128a8549b42b23af5cc">   46</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../df/d9a/barrier_8h.html#a5edd8403e0cf9128a8549b42b23af5cc">barrier_wait</a>(<a class="code hl_struct" href="../../d7/d8a/structBarrier.html">Barrier</a> *b);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#endif</span></div>
+<a href="../../df/d9a/barrier_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">// Copyright 2025 XavierHarkonnen9 and Enlarium</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// </span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">// you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">// </span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">// </span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">// Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">// limitations under the License.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#ifndef DESCENT_THREAD_BARRIER_H</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define DESCENT_THREAD_BARRIER_H</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;../utilities/opaque.h&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../d7/d8a/structBarrier.html">Barrier</a>, DESCENT_OPAQUE_SIZE_BARRIER)</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="../../df/d9a/barrier_8h.html#a2c2be2f41e4661c3536730ebc3842122">   42</a></span>int <a class="code hl_function" href="../../df/d9a/barrier_8h.html#a2c2be2f41e4661c3536730ebc3842122">barrier_init</a>(<a class="code hl_struct" href="../../d7/d8a/structBarrier.html">Barrier</a> *b, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> count);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="../../df/d9a/barrier_8h.html#ac213f5028f188df97e3f19a07239ec9d">   50</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../df/d9a/barrier_8h.html#ac213f5028f188df97e3f19a07239ec9d">barrier_destroy</a>(<a class="code hl_struct" href="../../d7/d8a/structBarrier.html">Barrier</a> *b);</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="../../df/d9a/barrier_8h.html#a5edd8403e0cf9128a8549b42b23af5cc">   60</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../df/d9a/barrier_8h.html#a5edd8403e0cf9128a8549b42b23af5cc">barrier_wait</a>(<a class="code hl_struct" href="../../d7/d8a/structBarrier.html">Barrier</a> *b);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="abarrier_8h_html_a2c2be2f41e4661c3536730ebc3842122"><div class="ttname"><a href="../../df/d9a/barrier_8h.html#a2c2be2f41e4661c3536730ebc3842122">barrier_init</a></div><div class="ttdeci">int barrier_init(Barrier *b, unsigned int count)</div><div class="ttdoc">Initialize a barrier.</div></div>
 <div class="ttc" id="abarrier_8h_html_a5edd8403e0cf9128a8549b42b23af5cc"><div class="ttname"><a href="../../df/d9a/barrier_8h.html#a5edd8403e0cf9128a8549b42b23af5cc">barrier_wait</a></div><div class="ttdeci">int barrier_wait(Barrier *b)</div><div class="ttdoc">Wait at the barrier.</div></div>
 <div class="ttc" id="abarrier_8h_html_ac213f5028f188df97e3f19a07239ec9d"><div class="ttname"><a href="../../df/d9a/barrier_8h.html#ac213f5028f188df97e3f19a07239ec9d">barrier_destroy</a></div><div class="ttdeci">int barrier_destroy(Barrier *b)</div><div class="ttdoc">Destroy a barrier.</div></div>
-<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:22</div></div>
-<div class="ttc" id="astructBarrier_html"><div class="ttname"><a href="../../d7/d8a/structBarrier.html">Barrier</a></div><div class="ttdoc">Thread barrier.</div></div>
+<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:36</div></div>
+<div class="ttc" id="astructBarrier_html"><div class="ttname"><a href="../../d7/d8a/structBarrier.html">Barrier</a></div><div class="ttdoc">A thread barrier.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

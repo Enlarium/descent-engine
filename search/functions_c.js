@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['semaphore_5fdestroy_0',['semaphore_destroy',['../d6/dc6/semaphore_8h.html#a8a2a625eaff6d4ba87e93c2131e827f7',1,'semaphore.h']]],
-  ['semaphore_5finit_1',['semaphore_init',['../d6/dc6/semaphore_8h.html#abf5d872b125d372a12c256b101368379',1,'semaphore.h']]],
-  ['semaphore_5fpost_2',['semaphore_post',['../d6/dc6/semaphore_8h.html#ac59c4c9109f61cb2ad4110fbeaa843fd',1,'semaphore.h']]],
-  ['semaphore_5ftrywait_3',['semaphore_trywait',['../d6/dc6/semaphore_8h.html#a02cf40ea75cbdd308e59c4cc3915ef97',1,'semaphore.h']]],
-  ['semaphore_5fwait_4',['semaphore_wait',['../d6/dc6/semaphore_8h.html#adcd68bac2a3531d0f9aa870f6d608954',1,'semaphore.h']]],
+  ['semaphore_5fdestroy_0',['semaphore_destroy',['../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd',1,'semaphore.h']]],
+  ['semaphore_5finit_1',['semaphore_init',['../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a',1,'semaphore.h']]],
+  ['semaphore_5fpost_2',['semaphore_post',['../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46',1,'semaphore.h']]],
+  ['semaphore_5ftrywait_3',['semaphore_trywait',['../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574',1,'semaphore.h']]],
+  ['semaphore_5fwait_4',['semaphore_wait',['../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13',1,'semaphore.h']]],
   ['sign_5f16_5',['sign_16',['../d2/d35/arithmetic_8h.html#a0a2a9406abf6b4e0d183f7b0b921605d',1,'arithmetic.h']]],
   ['sign_5f32_6',['sign_32',['../d2/d35/arithmetic_8h.html#a95ad481d341185146113384df70ef8da',1,'arithmetic.h']]],
   ['sign_5f64_7',['sign_64',['../d2/d35/arithmetic_8h.html#ae677cede8f71d746d46f5e926cd62780',1,'arithmetic.h']]],

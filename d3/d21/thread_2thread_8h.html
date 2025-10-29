@@ -76,28 +76,32 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">thread.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="../../de/d03/platform_8h_source.html">descent/utilities/platform.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for thread.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d5/dce/thread_2thread_8h__incl.png" border="0" usemap="#ainclude_2descent_2thread_2thread_8h" alt=""/></div>
 <map name="ainclude_2descent_2thread_2thread_8h" id="ainclude_2descent_2thread_2thread_8h">
-<area shape="rect" title=" " alt="" coords="34,5,205,45"/>
-<area shape="rect" title=" " alt="" coords="5,93,76,119"/>
-<area shape="poly" title=" " alt="" coords="102,47,64,85,60,82,98,44"/>
-<area shape="rect" href="../../de/d03/platform_8h.html" title=" " alt="" coords="100,93,299,119"/>
-<area shape="poly" title=" " alt="" coords="141,44,179,82,176,85,137,47"/>
-<area shape="rect" title=" " alt="" coords="101,167,189,192"/>
-<area shape="poly" title=" " alt="" coords="192,121,164,157,160,154,188,117"/>
-<area shape="rect" href="../../de/d3c/macros_8h.html" title=" " alt="" coords="213,167,295,192"/>
-<area shape="poly" title=" " alt="" coords="210,117,239,154,235,157,206,121"/>
+<area shape="rect" title=" " alt="" coords="55,5,225,45"/>
+<area shape="rect" title=" " alt="" coords="5,93,80,119"/>
+<area shape="poly" title=" " alt="" coords="118,48,69,87,66,82,115,43"/>
+<area shape="rect" title=" " alt="" coords="105,93,175,119"/>
+<area shape="poly" title=" " alt="" coords="143,46,143,79,137,79,137,46"/>
+<area shape="rect" href="../../de/d03/platform_8h.html" title=" " alt="" coords="199,93,398,119"/>
+<area shape="poly" title=" " alt="" coords="179,43,264,85,262,90,177,48"/>
+<area shape="rect" title=" " alt="" coords="200,167,288,192"/>
+<area shape="poly" title=" " alt="" coords="292,121,263,157,259,154,288,117"/>
+<area shape="rect" href="../../de/d3c/macros_8h.html" title=" " alt="" coords="312,167,395,192"/>
+<area shape="poly" title=" " alt="" coords="310,117,338,154,334,157,306,121"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -105,15 +109,12 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/d53/thread_2thread_8h__dep__incl.png" border="0" usemap="#ainclude_2descent_2thread_2thread_8hdep" alt=""/></div>
 <map name="ainclude_2descent_2thread_2thread_8hdep" id="ainclude_2descent_2thread_2thread_8hdep">
-<area shape="rect" title=" " alt="" coords="24,5,194,45"/>
-<area shape="rect" href="../../db/dd5/thread_8h.html" title=" " alt="" coords="18,181,200,207"/>
-<area shape="poly" title=" " alt="" coords="54,55,31,72,14,95,8,113,14,132,26,148,41,160,75,179,72,184,38,165,22,151,9,135,3,113,9,92,28,68,51,50"/>
-<area shape="rect" href="../../df/d63/spinlock_8h.html" title=" " alt="" coords="24,93,194,133"/>
-<area shape="poly" title=" " alt="" coords="112,59,112,93,106,93,106,59"/>
-<area shape="rect" href="../../dd/d60/ticket__lock_8h.html" title=" " alt="" coords="218,93,389,133"/>
-<area shape="poly" title=" " alt="" coords="165,48,262,91,260,96,163,53"/>
-<area shape="poly" title=" " alt="" coords="112,147,112,181,106,181,106,147"/>
-<area shape="poly" title=" " alt="" coords="245,141,139,184,137,179,244,136"/>
+<area shape="rect" title=" " alt="" coords="11,5,182,45"/>
+<area shape="rect" href="../../db/dd5/thread_8h.html" title=" " alt="" coords="5,181,188,207"/>
+<area shape="poly" title=" " alt="" coords="79,58,63,94,60,113,63,133,75,159,89,180,85,183,70,161,58,134,55,113,58,93,74,56"/>
+<area shape="rect" href="../../dd/d60/ticket__lock_8h.html" title=" " alt="" coords="73,93,243,133"/>
+<area shape="poly" title=" " alt="" coords="120,55,147,92,142,95,116,58"/>
+<area shape="poly" title=" " alt="" coords="137,146,108,183,104,179,133,143"/>
 </map>
 </div>
 </div>
@@ -121,9 +122,19 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d09/structThreadName.html">ThreadName</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container for thread name. Limited to 15 characters followed by a null terminator.  <a href="../../d2/d09/structThreadName.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d73/structThreadAttributes.html">ThreadAttributes</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attributes for creating a thread.  <a href="../../d4/d73/structThreadAttributes.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:af9f2eea281f85954f5d3471ac7138d44" id="r_af9f2eea281f85954f5d3471ac7138d44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#af9f2eea281f85954f5d3471ac7138d44">THREAD_NAME_LENGTH</a>&#160;&#160;&#160;16</td></tr>
+<tr class="separator:af9f2eea281f85954f5d3471ac7138d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9224b23f47c9cd45f98aa59e820a947" id="r_ae9224b23f47c9cd45f98aa59e820a947"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ae9224b23f47c9cd45f98aa59e820a947">THREAD_AFFINITY_ALL</a>&#160;&#160;&#160;UINT64_MAX</td></tr>
+<tr class="separator:ae9224b23f47c9cd45f98aa59e820a947"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -148,9 +159,12 @@ Enumerations</h2></td></tr>
 , <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa1d40a465f69812860a66d844f32cd812">THREAD_ERROR_FUNCTION_INVALID</a>
 , <br />
 &#160;&#160;<a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9facac02ca07b884a57071cb4bfe9cdada0">THREAD_ERROR_OS_CREATE_FAILED</a>
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa67c62f24e8e30590af677ac8d0be18c2">THREAD_ERROR_OS_YIELD_FAILED</a>
 , <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa6fd03599279cc4bc2ef577521ad54351">THREAD_ERROR_OS_JOIN_FAILED</a>
 , <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa95d5e3c1b37794de77afcabb1eb18049">THREAD_ERROR_OS_DETACH_FAILED</a>
+, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fae2da49ee2c8461141f7230e069e0b0de">THREAD_ERROR_OS_NAME_FAILED</a>
+, <br />
+&#160;&#160;<a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa2cea6a1d635a9f453f448d49e4fc887d">THREAD_ERROR_OS_AFFINITY_FAILED</a>
+, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa8f09d4a0116411af5b85ed853b7873da">THREAD_ERROR_OS_PRIORITY_FAILED</a>
 <br />
  }</td></tr>
 <tr class="memdesc:ab701d053a9c34ab7f11e43e0dc09ac9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines error codes returned by thread functions.  <a href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9f">More...</a><br /></td></tr>
@@ -167,40 +181,75 @@ Functions</h2></td></tr>
 <tr class="memitem:a03c7dc99ccd1a9c489be94a221844b59" id="r_a03c7dc99ccd1a9c489be94a221844b59"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a03c7dc99ccd1a9c489be94a221844b59">thread_max_concurrent</a> (void)</td></tr>
 <tr class="memdesc:a03c7dc99ccd1a9c489be94a221844b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of concurrent threads supported.  <br /></td></tr>
 <tr class="separator:a03c7dc99ccd1a9c489be94a221844b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3334b03a586aa22f07da8abf602f7d0" id="r_ab3334b03a586aa22f07da8abf602f7d0"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ab3334b03a586aa22f07da8abf602f7d0">thread_state</a> (int s)</td></tr>
-<tr class="memdesc:ab3334b03a586aa22f07da8abf602f7d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a human-readable string for a thread state enum.  <br /></td></tr>
-<tr class="separator:ab3334b03a586aa22f07da8abf602f7d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29fe064b4d068fbf15bf95b677c15530" id="r_a29fe064b4d068fbf15bf95b677c15530"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a29fe064b4d068fbf15bf95b677c15530">thread_error</a> (int e)</td></tr>
-<tr class="memdesc:a29fe064b4d068fbf15bf95b677c15530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a human-readable string for a thread error enum.  <br /></td></tr>
-<tr class="separator:a29fe064b4d068fbf15bf95b677c15530"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb8ad4213542cdec400bbd9093193463" id="r_afb8ad4213542cdec400bbd9093193463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#afb8ad4213542cdec400bbd9093193463">thread_self</a> (void)</td></tr>
-<tr class="memdesc:afb8ad4213542cdec400bbd9093193463"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the handle of the current thread.  <br /></td></tr>
-<tr class="separator:afb8ad4213542cdec400bbd9093193463"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85a867dd25d3133aa461b3decb225db6" id="r_a85a867dd25d3133aa461b3decb225db6"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a85a867dd25d3133aa461b3decb225db6">thread_name</a> (void)</td></tr>
-<tr class="memdesc:a85a867dd25d3133aa461b3decb225db6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the current thread.  <br /></td></tr>
-<tr class="separator:a85a867dd25d3133aa461b3decb225db6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac37edfbfc3fefdec5a6d8fc61c895ae6" id="r_ac37edfbfc3fefdec5a6d8fc61c895ae6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ac37edfbfc3fefdec5a6d8fc61c895ae6">thread_create</a> (<a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a> *t, <a class="el" href="../../d3/d21/thread_2thread_8h.html#a3446ac6752ab14d99ea5d3e8a552b2e8">ThreadFunction</a> f, void *arg)</td></tr>
-<tr class="memdesc:ac37edfbfc3fefdec5a6d8fc61c895ae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new thread.  <br /></td></tr>
-<tr class="separator:ac37edfbfc3fefdec5a6d8fc61c895ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ac05254084ab12078dc5b6c21df6da3" id="r_a7ac05254084ab12078dc5b6c21df6da3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a7ac05254084ab12078dc5b6c21df6da3">thread_create_attr</a> (<a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a> *t, <a class="el" href="../../d3/d21/thread_2thread_8h.html#a3446ac6752ab14d99ea5d3e8a552b2e8">ThreadFunction</a> f, void *arg, const <a class="el" href="../../d4/d73/structThreadAttributes.html">ThreadAttributes</a> *a)</td></tr>
-<tr class="memdesc:a7ac05254084ab12078dc5b6c21df6da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new thread with custom attributes.  <br /></td></tr>
-<tr class="separator:a7ac05254084ab12078dc5b6c21df6da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cd35c5dd19d6a8a18d2e86b60b8b7e7" id="r_a0cd35c5dd19d6a8a18d2e86b60b8b7e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a0cd35c5dd19d6a8a18d2e86b60b8b7e7">thread_exit</a> (int code)</td></tr>
-<tr class="memdesc:a0cd35c5dd19d6a8a18d2e86b60b8b7e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exit the current thread.  <br /></td></tr>
-<tr class="separator:a0cd35c5dd19d6a8a18d2e86b60b8b7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f5e482f63d34f5b7ed1dc30370b4c3b" id="r_a6f5e482f63d34f5b7ed1dc30370b4c3b"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a6f5e482f63d34f5b7ed1dc30370b4c3b">thread_error_message</a> (int e)</td></tr>
+<tr class="memdesc:a6f5e482f63d34f5b7ed1dc30370b4c3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a human-readable string for a thread error enum.  <br /></td></tr>
+<tr class="separator:a6f5e482f63d34f5b7ed1dc30370b4c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ad684cc118f4d23d546c35b1477959f" id="r_a5ad684cc118f4d23d546c35b1477959f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a5ad684cc118f4d23d546c35b1477959f">thread_create</a> (<a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a> *t, <a class="el" href="../../d3/d21/thread_2thread_8h.html#a3446ac6752ab14d99ea5d3e8a552b2e8">ThreadFunction</a> f, void *arg, const <a class="el" href="../../d4/d73/structThreadAttributes.html">ThreadAttributes</a> *a)</td></tr>
+<tr class="memdesc:a5ad684cc118f4d23d546c35b1477959f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new thread.  <br /></td></tr>
+<tr class="separator:a5ad684cc118f4d23d546c35b1477959f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a058a1bfad77cc64c954adcf8c7e85de5" id="r_a058a1bfad77cc64c954adcf8c7e85de5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a058a1bfad77cc64c954adcf8c7e85de5">thread_join</a> (<a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a> t, int *code)</td></tr>
 <tr class="memdesc:a058a1bfad77cc64c954adcf8c7e85de5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for a thread to finish and retrieve its exit code.  <br /></td></tr>
 <tr class="separator:a058a1bfad77cc64c954adcf8c7e85de5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68a27ff8ba01cfe34a7c4d850723631c" id="r_a68a27ff8ba01cfe34a7c4d850723631c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a68a27ff8ba01cfe34a7c4d850723631c">thread_detach</a> (<a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a> t)</td></tr>
 <tr class="memdesc:a68a27ff8ba01cfe34a7c4d850723631c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach a thread.  <br /></td></tr>
 <tr class="separator:a68a27ff8ba01cfe34a7c4d850723631c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cd35c5dd19d6a8a18d2e86b60b8b7e7" id="r_a0cd35c5dd19d6a8a18d2e86b60b8b7e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a0cd35c5dd19d6a8a18d2e86b60b8b7e7">thread_exit</a> (int code)</td></tr>
+<tr class="memdesc:a0cd35c5dd19d6a8a18d2e86b60b8b7e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exit the current thread.  <br /></td></tr>
+<tr class="separator:a0cd35c5dd19d6a8a18d2e86b60b8b7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb8ad4213542cdec400bbd9093193463" id="r_afb8ad4213542cdec400bbd9093193463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#afb8ad4213542cdec400bbd9093193463">thread_self</a> (void)</td></tr>
+<tr class="memdesc:afb8ad4213542cdec400bbd9093193463"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the handle of the current thread.  <br /></td></tr>
+<tr class="separator:afb8ad4213542cdec400bbd9093193463"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6c7176cf6f59cbefd415e63c22d6770" id="r_ad6c7176cf6f59cbefd415e63c22d6770"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ad6c7176cf6f59cbefd415e63c22d6770">thread_equal</a> (<a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a> t1, <a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a> t2)</td></tr>
 <tr class="memdesc:ad6c7176cf6f59cbefd415e63c22d6770"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two thread handles for equality.  <br /></td></tr>
 <tr class="separator:ad6c7176cf6f59cbefd415e63c22d6770"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cd9bd25fa54b6108137cbd04833ed9c" id="r_a8cd9bd25fa54b6108137cbd04833ed9c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a8cd9bd25fa54b6108137cbd04833ed9c">thread_pause</a> (void)</td></tr>
-<tr class="memdesc:a8cd9bd25fa54b6108137cbd04833ed9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide a CPU pause hint. Does not yield execution.  <br /></td></tr>
-<tr class="separator:a8cd9bd25fa54b6108137cbd04833ed9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea52e402e4c38e18ff31b3b04d808e24" id="r_aea52e402e4c38e18ff31b3b04d808e24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/d09/structThreadName.html">ThreadName</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#aea52e402e4c38e18ff31b3b04d808e24">thread_get_name</a> (void)</td></tr>
+<tr class="memdesc:aea52e402e4c38e18ff31b3b04d808e24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the current thread.  <br /></td></tr>
+<tr class="separator:aea52e402e4c38e18ff31b3b04d808e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa58fa813e7518dab1f5c1c83c8923f2a" id="r_aa58fa813e7518dab1f5c1c83c8923f2a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#aa58fa813e7518dab1f5c1c83c8923f2a">thread_set_name</a> (<a class="el" href="../../d2/d09/structThreadName.html">ThreadName</a> n)</td></tr>
+<tr class="memdesc:aa58fa813e7518dab1f5c1c83c8923f2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the name of the current thread.  <br /></td></tr>
+<tr class="separator:aa58fa813e7518dab1f5c1c83c8923f2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeff16f953cdde65c30a28ef0ef8b1376" id="r_aeff16f953cdde65c30a28ef0ef8b1376"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#aeff16f953cdde65c30a28ef0ef8b1376">thread_get_affinity</a> (void)</td></tr>
+<tr class="memdesc:aeff16f953cdde65c30a28ef0ef8b1376"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the affinity of the current thread.  <br /></td></tr>
+<tr class="separator:aeff16f953cdde65c30a28ef0ef8b1376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4d26d4a94a64477ba296c638978ce33" id="r_ae4d26d4a94a64477ba296c638978ce33"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ae4d26d4a94a64477ba296c638978ce33">thread_set_affinity</a> (uint64_t affinity)</td></tr>
+<tr class="memdesc:ae4d26d4a94a64477ba296c638978ce33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the affinity of the current thread.  <br /></td></tr>
+<tr class="separator:ae4d26d4a94a64477ba296c638978ce33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a044b4b8c5dee20749d631552c32ed7a9" id="r_a044b4b8c5dee20749d631552c32ed7a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ac21de3041b361912460403d2649eaa0e">ThreadPriority</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a044b4b8c5dee20749d631552c32ed7a9">thread_get_priority</a> (void)</td></tr>
+<tr class="memdesc:a044b4b8c5dee20749d631552c32ed7a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the priority of the current thread.  <br /></td></tr>
+<tr class="separator:a044b4b8c5dee20749d631552c32ed7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae79b24ee40dc7fe146e1e9b0ac57d39a" id="r_ae79b24ee40dc7fe146e1e9b0ac57d39a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ae79b24ee40dc7fe146e1e9b0ac57d39a">thread_set_priority</a> (<a class="el" href="../../d3/d21/thread_2thread_8h.html#ac21de3041b361912460403d2649eaa0e">ThreadPriority</a> p)</td></tr>
+<tr class="memdesc:ae79b24ee40dc7fe146e1e9b0ac57d39a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the priority of the current thread.  <br /></td></tr>
+<tr class="separator:ae79b24ee40dc7fe146e1e9b0ac57d39a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ae9224b23f47c9cd45f98aa59e820a947" name="ae9224b23f47c9cd45f98aa59e820a947"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9224b23f47c9cd45f98aa59e820a947">&#9670;&#160;</a></span>THREAD_AFFINITY_ALL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define THREAD_AFFINITY_ALL&#160;&#160;&#160;UINT64_MAX</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af9f2eea281f85954f5d3471ac7138d44" name="af9f2eea281f85954f5d3471ac7138d44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9f2eea281f85954f5d3471ac7138d44">&#9670;&#160;</a></span>THREAD_NAME_LENGTH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define THREAD_NAME_LENGTH&#160;&#160;&#160;16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a21f231545327cbecaa5a1b3bd4038c3e" name="a21f231545327cbecaa5a1b3bd4038c3e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a21f231545327cbecaa5a1b3bd4038c3e">&#9670;&#160;</a></span>Thread</h2>
@@ -215,7 +264,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Opaque handle representing a thread. </p>
-<dl class="section note"><dt>Note</dt><dd>This is not the same as the platform's native thread handle. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This handle is not the same as the platform's native thread handle.</dd>
+<dd>
+Threads created through the Descent thread system must not be manipulated using the underlying thread API or other thread libraries. Doing so results in undefined behavior. </dd></dl>
 
 </div>
 </div>
@@ -273,13 +324,17 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa1d40a465f69812860a66d844f32cd812" name="ab701d053a9c34ab7f11e43e0dc09ac9fa1d40a465f69812860a66d844f32cd812"></a>THREAD_ERROR_FUNCTION_INVALID&#160;</td><td class="fielddoc"><p>Thread function pointer is invalid </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9facac02ca07b884a57071cb4bfe9cdada0" name="ab701d053a9c34ab7f11e43e0dc09ac9facac02ca07b884a57071cb4bfe9cdada0"></a>THREAD_ERROR_OS_CREATE_FAILED&#160;</td><td class="fielddoc"><p>Underlying OS thread creation failed </p>
+<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9facac02ca07b884a57071cb4bfe9cdada0" name="ab701d053a9c34ab7f11e43e0dc09ac9facac02ca07b884a57071cb4bfe9cdada0"></a>THREAD_ERROR_OS_CREATE_FAILED&#160;</td><td class="fielddoc"><p>Creating the thread failed at the OS level </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa67c62f24e8e30590af677ac8d0be18c2" name="ab701d053a9c34ab7f11e43e0dc09ac9fa67c62f24e8e30590af677ac8d0be18c2"></a>THREAD_ERROR_OS_YIELD_FAILED&#160;</td><td class="fielddoc"><p>Yielding the thread failed </p>
+<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa6fd03599279cc4bc2ef577521ad54351" name="ab701d053a9c34ab7f11e43e0dc09ac9fa6fd03599279cc4bc2ef577521ad54351"></a>THREAD_ERROR_OS_JOIN_FAILED&#160;</td><td class="fielddoc"><p>Joining the thread failed at the OS level </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa6fd03599279cc4bc2ef577521ad54351" name="ab701d053a9c34ab7f11e43e0dc09ac9fa6fd03599279cc4bc2ef577521ad54351"></a>THREAD_ERROR_OS_JOIN_FAILED&#160;</td><td class="fielddoc"><p>Joining the thread failed </p>
+<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa95d5e3c1b37794de77afcabb1eb18049" name="ab701d053a9c34ab7f11e43e0dc09ac9fa95d5e3c1b37794de77afcabb1eb18049"></a>THREAD_ERROR_OS_DETACH_FAILED&#160;</td><td class="fielddoc"><p>Detaching the thread failed at the OS level </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa95d5e3c1b37794de77afcabb1eb18049" name="ab701d053a9c34ab7f11e43e0dc09ac9fa95d5e3c1b37794de77afcabb1eb18049"></a>THREAD_ERROR_OS_DETACH_FAILED&#160;</td><td class="fielddoc"><p>Detaching the thread failed </p>
+<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fae2da49ee2c8461141f7230e069e0b0de" name="ab701d053a9c34ab7f11e43e0dc09ac9fae2da49ee2c8461141f7230e069e0b0de"></a>THREAD_ERROR_OS_NAME_FAILED&#160;</td><td class="fielddoc"><p>Setting the thread's name failed at the OS level </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa2cea6a1d635a9f453f448d49e4fc887d" name="ab701d053a9c34ab7f11e43e0dc09ac9fa2cea6a1d635a9f453f448d49e4fc887d"></a>THREAD_ERROR_OS_AFFINITY_FAILED&#160;</td><td class="fielddoc"><p>Setting the thread's affinity failed at the OS level </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa8f09d4a0116411af5b85ed853b7873da" name="ab701d053a9c34ab7f11e43e0dc09ac9fa8f09d4a0116411af5b85ed853b7873da"></a>THREAD_ERROR_OS_PRIORITY_FAILED&#160;</td><td class="fielddoc"><p>Setting the thread's priority failed at the OS level </p>
 </td></tr>
 </table>
 
@@ -310,60 +365,14 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ac37edfbfc3fefdec5a6d8fc61c895ae6" name="ac37edfbfc3fefdec5a6d8fc61c895ae6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac37edfbfc3fefdec5a6d8fc61c895ae6">&#9670;&#160;</a></span>thread_create()</h2>
+<a id="a5ad684cc118f4d23d546c35b1477959f" name="a5ad684cc118f4d23d546c35b1477959f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ad684cc118f4d23d546c35b1477959f">&#9670;&#160;</a></span>thread_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int thread_create </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a> *&#160;</td>
-          <td class="paramname"><em>t</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a3446ac6752ab14d99ea5d3e8a552b2e8">ThreadFunction</a>&#160;</td>
-          <td class="paramname"><em>f</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>arg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create a new thread. </p>
-<p>The thread executes the function <code>f</code> with argument <code>arg</code>. The thread must be joined or detached to free resources.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">t</td><td>Output pointer to receive the thread handle. Should not be NULL. </td></tr>
-    <tr><td class="paramname">f</td><td>Thread function to execute. Should not be NULL. </td></tr>
-    <tr><td class="paramname">arg</td><td>Argument passed to the thread function. Can be NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, ThreadError on failure. </dd></dl>
-
-</div>
-</div>
-<a id="a7ac05254084ab12078dc5b6c21df6da3" name="a7ac05254084ab12078dc5b6c21df6da3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ac05254084ab12078dc5b6c21df6da3">&#9670;&#160;</a></span>thread_create_attr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int thread_create_attr </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a> *&#160;</td>
           <td class="paramname"><em>t</em>, </td>
@@ -394,7 +403,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Create a new thread with custom attributes. </p>
+<p>Create a new thread. </p>
 <p>The thread executes the function <code>f</code> with argument <code>arg</code>. The thread must be joined or detached to free resources.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -475,14 +484,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a29fe064b4d068fbf15bf95b677c15530" name="a29fe064b4d068fbf15bf95b677c15530"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29fe064b4d068fbf15bf95b677c15530">&#9670;&#160;</a></span>thread_error()</h2>
+<a id="a6f5e482f63d34f5b7ed1dc30370b4c3b" name="a6f5e482f63d34f5b7ed1dc30370b4c3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f5e482f63d34f5b7ed1dc30370b4c3b">&#9670;&#160;</a></span>thread_error_message()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char * thread_error </td>
+          <td class="memname">const char * thread_error_message </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>e</em></td><td>)</td>
@@ -525,6 +534,76 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aeff16f953cdde65c30a28ef0ef8b1376" name="aeff16f953cdde65c30a28ef0ef8b1376"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeff16f953cdde65c30a28ef0ef8b1376">&#9670;&#160;</a></span>thread_get_affinity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t thread_get_affinity </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the affinity of the current thread. </p>
+<dl class="section return"><dt>Returns</dt><dd>Affinity of the current thread as a bitmask.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If this function is called on an unmanaged thread, the returned affinity will be zero. </dd>
+<dd>
+Not all platforms fully support thread affinity. </dd></dl>
+
+</div>
+</div>
+<a id="aea52e402e4c38e18ff31b3b04d808e24" name="aea52e402e4c38e18ff31b3b04d808e24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea52e402e4c38e18ff31b3b04d808e24">&#9670;&#160;</a></span>thread_get_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d2/d09/structThreadName.html">ThreadName</a> thread_get_name </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the name of the current thread. </p>
+<dl class="section return"><dt>Returns</dt><dd>Name of the current thread.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If this function is called on an unmanaged thread, the returned name will be a zero-length string. </dd></dl>
+
+</div>
+</div>
+<a id="a044b4b8c5dee20749d631552c32ed7a9" name="a044b4b8c5dee20749d631552c32ed7a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a044b4b8c5dee20749d631552c32ed7a9">&#9670;&#160;</a></span>thread_get_priority()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ac21de3041b361912460403d2649eaa0e">ThreadPriority</a> thread_get_priority </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the priority of the current thread. </p>
+<dl class="section return"><dt>Returns</dt><dd>The priority of the current thread</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If this function is called on an unmanaged thread, the returned priority will be DEFAULT. </dd>
+<dd>
+Not all platforms fully support thread priority. </dd></dl>
 
 </div>
 </div>
@@ -587,55 +666,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a85a867dd25d3133aa461b3decb225db6" name="a85a867dd25d3133aa461b3decb225db6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85a867dd25d3133aa461b3decb225db6">&#9670;&#160;</a></span>thread_name()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const char * thread_name </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the name of the current thread. </p>
-<dl class="section return"><dt>Returns</dt><dd>Name of the current thread. </dd></dl>
-
-</div>
-</div>
-<a id="a8cd9bd25fa54b6108137cbd04833ed9c" name="a8cd9bd25fa54b6108137cbd04833ed9c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cd9bd25fa54b6108137cbd04833ed9c">&#9670;&#160;</a></span>thread_pause()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void thread_pause </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Provide a CPU pause hint. Does not yield execution. </p>
-
-</div>
-</div>
 <a id="afb8ad4213542cdec400bbd9093193463" name="afb8ad4213542cdec400bbd9093193463"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afb8ad4213542cdec400bbd9093193463">&#9670;&#160;</a></span>thread_self()</h2>
 
@@ -658,30 +688,91 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab3334b03a586aa22f07da8abf602f7d0" name="ab3334b03a586aa22f07da8abf602f7d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3334b03a586aa22f07da8abf602f7d0">&#9670;&#160;</a></span>thread_state()</h2>
+<a id="ae4d26d4a94a64477ba296c638978ce33" name="ae4d26d4a94a64477ba296c638978ce33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4d26d4a94a64477ba296c638978ce33">&#9670;&#160;</a></span>thread_set_affinity()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char * thread_state </td>
+          <td class="memname">int thread_set_affinity </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>affinity</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Return a human-readable string for a thread state enum. </p>
+<p>Set the affinity of the current thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td>Thread state. </td></tr>
+    <tr><td class="paramname">affinity</td><td>The affinity to set the thread to as a bitmask. If this parameter is zero, the thread affinity will be unchanged </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to string describing the state. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, or ThreadError on failure.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function will only succeed on managed threads. </dd>
+<dd>
+Not all platforms fully support thread affinity. </dd></dl>
+
+</div>
+</div>
+<a id="aa58fa813e7518dab1f5c1c83c8923f2a" name="aa58fa813e7518dab1f5c1c83c8923f2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa58fa813e7518dab1f5c1c83c8923f2a">&#9670;&#160;</a></span>thread_set_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int thread_set_name </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d2/d09/structThreadName.html">ThreadName</a>&#160;</td>
+          <td class="paramname"><em>n</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the name of the current thread. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>The name to set the thread to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, or ThreadError on failure.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function will only succeed on managed threads. </dd></dl>
+
+</div>
+</div>
+<a id="ae79b24ee40dc7fe146e1e9b0ac57d39a" name="ae79b24ee40dc7fe146e1e9b0ac57d39a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae79b24ee40dc7fe146e1e9b0ac57d39a">&#9670;&#160;</a></span>thread_set_priority()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int thread_set_priority </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ac21de3041b361912460403d2649eaa0e">ThreadPriority</a>&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the priority of the current thread. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>The priority to set the thread to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, or ThreadError on failure.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function will only succeed on managed threads. </dd>
+<dd>
+Not all platforms fully support thread priority. </dd></dl>
 
 </div>
 </div>

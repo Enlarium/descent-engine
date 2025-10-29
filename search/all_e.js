@@ -13,6 +13,5 @@ var searchData=
   ['pow2ceil_5f16_10',['pow2ceil_16',['../d2/d35/arithmetic_8h.html#a28fb15288ea65ecc4e864cb60cc1d89c',1,'arithmetic.h']]],
   ['pow2ceil_5f32_11',['pow2ceil_32',['../d2/d35/arithmetic_8h.html#abe99aae1365dc8027a58cfdac9b41cd2',1,'arithmetic.h']]],
   ['pow2ceil_5f64_12',['pow2ceil_64',['../d2/d35/arithmetic_8h.html#a8eaa8429a82b3da3dfe80ecb5c4ddf3f',1,'arithmetic.h']]],
-  ['pow2ceil_5f8_13',['pow2ceil_8',['../d2/d35/arithmetic_8h.html#aab7d49be337fb33666df1e54ae9bb08c',1,'arithmetic.h']]],
-  ['priority_14',['priority',['../d4/d73/structThreadAttributes.html#a10daf0c62b931b0d68ff9c99fcc33f26',1,'ThreadAttributes']]]
+  ['pow2ceil_5f8_13',['pow2ceil_8',['../d2/d35/arithmetic_8h.html#aab7d49be337fb33666df1e54ae9bb08c',1,'arithmetic.h']]]
 ];

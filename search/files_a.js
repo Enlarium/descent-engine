@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['thread_2eh_0',['thread.h',['../db/dd5/thread_8h.html',1,'(Global Namespace)'],['../d3/d21/thread_2thread_8h.html',1,'(Global Namespace)']]],
-  ['ticket_5flock_2eh_1',['ticket_lock.h',['../dd/d60/ticket__lock_8h.html',1,'']]]
+  ['semaphore_2eh_0',['semaphore.h',['../d6/dc6/semaphore_8h.html',1,'']]],
+  ['spinlock_2eh_1',['spinlock.h',['../df/d63/spinlock_8h.html',1,'']]],
+  ['sysalloc_2eh_2',['sysalloc.h',['../d1/da1/sysalloc_8h.html',1,'']]]
 ];
