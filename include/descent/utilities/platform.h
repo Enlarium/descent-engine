@@ -77,7 +77,7 @@
 #define DESCENT_PLATFORM_COMPILER_VERSION STRINGIFY(__GNUC__) "." STRINGIFY(__GNUC_MINOR__) "." STRINGIFY(__GNUC_PATCHLEVEL__)
 #define DESCENT_PLATFORM_COMPILER_CYGWIN_GCC
 #define DESCENT_PLATFORM_COMPILER_TYPE_GCC
-#define DESCENT_PLATFORM_TYPE_POSIX
+#define DESCENT_PLATFORM_TYPE_POSIX_PARTIAL
 #elif defined(__MINGW32__) || defined(__MINGW64__)
 #define DESCENT_PLATFORM_COMPILER_VERSION STRINGIFY(__GNUC__) "." STRINGIFY(__GNUC_MINOR__) "." STRINGIFY(__GNUC_PATCHLEVEL__)
 #define DESCENT_PLATFORM_COMPILER_MINGW_GCC
@@ -157,10 +157,7 @@
 #error "Descent Engine requires that _DARWIN_C_SOURCE be defined on macOS"
 #endif
 
-// C implementation
-
-// Need to detect size of synchronization primitives and platform-specific types.
-// mingw and cygwin may require additional consideration.
+// Implementation
 
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 #if defined(DESCENT_PLATFORM_LINUX)

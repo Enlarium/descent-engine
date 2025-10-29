@@ -1,3 +1,17 @@
+// Copyright 2025 XavierHarkonnen9 and Enlarium
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef DESCENT_THREAD_ATOMIC_H
 #define DESCENT_THREAD_ATOMIC_H
 
@@ -8,7 +22,7 @@
 #include <stdatomic.h>
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
 #include <windows.h>
-// TODO: I don't care how hacky I have to be, I want this monstrosity out of my interface.
+// TODO: I don't care how hacky I have to be, I want this monstrous gigafile out of my interface.
 #endif
 
 // Check whether true 64-bit atomic operations are available on Windows
@@ -28,39 +42,11 @@
 #error "Pointers must be either 32 or 64 bits wide"
 #endif
 
-
-
 // All memory ordering is sequentially consistent to ensure cross-platform behavior is consistent
-
-/* TODO
-atomic_load_ptr should accept a const pointer
-atomic_load_32 / _64 take const atomic_* *, but atomic_load_ptr is atomic_ptr *. Make it const atomic_ptr * for consistency and to match semantics.
-
-Potential mismatch between typedefs & casts on Windows fallback
-When DESCENT_WINDOWS_INTERLOCKED_64 == 0 (atomic_64 is a struct with a mutex), you cast pointer-sized atomics to atomic_64 * in atomic_compare_exchange_ptr, atomic_exchange_ptr, etc. That is OK only when the underlying atomic_ptr representation matches the atomic_64 layout (which it does not when atomic_ptr is volatile uintptr_t). The code already uses #ifdef DESCENT_POINTER_32 to choose 32 vs 64 flows; but the cast ((atomic_64 *)object) is unsafe if atomic_ptr is volatile uintptr_t but atomic_64 is struct. In practice, the code only uses that cast if pointers are 64-bit and you're calling the 64-bit helper — but when DESCENT_WINDOWS_INTERLOCKED_64 == 0 we must ensure the pointer-sized atomic is stored in the same struct layout. Fix: make atomic_ptr typedef in the WIN fallback match the 64-bit atomic_64 wrapper when you need the mutex fallback (i.e., define atomic_ptr as atomic_64 in that case).
-
-Missing static assertions for sizes & alignment
-Add _Static_assert checks so mistakes/ABI mismatches are caught at compile time (e.g. sizeof(uintptr_t) vs pointer size, sizeof(long) vs uint32_t assumptions if you rely on casting between LONG and uint32_t).
-
-DESCENT_POINTER_32 logic is odd
-You define DESCENT_POINTER_32 only for 32-bit pointers; there’s no explicit DESCENT_POINTER_64 macro. That’s okay (absence means 64-bit), but make this explicit in comments and the code so future maintainers don't get surprised.
-
-Windows Interlocked types
-Casting atomic_* to LONG* / LONG64* is common but depends on sizes (e.g. LONG is 32-bit). Static assertions help; also prefer explicit casts to volatile LONG* to match Interlocked parameter requirements.
-
-Consistency of const on load/store APIs
-Some load/store functions have different const qualifiers;
-
-Add unit tests
-*/
-
-
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
 
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 
@@ -127,9 +113,9 @@ typedef __declspec(align(8)) struct {
  */
 typedef __declspec(align(sizeof(uintptr_t))) volatile uintptr_t atomic_ptr;
 
+// If atomic_ptr is 64-bit, then atomic_64 will also be a single 64-bit type
+
 #endif
-
-
 
 /**
  * @brief Atomically compare and exchange a 32-bit value.
@@ -569,7 +555,7 @@ static inline uint64_t atomic_load_64(const atomic_64 *object) {
  * @param object Pointer to the atomic_ptr variable.
  * @return The current pointer value.
  */
-static inline uintptr_t atomic_load_ptr(atomic_ptr *object) {
+static inline uintptr_t atomic_load_ptr(const atomic_ptr *object) {
 #ifdef DESCENT_POINTER_32
 	return atomic_load_32((atomic_32 *)object);
 #else
@@ -646,12 +632,8 @@ static inline void atomic_store_ptr(atomic_ptr *object, uintptr_t desired) {
 
 #endif
 
-
-
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif

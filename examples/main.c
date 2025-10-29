@@ -23,13 +23,13 @@
 
 int tf(void *arg) {
 	(void) arg;
-	debug_log(thread_name(), "[%016llX] hello", thread_self());
+	debug_log(thread_get_name().name, "[%016llX] hello", thread_self());
 	return 0;
 }
 
 int main (void) {
 	debug_log_open("stdout");
-	debug_log(thread_name(), "[%016llX] hello", thread_self());
+	debug_log(thread_get_name().name, "[%016llX] hello", thread_self());
 
 	for (int i = 0; i < 2; ++i) {
 		int tcount = 1; //thread_max_concurrent();
@@ -39,23 +39,20 @@ int main (void) {
 		Thread t[tcount];
 
 		ThreadAttributes attr = {
-			.name = "newbie",
-			.affinity = 1,
-			.priority = THREAD_PRIORITY_DEFAULT,
 			.stack_size = 8 * 1024 * 1024
 		};
 
 		for (int j = 0; j < tcount; ++j) {
-			e = thread_create_attr(&t[j], tf, NULL, &attr);
-			if (e) printf("Could not create new thread (%s)\n", thread_error(e));
+			e = thread_create(&t[j], tf, NULL, &attr);
+			if (e) printf("Could not create new thread (%s)\n", thread_error_message(e));
 		}
 		thread_pause();
 		for (int j = 0; j < tcount; ++j) {
 			e = thread_join(t[j], &result);
-			if (e) printf("Could not detach thread (%s)\n", thread_error(e));
+			if (e) printf("Could not detach thread (%s)\n", thread_error_message(e));
 
 			e = thread_join(t[j], &result);
-			if (e) printf("Could not detach thread (%s)\n", thread_error(e));
+			if (e) printf("Could not detach thread (%s)\n", thread_error_message(e));
 		}
 	}
 

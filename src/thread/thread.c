@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Don't want to include platform.h yet because it will stop us from using _GNU_SOURCE
+// We don't want to include platform.h yet because it will stop us from using _GNU_SOURCE
 #if defined(__linux__) && !defined(__ANDROID__)
 #define _GNU_SOURCE
 #endif
@@ -36,21 +36,15 @@
 #endif
 
 #include <descent/thread/atomic.h>
+#include <descent/thread/intrin.h>
 #include <descent/utilities/debug.h>
 
+#include "thread_context.h"
 #include "thread_handle.h"
-
-
 
 // Thread State Progression:
 // UNUSED --choose-> RESERVED --wrapper(init)-> RUNNING --wrapper(exit)-> FINISHED --join/detach-> UNUSED
 // RUNNING --detach-> DETACHED --wrapper(exit)-> UNUSED
-
-
-
-#ifndef DESCENT_MAX_THREADS
-#define DESCENT_MAX_THREADS 32
-#endif
 
 // Any unmanaged threads will be parsed as invalid, so they can't be joined or detached
 #define THREAD_SELF_UNMANAGED    ((Thread) 0xFFFFFFFFFFFFFFFF)
@@ -67,69 +61,13 @@
 
 
 
-typedef enum {
-	THREAD_STATE_INVALID = -1,
-	THREAD_STATE_UNUSED = 0,
-	THREAD_STATE_RESERVED,
-	THREAD_STATE_RUNNING,
-	THREAD_STATE_FINISHED,
-	THREAD_STATE_DETACHED,
-	THREAD_STATE_JOINING
-} ThreadState;
-
-typedef struct {
-	char                  name[THREAD_NAME_LENGTH];
-	atomic_thread_handle  handle;
-	ThreadFunction        function;
-	void                 *argument;
-	atomic_64             meta;
-	uint64_t              affinity;
-	int                   priority;
-} ThreadContext;
 
 
-
-static ThreadContext thread_pool[DESCENT_MAX_THREADS] = {0};
 
 // All managed threads start as unmanaged, but update themselves when they initialize
 static TLS Thread self = THREAD_SELF_UNMANAGED;
 
-
-
-static inline uint32_t thread_index(Thread t) {
-	return (uint32_t) t;
-}
-
-static inline uint32_t thread_generation(Thread t) {
-	return (uint32_t) (t >> 32);
-}
-
-static inline Thread thread_construct(uint32_t index, uint32_t generation) {
-	return ((Thread) generation << 32) | (Thread) index;
-}
-
-static inline int thread_valid(Thread t) {
-	uint32_t index = thread_index(t);
-	return (index < DESCENT_MAX_THREADS);
-}
-
-static inline uint32_t thread_context_generation(uint64_t meta) {
-	return (uint32_t) meta;
-}
-
-static inline uint32_t thread_context_state(uint64_t meta) {
-	return (uint32_t) (meta >> 32);
-}
-
-static inline uint64_t thread_context_construct(uint32_t state, uint32_t generation) {
-	return (((uint64_t) state) << 32 | generation);
-}
-
-// Strips "THREAD_STATE_" prefix from thread_state function
-static inline const char *thread_state_short(int s) {
-	// The null terminator "stands in" for the last underscore
-	return thread_state(s) + sizeof("THREAD_STATE");
-}
+static ThreadContext thread_pool[DESCENT_MAX_THREADS] = {0};
 
 static inline ThreadContext *choose_thread_context(void) {
 	for (int i = 0; i < DESCENT_MAX_THREADS; ++i) {
@@ -153,123 +91,6 @@ static inline ThreadContext *choose_thread_context(void) {
 	return NULL;
 }
 
-static inline void thread_set_name(const char *name) {
-	if (name) {
-		debug_thread_log(__func__, "[%016" PRIX64 "] setting name to %s", thread_self(), name);
-
-#if defined(DESCENT_PLATFORM_LINUX)
-
-		pthread_setname_np(pthread_self(), name);
-
-#elif defined(DESCENT_PLATFORM_FREEBSD)
-
-		pthread_set_name_np(pthread_self(), name);
-
-#elif defined(DESCENT_PLATFORM_MACOS)
-		pthread_setname_np(name);
-
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-
-		wchar_t wide_name[THREAD_NAME_LENGTH] = {};
-		if(mbstowcs_s(NULL, wide_name, THREAD_NAME_LENGTH, name, THREAD_NAME_LENGTH - 1)) wide_name[0] = '\0';
-		wide_name[THREAD_NAME_LENGTH - 1] = '\0';
-
-		typedef HRESULT (WINAPI *SetThreadDescriptionFunc)(HANDLE, PCWSTR);
-		SetThreadDescriptionFunc pSetThreadDescription = NULL;
-		if (!pSetThreadDescription) pSetThreadDescription = (SetThreadDescriptionFunc)GetProcAddress(GetModuleHandle(L"Kernel32.dll"), "SetThreadDescription");
-		if (pSetThreadDescription) pSetThreadDescription(GetCurrentThread(), wide_name);
-
-#endif
-
-	}
-}
-
-static inline void thread_set_affinity(uint64_t affinity) {
-	if (affinity) {
-		debug_thread_log(__func__, "[%016" PRIX64 "] setting affinity to %zu", thread_self(), affinity);
-
-#if defined(DESCENT_PLATFORM_LINUX) || defined(DESCENT_PLATFORM_FREEBSD)
-
-		cpu_set_t cpuset;
-		CPU_ZERO(&cpuset);
-
-		for (unsigned i = 0; i < sizeof(affinity) * 8; ++i) if (affinity & (1ULL << i)) CPU_SET(i, &cpuset);
-
-		pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
-
-#elif defined(DESCENT_PLATFORM_MACOS)
-
-	// No thread affinity analogue
-
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-
-		SetThreadAffinityMask(GetCurrentThread(), (DWORD_PTR)affinity);
-#endif
-
-	}
-}
-
-static inline void thread_set_priority(int priority) {
-	if (priority) {
-		debug_thread_log(__func__, "[%016" PRIX64 "] setting priority to %d", thread_self(), priority);
-		
-		int result = 0;
-
-#if defined(DESCENT_PLATFORM_LINUX)
-
-		struct sched_param param = {0};
-		switch (priority) {
-			case THREAD_PRIORITY_LOW:
-				result = pthread_setschedparam(pthread_self(), SCHED_BATCH, &param);
-				break;
-			case THREAD_PRIORITY_DEFAULT:
-				result = pthread_setschedparam(pthread_self(), SCHED_OTHER, &param);
-				break;
-			case THREAD_PRIORITY_HIGH:
-				result = pthread_setschedparam(pthread_self(), SCHED_OTHER, &param);
-				break;
-		}
-
-#elif defined(DESCENT_PLATFORM_FREEBSD)
-
-	// No thread priority analogue
-
-#elif defined(DESCENT_PLATFORM_MACOS)
-
-	switch (priority) {
-		case THREAD_PRIORITY_LOW:
-			result = pthread_set_qos_class_self_np(QOS_CLASS_UTILITY, 0);
-			break;
-		case THREAD_PRIORITY_DEFAULT:
-			result = pthread_set_qos_class_self_np(QOS_CLASS_DEFAULT, 0);
-			break;
-		case THREAD_PRIORITY_HIGH:
-			result = pthread_set_qos_class_self_np(QOS_CLASS_USER_INTERACTIVE, 0);
-			break;
-	}
-
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-
-		switch (priority) {
-			case THREAD_PRIORITY_LOW:
-				result = !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
-				break;
-			case THREAD_PRIORITY_DEFAULT:
-				result = !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
-				break;
-			case THREAD_PRIORITY_HIGH:
-				result = !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
-				break;
-		}
-#endif
-
-		if (result) debug_thread_log(__func__, "[%016" PRIX64 "] could not set priority to %d", thread_self(), priority);
-
-	}
-}
-
-
-
 static THREAD_WRAPPER_SIGNATURE thread_function_wrapper(void *p) {
 	// ThreadContext's static fields are not to be accessed by any function other than this
 	// or thread_create, and thread_create cannot modify a context while it is running.
@@ -283,20 +104,13 @@ static THREAD_WRAPPER_SIGNATURE thread_function_wrapper(void *p) {
 
 	debug_thread_log(__func__, "[%016" PRIX64 "] called", thread_self());
 
-	thread_set_name(context->name);
-	thread_set_affinity(context->affinity);
-	thread_set_priority(context->priority);
-
 	atomic_store_64(&context->meta, thread_context_construct(THREAD_STATE_RUNNING, generation));
 
 	int result = context->function(context->argument);
 
 	// Clear fields before closing
-	context->name[0] = '\0';
 	context->function = NULL;
 	context->argument = NULL;
-	context->affinity = 0;
-	context->priority = 0;
 
 	// Check if the thread is still in the default running state first
 	// If THREAD_STATE_RUNNING, go to THREAD_STATE_FINISHED
@@ -327,28 +141,7 @@ int thread_max_concurrent(void) {
 	return DESCENT_MAX_THREADS;
 }
 
-Thread thread_self(void) {
-	return self;
-}
-
-const char* thread_name(void) {
-	if (self == THREAD_SELF_UNMANAGED) return "Unmanaged Thread";
-	return thread_pool[thread_index(self)].name;
-}
-
-const char *thread_state(int s) {
-	switch (s) {
-		case THREAD_STATE_UNUSED:   return "THREAD_STATE_UNUSED";
-		case THREAD_STATE_RESERVED: return "THREAD_STATE_RESERVED";
-		case THREAD_STATE_RUNNING:  return "THREAD_STATE_RUNNING";
-		case THREAD_STATE_FINISHED: return "THREAD_STATE_FINISHED";
-		case THREAD_STATE_DETACHED: return "THREAD_STATE_DETACHED";
-		case THREAD_STATE_JOINING:  return "THREAD_STATE_JOINING";
-		default:                    return "THREAD_STATE_INVALID";
-	}
-}
-
-const char *thread_error(int e) {
+const char *thread_error_message(int e) {
 	switch (e) {
 		case THREAD_SUCCESS:                return "THREAD_SUCCESS";
 		case THREAD_ERROR_NO_SLOTS:         return "THREAD_ERROR_NO_SLOTS";
@@ -364,11 +157,7 @@ const char *thread_error(int e) {
 	}
 }
 
-int thread_create(Thread *t, ThreadFunction f, void *arg) {
-	return thread_create_attr(t, f, arg, NULL);
-}
-
-int thread_create_attr(Thread *t, ThreadFunction f, void *arg, const ThreadAttributes *a) {
+int thread_create(Thread *t, ThreadFunction f, void *arg, const ThreadAttributes *a) {
 	debug_thread_log(__func__, "[%016" PRIX64 "] called", thread_self());
 
 	if (!t) {
@@ -389,21 +178,10 @@ int thread_create_attr(Thread *t, ThreadFunction f, void *arg, const ThreadAttri
 	debug_thread_log(__func__, "[%016" PRIX64 "] reserved context at index %u, set state to RESERVED", thread_self(), (uint32_t) (context - thread_pool));
 
 	ThreadAttributes attributes = {0};
-
 	if (a) attributes = *a;
-
-	if (attributes.name) {
-		// Truncate names to THREAD_NAME_LENGTH - 1 characters
-		strncpy(context->name, attributes.name, THREAD_NAME_LENGTH - 1);
-		context->name[THREAD_NAME_LENGTH - 1] = '\0';
-	} else {
-		context->name[0] = '\0';
-	}
 
 	context->function = f;
 	context->argument = arg;
-	context->affinity = attributes.affinity;
-	context->priority = attributes.priority;
 
 	thread_handle handle;
 
@@ -456,16 +234,6 @@ int thread_create_attr(Thread *t, ThreadFunction f, void *arg, const ThreadAttri
 	return 0;
 }
 
-void thread_exit(int code) {
-	debug_thread_log(__func__, "[%016" PRIX64 "] called with code %d", thread_self(), code);
-
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	pthread_exit((void *)(intptr_t)code);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	_endthreadex((unsigned)code);
-#endif
-}
-
 int thread_join(Thread t, int *code) {
 	debug_thread_log(__func__, "[%016" PRIX64 "] called on thread %016" PRIX64 "", thread_self(), t);
 
@@ -474,7 +242,7 @@ int thread_join(Thread t, int *code) {
 		return THREAD_ERROR_HANDLE_UNMANAGED;
 	}
 
-	if (!thread_valid(t)) {
+	if (!thread_is_managed(t)) {
 		debug_thread_log(__func__, "[%016" PRIX64 "] provided invalid thread", thread_self());
 		return THREAD_ERROR_HANDLE_INVALID;
 	}
@@ -578,7 +346,7 @@ int thread_detach(Thread t) {
 		return THREAD_ERROR_HANDLE_UNMANAGED;
 	}
 
-	if (!thread_valid(t)) {
+	if (!thread_is_managed(t)) {
 		debug_thread_log(__func__, "[%016" PRIX64 "] provided invalid thread", thread_self());
 		return THREAD_ERROR_HANDLE_INVALID;
 	}
@@ -660,9 +428,330 @@ int thread_detach(Thread t) {
 	return 0;
 }
 
-int thread_equal(Thread t1, Thread t2) {
-	return (t1 == t2) && (thread_valid(t1) || (t1 == THREAD_SELF_UNMANAGED));
+void thread_exit(int code) {
+	debug_thread_log(__func__, "[%016" PRIX64 "] called with code %d", thread_self(), code);
+
+#if defined(DESCENT_PLATFORM_TYPE_POSIX)
+	pthread_exit((void *)(intptr_t)code);
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+	_endthreadex((unsigned)code);
+#endif
 }
+
+Thread thread_self(void) {
+	return self;
+}
+
+int thread_equal(Thread t1, Thread t2) {
+	return (t1 == t2) && thread_is_managed(t1);
+}
+
+ThreadName thread_get_name(void) {
+	ThreadName n = {0};
+
+	int result = 0;
+
+	if (thread_is_managed(self)) {
+#if defined(DESCENT_PLATFORM_LINUX)
+		result = pthread_getname_np(pthread_self(), n.name, THREAD_NAME_LENGTH);
+#elif defined(DESCENT_PLATFORM_FREEBSD)
+		result = pthread_get_name_np(pthread_self(), n.name, THREAD_NAME_LENGTH);
+#elif defined(DESCENT_PLATFORM_MACOS)
+		result = pthread_getname_np(pthread_self(), n.name, THREAD_NAME_LENGTH);
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+		PWSTR wname = NULL;
+		// Check that GetThreadDescription succeeds AND wname is set to a valid address
+		result = FAILED(GetThreadDescription(GetCurrentThread(), &wname)) || !wname;
+		if (!result) {
+			// Check that WideCharToMultiByte succeeds
+			result = WideCharToMultiByte(CP_UTF8, 0, wname, -1, n.name, THREAD_NAME_LENGTH - 1, NULL, NULL) == 0;
+			LocalFree(wname);
+		}
+#endif
+	} else {
+		debug_thread_log(__func__, "[%016" PRIX64 "] attempted to get name for unmanaged thread", self);
+	}
+
+	n.name[THREAD_NAME_LENGTH - 1] = '\0';
+
+	if (result) {
+		debug_thread_log(__func__, "[%016" PRIX64 "] failed to get name", self);
+		n.name[0] = '\0';
+	}
+
+	return n;
+}
+
+int thread_set_name(ThreadName n) {
+	if (!thread_is_managed(self)) {
+		debug_thread_log(__func__, "[%016" PRIX64 "] attempted to set name for unmanaged thread to %s", self, n.name);
+		return THREAD_ERROR_HANDLE_UNMANAGED;
+	}
+
+	// Sanitize input
+	n.name[THREAD_NAME_LENGTH - 1] = '\0';
+
+	int result = 0;
+
+#if defined(DESCENT_PLATFORM_LINUX)
+	result = pthread_setname_np(pthread_self(), n.name);
+#elif defined(DESCENT_PLATFORM_FREEBSD)
+	result = pthread_set_name_np(pthread_self(), n.name);
+#elif defined(DESCENT_PLATFORM_MACOS)
+	result = pthread_setname_np(n.name);
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+	wchar_t wname[THREAD_NAME_LENGTH] = {0};
+	if(mbstowcs_s(NULL, wname, THREAD_NAME_LENGTH, n.name, THREAD_NAME_LENGTH)) wname[0] = '\0';
+	result = FAILED(SetThreadDescription(GetCurrentThread(), wname));
+#endif
+
+	if (result) {
+		debug_thread_log(__func__, "[%016" PRIX64 "] failed to set name to %s", self, n.name);
+		return THREAD_ERROR_OS_NAME_FAILED;
+	}
+
+	return 0;
+}
+
+uint64_t thread_get_affinity(void) {
+	uint64_t affinity = 0;
+
+	int result = 0;
+
+	if (thread_is_managed(self)) {
+#if defined(DESCENT_PLATFORM_LINUX) || defined(DESCENT_PLATFORM_FREEBSD)
+		cpu_set_t cpuset;
+		CPU_ZERO(&cpuset);
+
+		result = pthread_getaffinity_np(pthread_self(), sizeof(cpuset), &cpuset);
+
+		if(!result)
+			for (unsigned i = 0; i < sizeof(affinity) * 8; ++i)
+				if (CPU_ISSET(i, &cpuset)) affinity |= (1ULL << i);
+#elif defined(DESCENT_PLATFORM_MACOS)
+		// No thread affinity analogue
+		result = 0; 
+		affinity = THREAD_AFFINITY_ALL;
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+		DWORD_PTR processMask = 0;
+		result = !GetThreadAffinityMask(GetCurrentThread(), &processMask);
+		if (!result) affinity = (uint64_t) processMask;
+#endif
+	} else {
+		debug_thread_log(__func__, "[%016" PRIX64 "] attempted to get affinity for unmanaged thread", self);
+	}
+
+	if (result) {
+		debug_thread_log(__func__, "[%016" PRIX64 "] failed to get affinity", self);
+		affinity = 0;
+	}
+
+	return affinity;
+}
+
+int thread_set_affinity(uint64_t affinity) {
+	if (!thread_is_managed(self)) {
+		debug_thread_log(__func__, "[%016" PRIX64 "] attempted to set affinity for unmanaged thread to %016" PRIX64, self, affinity);
+		return THREAD_ERROR_HANDLE_UNMANAGED;
+	}
+
+	int result = 0;
+
+	if (affinity) {
+#if defined(DESCENT_PLATFORM_LINUX) || defined(DESCENT_PLATFORM_FREEBSD)
+		cpu_set_t cpuset;
+		CPU_ZERO(&cpuset);
+
+		for (unsigned i = 0; i < sizeof(affinity) * 8; ++i)
+			if (affinity & (1ULL << i)) CPU_SET(i, &cpuset);
+
+		result = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+#elif defined(DESCENT_PLATFORM_MACOS)
+		// No thread affinity analogue
+		result = 0;
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+		result = !SetThreadAffinityMask(GetCurrentThread(), (DWORD_PTR)affinity);
+#endif
+	} else {
+		debug_thread_log(__func__, "[%016" PRIX64 "] provided with affinity of %016" PRIX64 ", ignoring", self, affinity);
+	}
+
+	if (result) {
+		debug_thread_log(__func__, "[%016" PRIX64 "] failed to set affinity to %016" PRIX64, self, affinity);
+		return THREAD_ERROR_OS_AFFINITY_FAILED;
+	}
+
+	return 0;
+}
+
+ThreadPriority thread_get_priority(void) {
+	ThreadPriority p = THREAD_PRIORITY_DEFAULT;
+
+	int result = 0;
+
+	if (thread_is_managed(self)) {
+#if defined(DESCENT_PLATFORM_LINUX)
+	int policy;
+	struct sched_param param;
+	result = pthread_getschedparam(pthread_self(), &policy, &param);
+
+	if (!result) {
+		switch(policy) {
+			case SCHED_BATCH:
+				p = THREAD_PRIORITY_HIGH;
+				break;
+			case SCHED_OTHER:
+				p = THREAD_PRIORITY_DEFAULT;
+				break;
+			default:
+				result = 1;
+		}
+	}
+#elif defined(DESCENT_PLATFORM_FREEBSD)
+// No thread priority analogue
+	result = 0;
+#elif defined(DESCENT_PLATFORM_MACOS)
+	pthread_qos_class_t qos;
+	int relative_priority;
+	result = pthread_get_qos_class_self_np(&qos, &relative_priority);
+
+	if (!result) {
+		switch(qos) {
+			case QOS_CLASS_UTILITY:
+				p = THREAD_PRIORITY_LOW;
+				break;
+			case QOS_CLASS_DEFAULT:
+				p = THREAD_PRIORITY_DEFAULT;
+				break;
+			case QOS_CLASS_USER_INTERACTIVE:
+				p = THREAD_PRIORITY_HIGH;
+				break;
+			default:
+				result = 1;
+		}
+	}
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+	int win_priority = GetThreadPriority(GetCurrentThread());
+
+	if (!result) {
+		switch(win_priority) {
+			case THREAD_PRIORITY_BELOW_NORMAL:
+				p = THREAD_PRIORITY_LOW;
+				break;
+			case THREAD_PRIORITY_NORMAL:
+				p = THREAD_PRIORITY_DEFAULT;
+				break;
+			case THREAD_PRIORITY_HIGHEST:
+				p = THREAD_PRIORITY_HIGH;
+				break;
+			default:
+				result = 1;
+		}
+	}
+#endif
+	} else {
+		debug_thread_log(__func__, "[%016" PRIX64 "] attempted to get priority for unmanaged thread", self);
+	}
+
+	if (result) {
+		debug_thread_log(__func__, "[%016" PRIX64 "] failed to get affinity", self);
+		p = THREAD_PRIORITY_DEFAULT;
+	}
+
+	return p;
+}
+
+int thread_set_priority(ThreadPriority p) {
+	if (!thread_is_managed(self)) {
+		debug_thread_log(__func__, "[%016" PRIX64 "] attempted to set priority for unmanaged thread to %d", self, p);
+		return THREAD_ERROR_HANDLE_UNMANAGED;
+	}
+
+	// Normalize range
+	p = (p > 0) - (p < 0);
+
+	int result = 0;
+
+#if defined(DESCENT_PLATFORM_LINUX)
+	struct sched_param param = {0};
+	switch (p) {
+		case THREAD_PRIORITY_LOW:
+			result = pthread_setschedparam(pthread_self(), SCHED_BATCH, &param);
+			break;
+		case THREAD_PRIORITY_DEFAULT:
+			result = pthread_setschedparam(pthread_self(), SCHED_OTHER, &param);
+			break;
+		case THREAD_PRIORITY_HIGH:
+			result = pthread_setschedparam(pthread_self(), SCHED_OTHER, &param);
+			break;
+	}
+#elif defined(DESCENT_PLATFORM_FREEBSD)
+// No thread priority analogue
+	result = 0;
+#elif defined(DESCENT_PLATFORM_MACOS)
+	switch (p) {
+		case THREAD_PRIORITY_LOW:
+			result = pthread_set_qos_class_self_np(QOS_CLASS_UTILITY, 0);
+			break;
+		case THREAD_PRIORITY_DEFAULT:
+			result = pthread_set_qos_class_self_np(QOS_CLASS_DEFAULT, 0);
+			break;
+		case THREAD_PRIORITY_HIGH:
+			result = pthread_set_qos_class_self_np(QOS_CLASS_USER_INTERACTIVE, 0);
+			break;
+	}
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+		switch (p) {
+			case THREAD_PRIORITY_LOW:
+				result = !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
+				break;
+			case THREAD_PRIORITY_DEFAULT:
+				result = !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
+				break;
+			case THREAD_PRIORITY_HIGH:
+				result = !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+				break;
+		}
+#endif
+
+	if (result) {
+		debug_thread_log(__func__, "[%016" PRIX64 "] failed to set priority to %d", self, p);
+		return THREAD_ERROR_OS_PRIORITY_FAILED;
+	}
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Functions below are unorganized or unfinished
 

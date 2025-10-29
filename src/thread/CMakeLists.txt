@@ -6,6 +6,8 @@ add_library(${LIBRARY_NAME}
 	condition.c
 	mutex.c
 	recursive_mutex.c
+	rwlock.c
+	semaphore.c
 	thread.c
 )
 

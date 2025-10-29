@@ -20,4 +20,7 @@ EXTRACT_PRIVATE        = YES   # if you want internal functions too
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 
+# Generate LaTeX documentation
+GENERATE_LATEX = NO
+
 CREATE_SUBDIRS = YES

@@ -9,6 +9,9 @@ target_include_directories(${EXECUTABLE_NAME} PRIVATE
 )
 
 target_link_libraries(${EXECUTABLE_NAME} PRIVATE
+	descent-utilities
+	descent-thread
+	descent-alloc
 )
 
 add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})

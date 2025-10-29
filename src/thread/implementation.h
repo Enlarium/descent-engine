@@ -81,4 +81,12 @@ typedef struct {
 #endif
 } SemaphoreImplementation;
 
+typedef struct {
+#if defined(DESCENT_PLATFORM_TYPE_POSIX)
+	pthread_t _thread;
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+	HANDLE _thread;
+#endif
+} ThreadImplementation;
+
 #endif

@@ -20,7 +20,7 @@
 #include <descent/utilities/builtin/api.h>
 
 #ifdef __cplusplus
-namespace descent::builtin {
+extern "C" {
 #endif
 
 // All fallbacks must be cross platform, and thus implemented according to the base C standard.

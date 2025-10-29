@@ -1,20 +1,25 @@
+// Copyright 2025 XavierHarkonnen9 and Enlarium
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef DESCENT_THREAD_SEMAPHORE_H
 #define DESCENT_THREAD_SEMAPHORE_H
 
-#include "../utilities/platform.h"
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-#include <semaphore.h>
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-#include <windows.h>
-#endif
-
-
+#include "../utilities/opaque.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
 
 /**
  * @struct Semaphore
@@ -25,15 +30,7 @@ extern "C" {
  * 
  * @note This mechanism is intra-process only. It cannot be shared between processes.
  */
-typedef struct {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	sem_t _semaphore;
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	HANDLE _semaphore;
-#endif
-} Semaphore;
-
-
+DESCENT_OPAQUE_DEFINE(Semaphore, DESCENT_OPAQUE_SIZE_SEMAPHORE)
 
 /**
  * @brief Initialize a semaphore.
@@ -42,14 +39,7 @@ typedef struct {
  * @param initial_count Initial value of the semaphore counter.
  * @return 0 on success, non-zero on failure.
  */
-static inline int semaphore_init(Semaphore *s, unsigned int initial_count) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sem_init(&s->_semaphore, 0, initial_count);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	s->_semaphore = CreateSemaphoreW(NULL, (LONG)initial_count, LONG_MAX, NULL);
-	return !s->_semaphore;
-#endif
-}
+int semaphore_init(Semaphore *s, unsigned int initial_count);
 
 /**
  * @brief Destroy a semaphore.
@@ -57,13 +47,7 @@ static inline int semaphore_init(Semaphore *s, unsigned int initial_count) {
  * @param s Pointer to the Semaphore.
  * @return 0 on success, non-zero on failure. 
  */
-static inline int semaphore_destroy(Semaphore *s) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sem_destroy(&s->_semaphore);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !CloseHandle(s->_semaphore);
-#endif
-}
+int semaphore_destroy(Semaphore *s);
 
 /**
  * @brief Lock a semaphore.
@@ -74,13 +58,7 @@ static inline int semaphore_destroy(Semaphore *s) {
  * @param s Pointer to the Semaphore.
  * @return 0 on success, non-zero on failure. 
  */
-static inline int semaphore_wait(Semaphore *s) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sem_wait(&s->_semaphore);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return WaitForSingleObject(s->_semaphore, INFINITE) != WAIT_OBJECT_0;
-#endif
-}
+int semaphore_wait(Semaphore *s);
 
 /**
  * @brief Try to wait (non-blocking) on a semaphore.
@@ -90,13 +68,7 @@ static inline int semaphore_wait(Semaphore *s) {
  * @param s Pointer to the Semaphore structure.
  * @return 0 if the semaphore was successfully decremented, non-zero if the semaphore i already at zero.
  */
-static inline int semaphore_trywait(Semaphore *s) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sem_trywait(&s->_semaphore);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return WaitForSingleObject(s->_semaphore, 0) != WAIT_OBJECT_0;
-#endif
-}
+int semaphore_trywait(Semaphore *s);
 
 /**
  * @brief Post (increment) a semaphore.
@@ -106,20 +78,10 @@ static inline int semaphore_trywait(Semaphore *s) {
  * @param s Pointer to the Semaphore structure.
  * @return 0 on success, non-zero on failure.
  */
-static inline int semaphore_post(Semaphore *s) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sem_post(&s->_semaphore);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !ReleaseSemaphore(s->_semaphore, 1, NULL);
-#endif
-}
-
-
+int semaphore_post(Semaphore *s);
 
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif
