@@ -88,5 +88,4 @@ static inline uint64_t thread_context_construct(uint32_t state, uint32_t generat
 	return (((uint64_t) state) << 32 | generation);
 }
 
-
 #endif

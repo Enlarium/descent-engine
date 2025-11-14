@@ -21,7 +21,7 @@
 #include <descent/utilities/builtin/bits.h>
 
 #ifdef __cplusplus
-namespace descent::builtin {
+extern "C" {
 #endif
 
 // Determines whether the platform is little-endian

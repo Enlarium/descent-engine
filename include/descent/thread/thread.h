@@ -209,13 +209,26 @@ ThreadPriority thread_get_priority(void);
  */
 int thread_set_priority(ThreadPriority p);
 
-// thread_sleep (multiple sleep modes?)
+/**
+ * @brief Yields to other threads ready to run on the current processor
+ * @return 0 on success, nonzero on failure.
+ * 
+ * @note Provides no behavior guarantees on non-realtime threads.
+ */
+int thread_yield(void);
 
-// thread_yield (doesn't usually work for non-realtime threads)
+// Functions below are unorganized or unfinished
+
+long thread_sleep_granularity(void);
+
+//(multiple sleep modes?)
+int thread_sleep(uint64_t nanoseconds);
+
+// doesn't usually work / provide guarantees for non-realtime threads
 
 /*
 dynamic TLS
-TLS errno?
+Per-thread CPU usage sampling
 
 try join? timed join?
 

@@ -89,7 +89,7 @@ When building manually, define the following platform feature macros:
 
 | Platform |     Required Macros     |
 |:--------:|:-----------------------:|
-|  Linux   | _POSIX_C_SOURCE=200809L |
+|  Linux   |       _GNU_SOURCE       |
 | FreeBSD  | _POSIX_C_SOURCE=200809L |
 |  macOS   |    _DARWIN_C_SOURCE     |
 | Windows  |     *None required*     |

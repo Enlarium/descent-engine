@@ -26,7 +26,7 @@
 #endif
 
 #ifdef __cplusplus
-namespace descent::builtin {
+extern "C" {
 #endif
 
 // Sign

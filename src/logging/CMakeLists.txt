@@ -1,7 +1,8 @@
-set(LIBRARY_NAME "descent-utilities")
+set(LIBRARY_NAME "descent-logging")
 
 add_library(${LIBRARY_NAME}
-	debug.c
+	logging.c
+	tables.c
 )
 
 target_include_directories(${LIBRARY_NAME} PRIVATE

@@ -18,6 +18,10 @@ endif()
 # Include modules for finding external libraries
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
+# Find necessary packages
+find_package(Lua REQUIRED)
+find_package(Vulkan REQUIRED)
+
 # Define directories
 set(DESCENT_INCLUDE_DIRS
 	${CMAKE_SOURCE_DIR}/include
@@ -25,7 +29,7 @@ set(DESCENT_INCLUDE_DIRS
 
 # Global compile definitions
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-	add_compile_definitions(_POSIX_C_SOURCE=200809L)
+	add_compile_definitions(_GNU_SOURCE)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 	add_compile_definitions(_DARWIN_C_SOURCE)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")

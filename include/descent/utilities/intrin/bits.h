@@ -23,10 +23,10 @@
 #include <intrin.h>
 #endif
 
-#include <descent/utilities/builtin/api.h>
+#include <descent/utilities/intrin/api.h>
 
 #ifdef __cplusplus
-namespace descent::builtin {
+extern "C" {
 #endif
 
 // Cyclic Shifts

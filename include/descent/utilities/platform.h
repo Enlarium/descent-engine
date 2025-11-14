@@ -25,19 +25,17 @@
 // Project Headers
 #include "macros.h"
 
-
-
 // Platform
 
 #if   defined(__linux__) && !defined(__ANDROID__)
 #define DESCENT_PLATFORM_LINUX
 #define DESCENT_PLATFORM_TYPE_POSIX
-#elif defined(__FreeBSD__)
-#define DESCENT_PLATFORM_FREEBSD
-#define DESCENT_PLATFORM_TYPE_POSIX
-#elif defined(__APPLE__) && TARGET_OS_MAC
-#define DESCENT_PLATFORM_MACOS
-#define DESCENT_PLATFORM_TYPE_POSIX
+//#elif defined(__FreeBSD__)
+//#define DESCENT_PLATFORM_FREEBSD
+//#define DESCENT_PLATFORM_TYPE_POSIX
+//#elif defined(__APPLE__) && TARGET_OS_MAC
+//#define DESCENT_PLATFORM_MACOS
+//#define DESCENT_PLATFORM_TYPE_POSIX
 #elif defined(_WIN64)
 #if   defined(_M_ARM64)
 #define DESCENT_PLATFORM_WINDOWS_ARM_64
@@ -66,10 +64,10 @@
 #define DESCENT_PLATFORM_COMPILER_VERSION STRINGIFY(__clang_major__) "." STRINGIFY(__clang_minor__) "." STRINGIFY(__clang_patchlevel__)
 #define DESCENT_PLATFORM_COMPILER_CLANG
 #define DESCENT_PLATFORM_COMPILER_TYPE_CLANG
-#elif defined(__clang__) && defined(__apple_build_version__)
-#define DESCENT_PLATFORM_COMPILER_VERSION STRINGIFY(__clang_major__) "." STRINGIFY(__clang_minor__) "." STRINGIFY(__clang_patchlevel__)
-#define DESCENT_PLATFORM_COMPILER_APPLE_CLANG
-#define DESCENT_PLATFORM_COMPILER_TYPE_CLANG
+//#elif defined(__clang__) && defined(__apple_build_version__)
+//#define DESCENT_PLATFORM_COMPILER_VERSION STRINGIFY(__clang_major__) "." STRINGIFY(__clang_minor__) "." STRINGIFY(__clang_patchlevel__)
+//#define DESCENT_PLATFORM_COMPILER_APPLE_CLANG
+//#define DESCENT_PLATFORM_COMPILER_TYPE_CLANG
 //#elif defined(__INTEL_COMPILER)
 //#define DESCENT_PLATFORM_COMPILER_VERSION STRINGIFY(__INTEL_COMPILER / 100) "." STRINGIFY(__INTEL_COMPILER % 100)
 //#define DESCENT_PLATFORM_COMPILER_INTEL
@@ -151,8 +149,10 @@
 #error "This platform does not define a byte ordering!"
 #endif
 
-#if (defined(DESCENT_PLATFORM_LINUX) || defined(DESCENT_PLATFORM_FREEBSD)) && (!defined(_POSIX_C_SOURCE) || _POSIX_C_SOURCE < 200809L)
-#error "Descent Engine requires that _POSIX_C_SOURCE be defined as at least 200809L on Linux and FreeBSD"
+#if defined(DESCENT_PLATFORM_LINUX) && !defined(_GNU_SOURCE)
+#error "Descent Engine requires that _GNU_SOURCE be defined on Linux"
+#elif defined(DESCENT_PLATFORM_FREEBSD) && (!defined(_POSIX_C_SOURCE) || _POSIX_C_SOURCE < 200809L)
+#error "Descent Engine requires that _POSIX_C_SOURCE be defined as at least 200809L on FreeBSD"
 #elif defined(DESCENT_PLATFORM_MACOS) && !defined(_DARWIN_C_SOURCE)
 #error "Descent Engine requires that _DARWIN_C_SOURCE be defined on macOS"
 #endif

@@ -12,12 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef DESCENT_H
-#define DESCENT_H
+#include <descent/thread/job_system.h>
 
-// TODO: #include "utilities/intrin.h"
-#include "utilities/macros.h"
-#include "utilities/platform.h"
-#include "utilities/version.h"
-
-#endif

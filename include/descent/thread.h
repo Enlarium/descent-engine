@@ -23,7 +23,6 @@
 #include "thread/rwlock.h"
 #include "thread/semaphore.h"
 #include "thread/spinlock.h"
-//TODO #include "thread/thread_pool.h"
 #include "thread/thread.h"
 #include "thread/ticket_lock.h"
 
