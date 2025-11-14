@@ -1,9 +1,27 @@
 var searchData=
 [
-  ['variant_0',['variant',['../d4/d46/structVersion.html#adc1a0823bcdd4b6db167035b4c0ef0f0',1,'Version']]],
-  ['version_1',['Version',['../d4/d46/structVersion.html',1,'']]],
-  ['version_2eh_2',['version.h',['../df/dfc/version_8h.html',1,'']]],
-  ['version_5fcompare_3',['version_compare',['../df/dfc/version_8h.html#acdd759c53c29036a499a9c300496883e',1,'version.h']]],
-  ['version_5ffrom_5fvk_5fapi_4',['version_from_vk_api',['../df/dfc/version_8h.html#afc6274c5b5d305592887bc6ca5cacf60',1,'version.h']]],
-  ['version_5fto_5fvk_5fapi_5',['version_to_vk_api',['../df/dfc/version_8h.html#a0992e725a4e815ed481e216b462dba24',1,'version.h']]]
+  ['uadd_5fcarry_5f16_0',['uadd_carry_16',['../d2/d35/arithmetic_8h.html#a75435539d8fa587a1f2c83f867e7ba56',1,'arithmetic.h']]],
+  ['uadd_5fcarry_5f32_1',['uadd_carry_32',['../d2/d35/arithmetic_8h.html#a99de10b5a7fc6adb95e44f34e4ccd2ef',1,'arithmetic.h']]],
+  ['uadd_5fcarry_5f64_2',['uadd_carry_64',['../d2/d35/arithmetic_8h.html#ac947987091cb6ad41f700d7772283da3',1,'arithmetic.h']]],
+  ['uadd_5fcarry_5f8_3',['uadd_carry_8',['../d2/d35/arithmetic_8h.html#abd1d40006d59bf9b7be8765824f8190c',1,'arithmetic.h']]],
+  ['uadd_5foverflow_5f16_4',['uadd_overflow_16',['../d2/d35/arithmetic_8h.html#a721477aaa80372fd17a5d67f077559ec',1,'arithmetic.h']]],
+  ['uadd_5foverflow_5f32_5',['uadd_overflow_32',['../d2/d35/arithmetic_8h.html#a3c4351ec785cf9de11297c7a5ea05aa8',1,'arithmetic.h']]],
+  ['uadd_5foverflow_5f64_6',['uadd_overflow_64',['../d2/d35/arithmetic_8h.html#a9792e38da067f96d3d1cdbcd880f0e33',1,'arithmetic.h']]],
+  ['uadd_5foverflow_5f8_7',['uadd_overflow_8',['../d2/d35/arithmetic_8h.html#a0546e4a979fcc13e76b57853cd47a123',1,'arithmetic.h']]],
+  ['uadd_5fsaturating_5f16_8',['uadd_saturating_16',['../d2/d35/arithmetic_8h.html#ae04757f69f01e085bc9be95799bd0c16',1,'arithmetic.h']]],
+  ['uadd_5fsaturating_5f32_9',['uadd_saturating_32',['../d2/d35/arithmetic_8h.html#aaf45fabe6b544c824c07db9d7adfbf8d',1,'arithmetic.h']]],
+  ['uadd_5fsaturating_5f64_10',['uadd_saturating_64',['../d2/d35/arithmetic_8h.html#abeafd3c9aa18f1c7168caa2b507554a4',1,'arithmetic.h']]],
+  ['uadd_5fsaturating_5f8_11',['uadd_saturating_8',['../d2/d35/arithmetic_8h.html#a3f541c292add43cf76c4ae38c7ce9ce8',1,'arithmetic.h']]],
+  ['umul_5foverflow_5f16_12',['umul_overflow_16',['../d2/d35/arithmetic_8h.html#ad2c4b963d03f312eea0b83e95f0f708d',1,'arithmetic.h']]],
+  ['umul_5foverflow_5f32_13',['umul_overflow_32',['../d2/d35/arithmetic_8h.html#acab44ae1fc8273ceca4410c8d6d587cc',1,'arithmetic.h']]],
+  ['umul_5foverflow_5f64_14',['umul_overflow_64',['../d2/d35/arithmetic_8h.html#a8696b54248c998fde21ad5df9dc63653',1,'arithmetic.h']]],
+  ['umul_5foverflow_5f8_15',['umul_overflow_8',['../d2/d35/arithmetic_8h.html#aaac4c424c4552acb4f22f096d64847c1',1,'arithmetic.h']]],
+  ['umul_5fpartial_5f128_16',['umul_partial_128',['../d2/d35/arithmetic_8h.html#ae08204acb259cc018cdda14ee4a71dcf',1,'arithmetic.h']]],
+  ['unreachable_17',['unreachable',['../da/d10/other_8h.html#a86d08c1b23d67eca942da0ac012d89f3',1,'other.h']]],
+  ['usub_5foverflow_5f16_18',['usub_overflow_16',['../d2/d35/arithmetic_8h.html#a52558846e8c45dde9949cf52d94ec6bf',1,'arithmetic.h']]],
+  ['usub_5foverflow_5f32_19',['usub_overflow_32',['../d2/d35/arithmetic_8h.html#a4c2f85113a5f18b746e804a52747539f',1,'arithmetic.h']]],
+  ['usub_5foverflow_5f64_20',['usub_overflow_64',['../d2/d35/arithmetic_8h.html#a8eec5a0227a5d23869474c3527a1ec38',1,'arithmetic.h']]],
+  ['usub_5foverflow_5f8_21',['usub_overflow_8',['../d2/d35/arithmetic_8h.html#a4a2956505f91477c0bec3080c0386991',1,'arithmetic.h']]],
+  ['usub_5fsaturating_5f64_22',['usub_saturating_64',['../d2/d35/arithmetic_8h.html#a00b4232abaaad40cb19f3b62ab211f00',1,'arithmetic.h']]],
+  ['utilities_2eh_23',['utilities.h',['../de/df0/utilities_8h.html',1,'']]]
 ];

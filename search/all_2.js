@@ -47,8 +47,7 @@ var searchData=
   ['bits_5ftoggle_5f64_44',['bits_toggle_64',['../df/db9/bits_8h.html#a9ba4e6e52168bfc101220c2e360acb5f',1,'bits.h']]],
   ['bits_5ftoggle_5f8_45',['bits_toggle_8',['../df/db9/bits_8h.html#aac8341de5ebbab3115f360278222719d',1,'bits.h']]],
   ['block_5fsize_46',['block_size',['../d1/da1/sysalloc_8h.html#a4ba366cc34227f7ec13f078e2d40c862',1,'sysalloc.h']]],
-  ['builtin_2eh_47',['builtin.h',['../d6/dcd/builtin_8h.html',1,'']]],
-  ['byteswap_5f16_48',['byteswap_16',['../df/db9/bits_8h.html#afdebc52712cb1ac170b9b85a44f6b0e0',1,'bits.h']]],
-  ['byteswap_5f32_49',['byteswap_32',['../df/db9/bits_8h.html#a83680169b897e4ce281f970fb9dc06cd',1,'bits.h']]],
-  ['byteswap_5f64_50',['byteswap_64',['../df/db9/bits_8h.html#a26720f07f6e7e784be7163676bb39dad',1,'bits.h']]]
+  ['byteswap_5f16_47',['byteswap_16',['../df/db9/bits_8h.html#afdebc52712cb1ac170b9b85a44f6b0e0',1,'bits.h']]],
+  ['byteswap_5f32_48',['byteswap_32',['../df/db9/bits_8h.html#a83680169b897e4ce281f970fb9dc06cd',1,'bits.h']]],
+  ['byteswap_5f64_49',['byteswap_64',['../df/db9/bits_8h.html#a26720f07f6e7e784be7163676bb39dad',1,'bits.h']]]
 ];

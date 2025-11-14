@@ -1,7 +1,5 @@
-<map id="include/descent/utilities/builtin/bits.h" name="include/descent/utilities/builtin/bits.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="105,5,283,45"/>
-<area shape="rect" id="Node000002" href="$d6/dcd/builtin_8h.html" title=" " alt="" coords="5,93,183,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,56,118,95,114,91,160,52"/>
-<area shape="rect" id="Node000003" href="$d1/d84/endian_8h.html" title=" " alt="" coords="207,93,384,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="229,52,275,91,271,95,225,56"/>
+<map id="include/descent/utilities/intrin/bits.h" name="include/descent/utilities/intrin/bits.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,183,45"/>
+<area shape="rect" id="Node000002" href="$d4/dc8/utilities_2intrin_8h.html" title=" " alt="" coords="5,93,183,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,59,97,93,91,93,91,59"/>
 </map>

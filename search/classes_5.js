@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['semaphore_0',['Semaphore',['../d7/dee/structSemaphore.html',1,'']]],
-  ['spinlock_1',['SpinLock',['../d3/dce/structSpinLock.html',1,'']]]
+  ['recursivemutex_0',['RecursiveMutex',['../d0/de4/structRecursiveMutex.html',1,'']]],
+  ['rwlock_1',['RWLock',['../da/d07/structRWLock.html',1,'']]]
 ];

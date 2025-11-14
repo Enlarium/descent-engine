@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Descent Engine: include/descent/utilities/builtin/endian.h Source File</title>
+<title>Descent Engine: include/descent/utilities/intrin/endian.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -75,7 +75,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../dir_7f1d4cb3f3ac855141df6f9e651d51dc.html">descent</a></li><li class="navelem"><a class="el" href="../../dir_02b775c02355bf8112c5b2e6704c4beb.html">utilities</a></li><li class="navelem"><a class="el" href="../../dir_607c2b04221407f089e3565dc729f472.html">builtin</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../dir_7f1d4cb3f3ac855141df6f9e651d51dc.html">descent</a></li><li class="navelem"><a class="el" href="../../dir_02b775c02355bf8112c5b2e6704c4beb.html">utilities</a></li><li class="navelem"><a class="el" href="../../dir_c3813586ff8f5501a006dc4c162b2c5f.html">intrin</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -101,11 +101,11 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d65/api_8h.html">descent/utilities/builtin/api.h</a>&gt;</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;<a class="code" href="../../df/db9/bits_8h.html">descent/utilities/builtin/bits.h</a>&gt;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;descent/utilities/builtin/api.h&gt;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;descent/utilities/builtin/bits.h&gt;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">namespace </span>descent::builtin {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">// Determines whether the platform is little-endian</span></div>
@@ -182,10 +182,8 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aapi_8h_html"><div class="ttname"><a href="../../dc/d65/api_8h.html">api.h</a></div></div>
 <div class="ttc" id="aapi_8h_html_a35b7b157eff61e1526ff6ccaa3f868db"><div class="ttname"><a href="../../dc/d65/api_8h.html#a35b7b157eff61e1526ff6ccaa3f868db">DESCENT_BUILTIN_CONST</a></div><div class="ttdeci">#define DESCENT_BUILTIN_CONST</div><div class="ttdef"><b>Definition</b> api.h:26</div></div>
 <div class="ttc" id="aapi_8h_html_a79242acfc45ce2ed42926c29041a5403"><div class="ttname"><a href="../../dc/d65/api_8h.html#a79242acfc45ce2ed42926c29041a5403">DESCENT_BUILTIN_API</a></div><div class="ttdeci">#define DESCENT_BUILTIN_API</div><div class="ttdef"><b>Definition</b> api.h:25</div></div>
-<div class="ttc" id="abits_8h_html"><div class="ttname"><a href="../../df/db9/bits_8h.html">bits.h</a></div></div>
 <div class="ttc" id="abits_8h_html_a26720f07f6e7e784be7163676bb39dad"><div class="ttname"><a href="../../df/db9/bits_8h.html#a26720f07f6e7e784be7163676bb39dad">byteswap_64</a></div><div class="ttdeci">DESCENT_BUILTIN_API uint64_t byteswap_64(uint64_t v)</div><div class="ttdef"><b>Definition</b> bits.h:193</div></div>
 <div class="ttc" id="abits_8h_html_a83680169b897e4ce281f970fb9dc06cd"><div class="ttname"><a href="../../df/db9/bits_8h.html#a83680169b897e4ce281f970fb9dc06cd">byteswap_32</a></div><div class="ttdeci">DESCENT_BUILTIN_API uint32_t byteswap_32(uint32_t v)</div><div class="ttdef"><b>Definition</b> bits.h:212</div></div>
 <div class="ttc" id="abits_8h_html_afdebc52712cb1ac170b9b85a44f6b0e0"><div class="ttname"><a href="../../df/db9/bits_8h.html#afdebc52712cb1ac170b9b85a44f6b0e0">byteswap_16</a></div><div class="ttdeci">DESCENT_BUILTIN_API uint16_t byteswap_16(uint16_t v)</div><div class="ttdef"><b>Definition</b> bits.h:227</div></div>

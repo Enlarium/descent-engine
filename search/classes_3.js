@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mutex_0',['Mutex',['../d2/da4/structMutex.html',1,'']]]
+  ['logsinkhandle_0',['LogSinkHandle',['../df/d92/structLogSinkHandle.html',1,'']]]
 ];

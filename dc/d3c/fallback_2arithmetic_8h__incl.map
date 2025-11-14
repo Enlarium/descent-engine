@@ -1,13 +1,7 @@
-<map id="include/descent/utilities/builtin/fallback/arithmetic.h" name="include/descent/utilities/builtin/fallback/arithmetic.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="9,5,216,45"/>
+<map id="include/descent/utilities/intrin/fallback/arithmetic.h" name="include/descent/utilities/intrin/fallback/arithmetic.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="13,5,212,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,101,76,126"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,47,61,91,57,88,95,44"/>
-<area shape="rect" id="Node000003" href="$dc/d65/api_8h.html" title=" " alt="" coords="101,93,271,133"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="101,93,271,133"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="131,44,163,81,159,85,127,47"/>
-<area shape="rect" id="Node000004" href="$de/d03/platform_8h.html" title=" " alt="" coords="87,181,285,207"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="189,134,189,167,183,167,183,134"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="87,255,175,280"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="179,209,151,245,146,242,175,205"/>
-<area shape="rect" id="Node000006" href="$de/d3c/macros_8h.html" title=" " alt="" coords="199,255,282,280"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="197,205,226,242,221,245,193,209"/>
 </map>

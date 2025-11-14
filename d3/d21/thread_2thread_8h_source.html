@@ -174,36 +174,45 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="../../d3/d21/thread_2thread_8h.html#ae79b24ee40dc7fe146e1e9b0ac57d39a">  210</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d3/d21/thread_2thread_8h.html#ae79b24ee40dc7fe146e1e9b0ac57d39a">thread_set_priority</a>(<a class="code hl_enumeration" href="../../d3/d21/thread_2thread_8h.html#ac21de3041b361912460403d2649eaa0e">ThreadPriority</a> p);</div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="comment">// thread_sleep (multiple sleep modes?)</span></div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="comment">// thread_yield (doesn&#39;t usually work for non-realtime threads)</span></div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="comment">/*</span></div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span><span class="comment">dynamic TLS</span></div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span><span class="comment">TLS errno?</span></div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="comment"></span> </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="comment">try join? timed join?</span></div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="comment"></span> </div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span><span class="comment">Other files:</span></div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span><span class="comment">timed waits for locks</span></div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="comment">change spinlock implementation to native</span></div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="comment">*/</span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno"><a class="line" href="../../d3/d21/thread_2thread_8h.html#affe2eebf6749bc36765d45ff48c926b1">  218</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d3/d21/thread_2thread_8h.html#affe2eebf6749bc36765d45ff48c926b1">thread_yield</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="comment">// Functions below are unorganized or unfinished</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno"><a class="line" href="../../d3/d21/thread_2thread_8h.html#a0541d7696609295f9329551ab3e56bbf">  222</a></span><span class="keywordtype">long</span> <a class="code hl_function" href="../../d3/d21/thread_2thread_8h.html#a0541d7696609295f9329551ab3e56bbf">thread_sleep_granularity</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="comment">//(multiple sleep modes?)</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno"><a class="line" href="../../d3/d21/thread_2thread_8h.html#a3cf5a197b7e08ae5d0dc08bb85bf2cdd">  225</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d3/d21/thread_2thread_8h.html#a3cf5a197b7e08ae5d0dc08bb85bf2cdd">thread_sleep</a>(uint64_t nanoseconds);</div>
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>}</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="comment">// doesn&#39;t usually work / provide guarantees for non-realtime threads</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span><span class="comment">dynamic TLS</span></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="comment">Per-thread CPU usage sampling</span></div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="comment"></span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><span class="comment">try join? timed join?</span></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span><span class="comment"></span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="comment">Other files:</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="comment">timed waits for locks</span></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="comment">change spinlock implementation to native</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="comment">*/</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>}</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aplatform_8h_html"><div class="ttname"><a href="../../de/d03/platform_8h.html">platform.h</a></div></div>
 <div class="ttc" id="astructThreadAttributes_html"><div class="ttname"><a href="../../d4/d73/structThreadAttributes.html">ThreadAttributes</a></div><div class="ttdoc">Attributes for creating a thread.</div><div class="ttdef"><b>Definition</b> thread.h:65</div></div>
 <div class="ttc" id="astructThreadAttributes_html_ae5abd0085ee693a8e6672cda5f8dd138"><div class="ttname"><a href="../../d4/d73/structThreadAttributes.html#ae5abd0085ee693a8e6672cda5f8dd138">ThreadAttributes::stack_size</a></div><div class="ttdeci">unsigned int stack_size</div><div class="ttdef"><b>Definition</b> thread.h:66</div></div>
 <div class="ttc" id="astructThreadName_html"><div class="ttname"><a href="../../d2/d09/structThreadName.html">ThreadName</a></div><div class="ttdoc">Container for thread name. Limited to 15 characters followed by a null terminator.</div><div class="ttdef"><b>Definition</b> thread.h:57</div></div>
 <div class="ttc" id="athread_2thread_8h_html_a03c7dc99ccd1a9c489be94a221844b59"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a03c7dc99ccd1a9c489be94a221844b59">thread_max_concurrent</a></div><div class="ttdeci">int thread_max_concurrent(void)</div><div class="ttdoc">Get the maximum number of concurrent threads supported.</div></div>
 <div class="ttc" id="athread_2thread_8h_html_a044b4b8c5dee20749d631552c32ed7a9"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a044b4b8c5dee20749d631552c32ed7a9">thread_get_priority</a></div><div class="ttdeci">ThreadPriority thread_get_priority(void)</div><div class="ttdoc">Get the priority of the current thread.</div></div>
+<div class="ttc" id="athread_2thread_8h_html_a0541d7696609295f9329551ab3e56bbf"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a0541d7696609295f9329551ab3e56bbf">thread_sleep_granularity</a></div><div class="ttdeci">long thread_sleep_granularity(void)</div></div>
 <div class="ttc" id="athread_2thread_8h_html_a058a1bfad77cc64c954adcf8c7e85de5"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a058a1bfad77cc64c954adcf8c7e85de5">thread_join</a></div><div class="ttdeci">int thread_join(Thread t, int *code)</div><div class="ttdoc">Wait for a thread to finish and retrieve its exit code.</div></div>
 <div class="ttc" id="athread_2thread_8h_html_a0cd35c5dd19d6a8a18d2e86b60b8b7e7"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a0cd35c5dd19d6a8a18d2e86b60b8b7e7">thread_exit</a></div><div class="ttdeci">void thread_exit(int code)</div><div class="ttdoc">Exit the current thread.</div></div>
 <div class="ttc" id="athread_2thread_8h_html_a21f231545327cbecaa5a1b3bd4038c3e"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a></div><div class="ttdeci">uint64_t Thread</div><div class="ttdoc">Opaque handle representing a thread.</div><div class="ttdef"><b>Definition</b> thread.h:87</div></div>
 <div class="ttc" id="athread_2thread_8h_html_a3446ac6752ab14d99ea5d3e8a552b2e8"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a3446ac6752ab14d99ea5d3e8a552b2e8">ThreadFunction</a></div><div class="ttdeci">int(* ThreadFunction)(void *arg)</div><div class="ttdoc">Function type executed by a thread.</div><div class="ttdef"><b>Definition</b> thread.h:75</div></div>
+<div class="ttc" id="athread_2thread_8h_html_a3cf5a197b7e08ae5d0dc08bb85bf2cdd"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a3cf5a197b7e08ae5d0dc08bb85bf2cdd">thread_sleep</a></div><div class="ttdeci">int thread_sleep(uint64_t nanoseconds)</div></div>
 <div class="ttc" id="athread_2thread_8h_html_a5ad684cc118f4d23d546c35b1477959f"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a5ad684cc118f4d23d546c35b1477959f">thread_create</a></div><div class="ttdeci">int thread_create(Thread *t, ThreadFunction f, void *arg, const ThreadAttributes *a)</div><div class="ttdoc">Create a new thread.</div></div>
 <div class="ttc" id="athread_2thread_8h_html_a68a27ff8ba01cfe34a7c4d850723631c"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a68a27ff8ba01cfe34a7c4d850723631c">thread_detach</a></div><div class="ttdeci">int thread_detach(Thread t)</div><div class="ttdoc">Detach a thread.</div></div>
 <div class="ttc" id="athread_2thread_8h_html_a6f5e482f63d34f5b7ed1dc30370b4c3b"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#a6f5e482f63d34f5b7ed1dc30370b4c3b">thread_error_message</a></div><div class="ttdeci">const char * thread_error_message(int e)</div><div class="ttdoc">Return a human-readable string for a thread error enum.</div></div>
@@ -234,6 +243,7 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="athread_2thread_8h_html_aeff16f953cdde65c30a28ef0ef8b1376"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#aeff16f953cdde65c30a28ef0ef8b1376">thread_get_affinity</a></div><div class="ttdeci">uint64_t thread_get_affinity(void)</div><div class="ttdoc">Get the affinity of the current thread.</div></div>
 <div class="ttc" id="athread_2thread_8h_html_af9f2eea281f85954f5d3471ac7138d44"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#af9f2eea281f85954f5d3471ac7138d44">THREAD_NAME_LENGTH</a></div><div class="ttdeci">#define THREAD_NAME_LENGTH</div><div class="ttdef"><b>Definition</b> thread.h:7</div></div>
 <div class="ttc" id="athread_2thread_8h_html_afb8ad4213542cdec400bbd9093193463"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#afb8ad4213542cdec400bbd9093193463">thread_self</a></div><div class="ttdeci">Thread thread_self(void)</div><div class="ttdoc">Get the handle of the current thread.</div></div>
+<div class="ttc" id="athread_2thread_8h_html_affe2eebf6749bc36765d45ff48c926b1"><div class="ttname"><a href="../../d3/d21/thread_2thread_8h.html#affe2eebf6749bc36765d45ff48c926b1">thread_yield</a></div><div class="ttdeci">int thread_yield(void)</div><div class="ttdoc">Yields to other threads ready to run on the current processor.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['spinlock_5finitializer_0',['SPINLOCK_INITIALIZER',['../df/d63/spinlock_8h.html#a650d9d834c1c99b71df08ddd1772714d',1,'spinlock.h']]],
-  ['stringify_1',['STRINGIFY',['../de/d3c/macros_8h.html#a6df1d22fb5f09eccc23b9f399670cfd7',1,'macros.h']]],
-  ['stringify_5fpure_2',['STRINGIFY_PURE',['../de/d3c/macros_8h.html#aee7191c8cc029e598f35526539978578',1,'macros.h']]]
+  ['fatal_5fallocator_0',['FATAL_ALLOCATOR',['../d5/d77/logging_8h.html#a4700c3453ec7dd8be45329173d2034f0',1,'logging.h']]],
+  ['fatal_5frendering_1',['FATAL_RENDERING',['../d5/d77/logging_8h.html#a6128f6f66b4d8b18863cda8622f140a3',1,'logging.h']]],
+  ['fatal_5fscripting_2',['FATAL_SCRIPTING',['../d5/d77/logging_8h.html#ad372b598ce99149c50c2114ba8c34582',1,'logging.h']]],
+  ['fatal_5fthreading_3',['FATAL_THREADING',['../d5/d77/logging_8h.html#abdb23b478c7ffcae5f41fc9d720cbf5d',1,'logging.h']]]
 ];

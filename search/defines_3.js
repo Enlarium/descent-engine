@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['thread_5faffinity_5fall_0',['THREAD_AFFINITY_ALL',['../d3/d21/thread_2thread_8h.html#ae9224b23f47c9cd45f98aa59e820a947',1,'thread.h']]],
-  ['thread_5fname_5flength_1',['THREAD_NAME_LENGTH',['../d3/d21/thread_2thread_8h.html#af9f2eea281f85954f5d3471ac7138d44',1,'thread.h']]],
-  ['ticket_5flock_5finitializer_2',['TICKET_LOCK_INITIALIZER',['../dd/d60/ticket__lock_8h.html#a984568dfd8c7f79f5e800c15e01c60fa',1,'ticket_lock.h']]]
+  ['info_5fallocator_0',['INFO_ALLOCATOR',['../d5/d77/logging_8h.html#a8ed5f0544395e34069b3f97e98f485d1',1,'logging.h']]],
+  ['info_5frendering_1',['INFO_RENDERING',['../d5/d77/logging_8h.html#a7cfa667a4be8d83b155d6a6fc4179d03',1,'logging.h']]],
+  ['info_5fscripting_2',['INFO_SCRIPTING',['../d5/d77/logging_8h.html#a4dd5563efe64b304e92f7864c81a6c47',1,'logging.h']]],
+  ['info_5fthreading_3',['INFO_THREADING',['../d5/d77/logging_8h.html#a9a2589308c45b8681021b14b262d40ac',1,'logging.h']]]
 ];

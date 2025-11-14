@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Descent Engine: include/descent/utilities/builtin/arithmetic.h Source File</title>
+<title>Descent Engine: include/descent/utilities/intrin/arithmetic.h Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -75,7 +75,7 @@ $(document).ready(function() { init_codefold(1); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../dir_7f1d4cb3f3ac855141df6f9e651d51dc.html">descent</a></li><li class="navelem"><a class="el" href="../../dir_02b775c02355bf8112c5b2e6704c4beb.html">utilities</a></li><li class="navelem"><a class="el" href="../../dir_607c2b04221407f089e3565dc729f472.html">builtin</a></li>  </ul>
+<li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../dir_7f1d4cb3f3ac855141df6f9e651d51dc.html">descent</a></li><li class="navelem"><a class="el" href="../../dir_02b775c02355bf8112c5b2e6704c4beb.html">utilities</a></li><li class="navelem"><a class="el" href="../../dir_c3813586ff8f5501a006dc4c162b2c5f.html">intrin</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -102,15 +102,15 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d65/api_8h.html">descent/utilities/builtin/api.h</a>&gt;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;descent/utilities/builtin/api.h&gt;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &lt;<a class="code" href="../../de/d03/platform_8h.html">descent/utilities/platform.h</a>&gt;</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#if defined(DESCENT_PLATFORM_COMPILER_MSVC)</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;<a class="code" href="../../d0/d12/intrin_8h.html">intrin.h</a>&gt;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;intrin.h&gt;</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">namespace </span>descent::builtin {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment">// Sign</span></div>
@@ -735,7 +735,6 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span> </div>
 <div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aapi_8h_html"><div class="ttname"><a href="../../dc/d65/api_8h.html">api.h</a></div></div>
 <div class="ttc" id="aapi_8h_html_a35b7b157eff61e1526ff6ccaa3f868db"><div class="ttname"><a href="../../dc/d65/api_8h.html#a35b7b157eff61e1526ff6ccaa3f868db">DESCENT_BUILTIN_CONST</a></div><div class="ttdeci">#define DESCENT_BUILTIN_CONST</div><div class="ttdef"><b>Definition</b> api.h:26</div></div>
 <div class="ttc" id="aapi_8h_html_a79242acfc45ce2ed42926c29041a5403"><div class="ttname"><a href="../../dc/d65/api_8h.html#a79242acfc45ce2ed42926c29041a5403">DESCENT_BUILTIN_API</a></div><div class="ttdeci">#define DESCENT_BUILTIN_API</div><div class="ttdef"><b>Definition</b> api.h:25</div></div>
 <div class="ttc" id="aarithmetic_8h_html_a00b4232abaaad40cb19f3b62ab211f00"><div class="ttname"><a href="../../d2/d35/arithmetic_8h.html#a00b4232abaaad40cb19f3b62ab211f00">usub_saturating_64</a></div><div class="ttdeci">DESCENT_BUILTIN_API int usub_saturating_64(uint64_t a, uint64_t b, uint64_t *result)</div><div class="ttdef"><b>Definition</b> arithmetic.h:620</div></div>
@@ -789,7 +788,6 @@ $(document).ready(function() { init_codefold(1); });
 <div class="ttc" id="aarithmetic_8h_html_ae84108cd361086c9b943da7a7a4cfe35"><div class="ttname"><a href="../../d2/d35/arithmetic_8h.html#ae84108cd361086c9b943da7a7a4cfe35">sub_exflow_64</a></div><div class="ttdeci">DESCENT_BUILTIN_API int sub_exflow_64(int64_t a, int64_t b, int64_t *result)</div><div class="ttdoc">Subtracts two signed 64-bit integers with overflow and underflow detection.</div><div class="ttdef"><b>Definition</b> arithmetic.h:564</div></div>
 <div class="ttc" id="aarithmetic_8h_html_af5d11dda80209f01d5bc3ffdf433ab18"><div class="ttname"><a href="../../d2/d35/arithmetic_8h.html#af5d11dda80209f01d5bc3ffdf433ab18">add_carry_8</a></div><div class="ttdeci">DESCENT_BUILTIN_API int add_carry_8(int8_t a, int8_t b, int carry_in, int8_t *result)</div><div class="ttdoc">Adds two signed 8-bit integers with an incoming carry or borrow.</div><div class="ttdef"><b>Definition</b> arithmetic.h:433</div></div>
 <div class="ttc" id="aarithmetic_8h_html_af60082f9736603898557ee210656a872"><div class="ttname"><a href="../../d2/d35/arithmetic_8h.html#af60082f9736603898557ee210656a872">add_exflow_64</a></div><div class="ttdeci">DESCENT_BUILTIN_API int add_exflow_64(int64_t a, int64_t b, int64_t *result)</div><div class="ttdoc">Adds two signed 64-bit integers with overflow and underflow detection.</div><div class="ttdef"><b>Definition</b> arithmetic.h:76</div></div>
-<div class="ttc" id="aintrin_8h_html"><div class="ttname"><a href="../../d0/d12/intrin_8h.html">intrin.h</a></div></div>
 <div class="ttc" id="aplatform_8h_html"><div class="ttname"><a href="../../de/d03/platform_8h.html">platform.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -1,20 +1,9 @@
-<map id="include/descent/utilities/builtin/endian.h" name="include/descent/utilities/builtin/endian.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="73,5,251,45"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,189,76,214"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,47,59,179,55,176,147,44"/>
-<area shape="rect" id="Node000003" href="$dc/d65/api_8h.html" title=" " alt="" coords="101,181,271,221"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="167,45,184,167,179,168,162,46"/>
-<area shape="rect" id="Node000007" href="$df/db9/bits_8h.html" title=" " alt="" coords="199,93,370,133"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="191,43,248,83,245,88,188,48"/>
-<area shape="rect" id="Node000004" href="$de/d03/platform_8h.html" title=" " alt="" coords="148,269,347,295"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="203,220,232,257,228,260,199,223"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="149,343,237,368"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="240,297,212,333,208,330,236,293"/>
-<area shape="rect" id="Node000006" href="$de/d3c/macros_8h.html" title=" " alt="" coords="261,343,343,368"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="258,293,287,330,283,333,254,297"/>
-<area shape="poly" id="edge8_Node000007_Node000002" title=" " alt="" coords="228,136,90,184,83,186,81,181,88,179,227,131"/>
-<area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="265,136,220,174,216,170,261,132"/>
-<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="290,133,292,175,286,222,267,259,262,257,281,221,287,174,285,134"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="346,189,429,214"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="309,132,364,177,361,181,306,136"/>
+<map id="include/descent/utilities/intrin/endian.h" name="include/descent/utilities/intrin/endian.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="97,5,275,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,101,76,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,48,73,96,70,91,153,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="101,93,271,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="189,46,189,79,183,79,183,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="295,93,466,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="230,43,327,85,325,90,228,48"/>
 </map>
