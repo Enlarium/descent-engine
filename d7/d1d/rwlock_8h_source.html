@@ -82,54 +82,55 @@ $(document).ready(function() { init_codefold(1); });
   <div class="headertitle"><div class="title">rwlock.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="../../d7/d1d/rwlock_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">// Copyright 2025 XavierHarkonnen9 and Enlarium</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// </span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">// you may not use this file except in compliance with the License.</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// You may obtain a copy of the License at</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">// </span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//     http://www.apache.org/licenses/LICENSE-2.0</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">// </span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">// Unless required by applicable law or agreed to in writing, software</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// See the License for the specific language governing permissions and</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">// limitations under the License.</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#ifndef DESCENT_THREAD_RWLOCK_H</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define DESCENT_THREAD_RWLOCK_H</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;../utilities/opaque.h&quot;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a>, DESCENT_OPAQUE_SIZE_RWLOCK)</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<a href="../../d7/d1d/rwlock_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* Copyright 2025 XavierHarkonnen9 and Enlarium</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#ifndef DESCENT_THREAD_RWLOCK_H</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#define DESCENT_THREAD_RWLOCK_H</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;../utilities/opaque.h&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a>, DESCENT_OPAQUE_SIZE_RWLOCK)</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#abcd1560a97788af31bb06a9a965ce6a6">   39</a></span>int <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#abcd1560a97788af31bb06a9a965ce6a6">rwlock_init</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a59aa1af288e009b1bc6b3c496fd0831c">   46</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a59aa1af288e009b1bc6b3c496fd0831c">rwlock_destroy</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a1cb72f61a6cde97065282cfccd0ce552">   55</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a1cb72f61a6cde97065282cfccd0ce552">rwlock_read_lock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a1e63a2660413fac1a58ac594324cb586">   62</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a1e63a2660413fac1a58ac594324cb586">rwlock_read_trylock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a7d527d13db840816ff767a6858f537e8">   69</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a7d527d13db840816ff767a6858f537e8">rwlock_read_unlock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a2f445a10146b31ae756eed54eded17a6">   78</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a2f445a10146b31ae756eed54eded17a6">rwlock_write_lock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a9ec4ca42a715b3d12104a7c1e05e1065">   85</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a9ec4ca42a715b3d12104a7c1e05e1065">rwlock_write_trylock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a0a052c48ba3a3765a22e405da3f603a6">   92</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a0a052c48ba3a3765a22e405da3f603a6">rwlock_write_unlock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>}</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:36</div></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#abcd1560a97788af31bb06a9a965ce6a6">   40</a></span>int <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#abcd1560a97788af31bb06a9a965ce6a6">rwlock_init</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a59aa1af288e009b1bc6b3c496fd0831c">   47</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a59aa1af288e009b1bc6b3c496fd0831c">rwlock_destroy</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a1cb72f61a6cde97065282cfccd0ce552">   56</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a1cb72f61a6cde97065282cfccd0ce552">rwlock_read_lock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a1e63a2660413fac1a58ac594324cb586">   63</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a1e63a2660413fac1a58ac594324cb586">rwlock_read_trylock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a7d527d13db840816ff767a6858f537e8">   70</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a7d527d13db840816ff767a6858f537e8">rwlock_read_unlock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a2f445a10146b31ae756eed54eded17a6">   79</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a2f445a10146b31ae756eed54eded17a6">rwlock_write_lock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a9ec4ca42a715b3d12104a7c1e05e1065">   86</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a9ec4ca42a715b3d12104a7c1e05e1065">rwlock_write_trylock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="../../d7/d1d/rwlock_8h.html#a0a052c48ba3a3765a22e405da3f603a6">   93</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d1d/rwlock_8h.html#a0a052c48ba3a3765a22e405da3f603a6">rwlock_write_unlock</a>(<a class="code hl_struct" href="../../da/d07/structRWLock.html">RWLock</a> *l);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>}</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:37</div></div>
 <div class="ttc" id="arwlock_8h_html_a0a052c48ba3a3765a22e405da3f603a6"><div class="ttname"><a href="../../d7/d1d/rwlock_8h.html#a0a052c48ba3a3765a22e405da3f603a6">rwlock_write_unlock</a></div><div class="ttdeci">int rwlock_write_unlock(RWLock *l)</div><div class="ttdoc">Release a write (exclusive) lock.</div></div>
 <div class="ttc" id="arwlock_8h_html_a1cb72f61a6cde97065282cfccd0ce552"><div class="ttname"><a href="../../d7/d1d/rwlock_8h.html#a1cb72f61a6cde97065282cfccd0ce552">rwlock_read_lock</a></div><div class="ttdeci">int rwlock_read_lock(RWLock *l)</div><div class="ttdoc">Acquire a read (shared) lock.</div></div>
 <div class="ttc" id="arwlock_8h_html_a1e63a2660413fac1a58ac594324cb586"><div class="ttname"><a href="../../d7/d1d/rwlock_8h.html#a1e63a2660413fac1a58ac594324cb586">rwlock_read_trylock</a></div><div class="ttdeci">int rwlock_read_trylock(RWLock *l)</div><div class="ttdoc">Attempt to acquire a read (shared) lock without blocking.</div></div>

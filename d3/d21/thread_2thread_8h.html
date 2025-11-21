@@ -83,25 +83,15 @@ $(function() {
   <div class="headertitle"><div class="title">thread.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="../../de/d03/platform_8h_source.html">descent/utilities/platform.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for thread.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d5/dce/thread_2thread_8h__incl.png" border="0" usemap="#ainclude_2descent_2thread_2thread_8h" alt=""/></div>
 <map name="ainclude_2descent_2thread_2thread_8h" id="ainclude_2descent_2thread_2thread_8h">
-<area shape="rect" title=" " alt="" coords="55,5,225,45"/>
-<area shape="rect" title=" " alt="" coords="5,93,80,119"/>
-<area shape="poly" title=" " alt="" coords="118,48,69,87,66,82,115,43"/>
-<area shape="rect" title=" " alt="" coords="105,93,175,119"/>
-<area shape="poly" title=" " alt="" coords="143,46,143,79,137,79,137,46"/>
-<area shape="rect" href="../../de/d03/platform_8h.html" title=" " alt="" coords="199,93,398,119"/>
-<area shape="poly" title=" " alt="" coords="179,43,264,85,262,90,177,48"/>
-<area shape="rect" title=" " alt="" coords="200,167,288,192"/>
-<area shape="poly" title=" " alt="" coords="292,121,263,157,259,154,288,117"/>
-<area shape="rect" href="../../de/d3c/macros_8h.html" title=" " alt="" coords="312,167,395,192"/>
-<area shape="poly" title=" " alt="" coords="310,117,338,154,334,157,306,121"/>
+<area shape="rect" title=" " alt="" coords="5,5,176,45"/>
+<area shape="rect" title=" " alt="" coords="55,93,126,119"/>
+<area shape="poly" title=" " alt="" coords="93,46,93,79,88,79,88,46"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -147,28 +137,6 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ab701d053a9c34ab7f11e43e0dc09ac9f" id="r_ab701d053a9c34ab7f11e43e0dc09ac9f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9f">ThreadError</a> { <br />
-&#160;&#160;<a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa4d04d2bf33e5de828d513575d08780c5">THREAD_ERROR_UNKNOWN</a> = -1
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa44f8390d88d4d1419bccc514338660e4">THREAD_SUCCESS</a> = 0
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fad3cb2b0ec1d2eb9da174d1eb84ef3b6d">THREAD_ERROR_NO_SLOTS</a>
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa2d092c2f4af1b422725b28a2157337d6">THREAD_ERROR_HANDLE_INVALID</a>
-, <br />
-&#160;&#160;<a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa2e2ce2b230dd55b375e22f617d0537b5">THREAD_ERROR_HANDLE_UNMANAGED</a>
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fab1ff3d89213aa38310a43dea39e1a266">THREAD_ERROR_HANDLE_DETACHED</a>
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fafaaf9176df13afa2900984d0d0e15e22">THREAD_ERROR_HANDLE_CLOSED</a>
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa1d40a465f69812860a66d844f32cd812">THREAD_ERROR_FUNCTION_INVALID</a>
-, <br />
-&#160;&#160;<a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9facac02ca07b884a57071cb4bfe9cdada0">THREAD_ERROR_OS_CREATE_FAILED</a>
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa6fd03599279cc4bc2ef577521ad54351">THREAD_ERROR_OS_JOIN_FAILED</a>
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa95d5e3c1b37794de77afcabb1eb18049">THREAD_ERROR_OS_DETACH_FAILED</a>
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fae2da49ee2c8461141f7230e069e0b0de">THREAD_ERROR_OS_NAME_FAILED</a>
-, <br />
-&#160;&#160;<a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa2cea6a1d635a9f453f448d49e4fc887d">THREAD_ERROR_OS_AFFINITY_FAILED</a>
-, <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9fa8f09d4a0116411af5b85ed853b7873da">THREAD_ERROR_OS_PRIORITY_FAILED</a>
-<br />
- }</td></tr>
-<tr class="memdesc:ab701d053a9c34ab7f11e43e0dc09ac9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines error codes returned by thread functions.  <a href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9f">More...</a><br /></td></tr>
-<tr class="separator:ab701d053a9c34ab7f11e43e0dc09ac9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac21de3041b361912460403d2649eaa0e" id="r_ac21de3041b361912460403d2649eaa0e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#ac21de3041b361912460403d2649eaa0e">ThreadPriority</a> { <a class="el" href="../../d3/d21/thread_2thread_8h.html#ac21de3041b361912460403d2649eaa0ea3d7a61f778cb211aaa93c61f4e6204f1">THREAD_PRIORITY_LOW</a> = -1
 , <a class="el" href="../../d3/d21/thread_2thread_8h.html#ac21de3041b361912460403d2649eaa0ea90d58c16d4c00502633c9dff23fcec55">THREAD_PRIORITY_DEFAULT</a> = 0
 , <a class="el" href="../../d3/d21/thread_2thread_8h.html#ac21de3041b361912460403d2649eaa0ea1fc12e2cdc368230429f8812d1255043">THREAD_PRIORITY_HIGH</a> = 1
@@ -178,12 +146,11 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a6bbce8c0d8c944d7211d040e9dcd7bae" id="r_a6bbce8c0d8c944d7211d040e9dcd7bae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/d09/structThreadName.html">ThreadName</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a6bbce8c0d8c944d7211d040e9dcd7bae">thread_name</a> (const char *string)</td></tr>
+<tr class="separator:a6bbce8c0d8c944d7211d040e9dcd7bae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03c7dc99ccd1a9c489be94a221844b59" id="r_a03c7dc99ccd1a9c489be94a221844b59"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a03c7dc99ccd1a9c489be94a221844b59">thread_max_concurrent</a> (void)</td></tr>
 <tr class="memdesc:a03c7dc99ccd1a9c489be94a221844b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of concurrent threads supported.  <br /></td></tr>
 <tr class="separator:a03c7dc99ccd1a9c489be94a221844b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f5e482f63d34f5b7ed1dc30370b4c3b" id="r_a6f5e482f63d34f5b7ed1dc30370b4c3b"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a6f5e482f63d34f5b7ed1dc30370b4c3b">thread_error_message</a> (int e)</td></tr>
-<tr class="memdesc:a6f5e482f63d34f5b7ed1dc30370b4c3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a human-readable string for a thread error enum.  <br /></td></tr>
-<tr class="separator:a6f5e482f63d34f5b7ed1dc30370b4c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ad684cc118f4d23d546c35b1477959f" id="r_a5ad684cc118f4d23d546c35b1477959f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d21/thread_2thread_8h.html#a5ad684cc118f4d23d546c35b1477959f">thread_create</a> (<a class="el" href="../../d3/d21/thread_2thread_8h.html#a21f231545327cbecaa5a1b3bd4038c3e">Thread</a> *t, <a class="el" href="../../d3/d21/thread_2thread_8h.html#a3446ac6752ab14d99ea5d3e8a552b2e8">ThreadFunction</a> f, void *arg, const <a class="el" href="../../d4/d73/structThreadAttributes.html">ThreadAttributes</a> *a)</td></tr>
 <tr class="memdesc:a5ad684cc118f4d23d546c35b1477959f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new thread.  <br /></td></tr>
 <tr class="separator:a5ad684cc118f4d23d546c35b1477959f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -301,52 +268,6 @@ Threads created through the Descent thread system must not be manipulated using 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="ab701d053a9c34ab7f11e43e0dc09ac9f" name="ab701d053a9c34ab7f11e43e0dc09ac9f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab701d053a9c34ab7f11e43e0dc09ac9f">&#9670;&#160;</a></span>ThreadError</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="../../d3/d21/thread_2thread_8h.html#ab701d053a9c34ab7f11e43e0dc09ac9f">ThreadError</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Defines error codes returned by thread functions. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa4d04d2bf33e5de828d513575d08780c5" name="ab701d053a9c34ab7f11e43e0dc09ac9fa4d04d2bf33e5de828d513575d08780c5"></a>THREAD_ERROR_UNKNOWN&#160;</td><td class="fielddoc"><p>Unknown error occurred </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa44f8390d88d4d1419bccc514338660e4" name="ab701d053a9c34ab7f11e43e0dc09ac9fa44f8390d88d4d1419bccc514338660e4"></a>THREAD_SUCCESS&#160;</td><td class="fielddoc"><p>Operation succeeded </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fad3cb2b0ec1d2eb9da174d1eb84ef3b6d" name="ab701d053a9c34ab7f11e43e0dc09ac9fad3cb2b0ec1d2eb9da174d1eb84ef3b6d"></a>THREAD_ERROR_NO_SLOTS&#160;</td><td class="fielddoc"><p>No thread slots available </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa2d092c2f4af1b422725b28a2157337d6" name="ab701d053a9c34ab7f11e43e0dc09ac9fa2d092c2f4af1b422725b28a2157337d6"></a>THREAD_ERROR_HANDLE_INVALID&#160;</td><td class="fielddoc"><p>Thread handle is invalid </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa2e2ce2b230dd55b375e22f617d0537b5" name="ab701d053a9c34ab7f11e43e0dc09ac9fa2e2ce2b230dd55b375e22f617d0537b5"></a>THREAD_ERROR_HANDLE_UNMANAGED&#160;</td><td class="fielddoc"><p>Operation not allowed on unmanaged thread </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fab1ff3d89213aa38310a43dea39e1a266" name="ab701d053a9c34ab7f11e43e0dc09ac9fab1ff3d89213aa38310a43dea39e1a266"></a>THREAD_ERROR_HANDLE_DETACHED&#160;</td><td class="fielddoc"><p>Operation not allowed on detached thread </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fafaaf9176df13afa2900984d0d0e15e22" name="ab701d053a9c34ab7f11e43e0dc09ac9fafaaf9176df13afa2900984d0d0e15e22"></a>THREAD_ERROR_HANDLE_CLOSED&#160;</td><td class="fielddoc"><p>Operation on a closed thread </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa1d40a465f69812860a66d844f32cd812" name="ab701d053a9c34ab7f11e43e0dc09ac9fa1d40a465f69812860a66d844f32cd812"></a>THREAD_ERROR_FUNCTION_INVALID&#160;</td><td class="fielddoc"><p>Thread function pointer is invalid </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9facac02ca07b884a57071cb4bfe9cdada0" name="ab701d053a9c34ab7f11e43e0dc09ac9facac02ca07b884a57071cb4bfe9cdada0"></a>THREAD_ERROR_OS_CREATE_FAILED&#160;</td><td class="fielddoc"><p>Creating the thread failed at the OS level </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa6fd03599279cc4bc2ef577521ad54351" name="ab701d053a9c34ab7f11e43e0dc09ac9fa6fd03599279cc4bc2ef577521ad54351"></a>THREAD_ERROR_OS_JOIN_FAILED&#160;</td><td class="fielddoc"><p>Joining the thread failed at the OS level </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa95d5e3c1b37794de77afcabb1eb18049" name="ab701d053a9c34ab7f11e43e0dc09ac9fa95d5e3c1b37794de77afcabb1eb18049"></a>THREAD_ERROR_OS_DETACH_FAILED&#160;</td><td class="fielddoc"><p>Detaching the thread failed at the OS level </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fae2da49ee2c8461141f7230e069e0b0de" name="ab701d053a9c34ab7f11e43e0dc09ac9fae2da49ee2c8461141f7230e069e0b0de"></a>THREAD_ERROR_OS_NAME_FAILED&#160;</td><td class="fielddoc"><p>Setting the thread's name failed at the OS level </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa2cea6a1d635a9f453f448d49e4fc887d" name="ab701d053a9c34ab7f11e43e0dc09ac9fa2cea6a1d635a9f453f448d49e4fc887d"></a>THREAD_ERROR_OS_AFFINITY_FAILED&#160;</td><td class="fielddoc"><p>Setting the thread's affinity failed at the OS level </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ab701d053a9c34ab7f11e43e0dc09ac9fa8f09d4a0116411af5b85ed853b7873da" name="ab701d053a9c34ab7f11e43e0dc09ac9fa8f09d4a0116411af5b85ed853b7873da"></a>THREAD_ERROR_OS_PRIORITY_FAILED&#160;</td><td class="fielddoc"><p>Setting the thread's priority failed at the OS level </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <a id="ac21de3041b361912460403d2649eaa0e" name="ac21de3041b361912460403d2649eaa0e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac21de3041b361912460403d2649eaa0e">&#9670;&#160;</a></span>ThreadPriority</h2>
 
@@ -488,33 +409,6 @@ Threads created through the Descent thread system must not be manipulated using 
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Non-zero if threads are equal, 0 otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="a6f5e482f63d34f5b7ed1dc30370b4c3b" name="a6f5e482f63d34f5b7ed1dc30370b4c3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f5e482f63d34f5b7ed1dc30370b4c3b">&#9670;&#160;</a></span>thread_error_message()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const char * thread_error_message </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>e</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return a human-readable string for a thread error enum. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">e</td><td>Thread error. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to string describing the error. </dd></dl>
 
 </div>
 </div>
@@ -670,6 +564,24 @@ Not all platforms fully support thread priority. </dd></dl>
 
 <p>Get the maximum number of concurrent threads supported. </p>
 <dl class="section return"><dt>Returns</dt><dd>Maximum concurrent threads. </dd></dl>
+
+</div>
+</div>
+<a id="a6bbce8c0d8c944d7211d040e9dcd7bae" name="a6bbce8c0d8c944d7211d040e9dcd7bae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bbce8c0d8c944d7211d040e9dcd7bae">&#9670;&#160;</a></span>thread_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d2/d09/structThreadName.html">ThreadName</a> thread_name </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>string</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

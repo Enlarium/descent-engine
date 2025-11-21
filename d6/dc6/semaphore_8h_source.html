@@ -82,48 +82,49 @@ $(document).ready(function() { init_codefold(1); });
   <div class="headertitle"><div class="title">semaphore.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="../../d6/dc6/semaphore_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">// Copyright 2025 XavierHarkonnen9 and Enlarium</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// </span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">// you may not use this file except in compliance with the License.</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// You may obtain a copy of the License at</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">// </span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//     http://www.apache.org/licenses/LICENSE-2.0</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">// </span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">// Unless required by applicable law or agreed to in writing, software</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// See the License for the specific language governing permissions and</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">// limitations under the License.</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#ifndef DESCENT_THREAD_SEMAPHORE_H</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define DESCENT_THREAD_SEMAPHORE_H</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;../utilities/opaque.h&quot;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a>, DESCENT_OPAQUE_SIZE_SEMAPHORE)</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<a href="../../d6/dc6/semaphore_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* Copyright 2025 XavierHarkonnen9 and Enlarium</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#ifndef DESCENT_THREAD_SEMAPHORE_H</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#define DESCENT_THREAD_SEMAPHORE_H</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;../utilities/opaque.h&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a>, DESCENT_OPAQUE_SIZE_SEMAPHORE)</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">   42</a></span>int <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">semaphore_init</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> initial_count);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">   50</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">semaphore_destroy</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">   61</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">semaphore_wait</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">   71</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">semaphore_trywait</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">   81</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">semaphore_post</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>}</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:36</div></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">   43</a></span>int <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">semaphore_init</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> initial_count);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">   51</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">semaphore_destroy</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">   62</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">semaphore_wait</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">   72</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">semaphore_trywait</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">   82</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">semaphore_post</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>}</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:37</div></div>
 <div class="ttc" id="asemaphore_8h_html_a07287bd97e9a8ff58cca28be78c12574"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">semaphore_trywait</a></div><div class="ttdeci">int semaphore_trywait(Semaphore *s)</div><div class="ttdoc">Try to wait (non-blocking) on a semaphore.</div></div>
 <div class="ttc" id="asemaphore_8h_html_a3be15d37293a67059e227cbb2cf89d46"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">semaphore_post</a></div><div class="ttdeci">int semaphore_post(Semaphore *s)</div><div class="ttdoc">Post (increment) a semaphore.</div></div>
 <div class="ttc" id="asemaphore_8h_html_a5d062bad60a9a7c0e9d72927f0e47f13"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">semaphore_wait</a></div><div class="ttdeci">int semaphore_wait(Semaphore *s)</div><div class="ttdoc">Lock a semaphore.</div></div>

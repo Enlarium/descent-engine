@@ -82,42 +82,43 @@ $(document).ready(function() { init_codefold(1); });
   <div class="headertitle"><div class="title">sysalloc.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="../../d1/da1/sysalloc_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">// Copyright 2025 XavierHarkonnen9 and Enlarium</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// </span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">// you may not use this file except in compliance with the License.</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// You may obtain a copy of the License at</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">// </span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//     http://www.apache.org/licenses/LICENSE-2.0</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">// </span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">// Unless required by applicable law or agreed to in writing, software</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// See the License for the specific language governing permissions and</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">// limitations under the License.</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#ifndef DESCENT_SYSALLOC_H</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define DESCENT_SYSALLOC_H</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="foldopen" id="foldopen00020" data-start="{" data-end="};">
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="../../d2/d05/structAlloc.html">   20</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="../../d2/d05/structAlloc.html#a5670b455122bafce40a2a962dd9f9146">   21</a></span>    <span class="keywordtype">void</span> *<a class="code hl_variable" href="../../d2/d05/structAlloc.html#a5670b455122bafce40a2a962dd9f9146">alloc</a>;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="../../d2/d05/structAlloc.html#a5903cfc369023c240fa215c1cb2789a2">   22</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="../../d2/d05/structAlloc.html#a5903cfc369023c240fa215c1cb2789a2">size</a>;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>} <a class="code hl_struct" href="../../d2/d05/structAlloc.html">Alloc</a>;</div>
+<a href="../../d1/da1/sysalloc_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* Copyright 2025 XavierHarkonnen9 and Enlarium</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#ifndef DESCENT_SYSALLOC_H</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#define DESCENT_SYSALLOC_H</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="};">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="../../d2/d05/structAlloc.html">   21</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="../../d2/d05/structAlloc.html#a5670b455122bafce40a2a962dd9f9146">   22</a></span>    <span class="keywordtype">void</span> *<a class="code hl_variable" href="../../d2/d05/structAlloc.html#a5670b455122bafce40a2a962dd9f9146">alloc</a>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="../../d2/d05/structAlloc.html#a5903cfc369023c240fa215c1cb2789a2">   23</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="../../d2/d05/structAlloc.html#a5903cfc369023c240fa215c1cb2789a2">size</a>;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>} <a class="code hl_struct" href="../../d2/d05/structAlloc.html">Alloc</a>;</div>
 </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="../../d1/da1/sysalloc_8h.html#a4ba366cc34227f7ec13f078e2d40c862">   25</a></span><span class="keywordtype">size_t</span> <a class="code hl_function" href="../../d1/da1/sysalloc_8h.html#a4ba366cc34227f7ec13f078e2d40c862">block_size</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="../../d1/da1/sysalloc_8h.html#a4226da62546197c371fd38df14694fc2">   27</a></span><a class="code hl_struct" href="../../d2/d05/structAlloc.html">Alloc</a> <a class="code hl_function" href="../../d1/da1/sysalloc_8h.html#a4226da62546197c371fd38df14694fc2">sysalloc</a>(<span class="keywordtype">size_t</span> size);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="../../d1/da1/sysalloc_8h.html#a9eb8a5ec20a4e07d3d2580bcb92391b0">   29</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d1/da1/sysalloc_8h.html#a9eb8a5ec20a4e07d3d2580bcb92391b0">sysfree</a>(<a class="code hl_struct" href="../../d2/d05/structAlloc.html">Alloc</a> *a);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="astructAlloc_html"><div class="ttname"><a href="../../d2/d05/structAlloc.html">Alloc</a></div><div class="ttdef"><b>Definition</b> sysalloc.h:20</div></div>
-<div class="ttc" id="astructAlloc_html_a5670b455122bafce40a2a962dd9f9146"><div class="ttname"><a href="../../d2/d05/structAlloc.html#a5670b455122bafce40a2a962dd9f9146">Alloc::alloc</a></div><div class="ttdeci">void * alloc</div><div class="ttdef"><b>Definition</b> sysalloc.h:21</div></div>
-<div class="ttc" id="astructAlloc_html_a5903cfc369023c240fa215c1cb2789a2"><div class="ttname"><a href="../../d2/d05/structAlloc.html#a5903cfc369023c240fa215c1cb2789a2">Alloc::size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition</b> sysalloc.h:22</div></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="../../d1/da1/sysalloc_8h.html#a4ba366cc34227f7ec13f078e2d40c862">   26</a></span><span class="keywordtype">size_t</span> <a class="code hl_function" href="../../d1/da1/sysalloc_8h.html#a4ba366cc34227f7ec13f078e2d40c862">block_size</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="../../d1/da1/sysalloc_8h.html#a4226da62546197c371fd38df14694fc2">   28</a></span><a class="code hl_struct" href="../../d2/d05/structAlloc.html">Alloc</a> <a class="code hl_function" href="../../d1/da1/sysalloc_8h.html#a4226da62546197c371fd38df14694fc2">sysalloc</a>(<span class="keywordtype">size_t</span> size);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="../../d1/da1/sysalloc_8h.html#a9eb8a5ec20a4e07d3d2580bcb92391b0">   30</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d1/da1/sysalloc_8h.html#a9eb8a5ec20a4e07d3d2580bcb92391b0">sysfree</a>(<a class="code hl_struct" href="../../d2/d05/structAlloc.html">Alloc</a> *a);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="astructAlloc_html"><div class="ttname"><a href="../../d2/d05/structAlloc.html">Alloc</a></div><div class="ttdef"><b>Definition</b> sysalloc.h:21</div></div>
+<div class="ttc" id="astructAlloc_html_a5670b455122bafce40a2a962dd9f9146"><div class="ttname"><a href="../../d2/d05/structAlloc.html#a5670b455122bafce40a2a962dd9f9146">Alloc::alloc</a></div><div class="ttdeci">void * alloc</div><div class="ttdef"><b>Definition</b> sysalloc.h:22</div></div>
+<div class="ttc" id="astructAlloc_html_a5903cfc369023c240fa215c1cb2789a2"><div class="ttname"><a href="../../d2/d05/structAlloc.html#a5903cfc369023c240fa215c1cb2789a2">Alloc::size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition</b> sysalloc.h:23</div></div>
 <div class="ttc" id="asysalloc_8h_html_a4226da62546197c371fd38df14694fc2"><div class="ttname"><a href="../../d1/da1/sysalloc_8h.html#a4226da62546197c371fd38df14694fc2">sysalloc</a></div><div class="ttdeci">Alloc sysalloc(size_t size)</div></div>
 <div class="ttc" id="asysalloc_8h_html_a4ba366cc34227f7ec13f078e2d40c862"><div class="ttname"><a href="../../d1/da1/sysalloc_8h.html#a4ba366cc34227f7ec13f078e2d40c862">block_size</a></div><div class="ttdeci">size_t block_size(void)</div></div>
 <div class="ttc" id="asysalloc_8h_html_a9eb8a5ec20a4e07d3d2580bcb92391b0"><div class="ttname"><a href="../../d1/da1/sysalloc_8h.html#a9eb8a5ec20a4e07d3d2580bcb92391b0">sysfree</a></div><div class="ttdeci">int sysfree(Alloc *a)</div></div>

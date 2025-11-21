@@ -1,16 +1,16 @@
 <map id="include/descent/thread/mutex.h" name="include/descent/thread/mutex.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="61,5,232,45"/>
-<area shape="rect" id="Node000002" href="$de/d03/platform_8h.html" title=" " alt="" coords="27,240,181,265"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,46,111,227,106,226,140,45"/>
-<area shape="rect" id="Node000005" href="$d7/d6c/condition_8h.html" title=" " alt="" coords="154,93,249,119"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="162,44,188,80,183,84,158,47"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,313,93,339"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,267,69,304,64,301,93,264"/>
-<area shape="rect" id="Node000004" href="$de/d3c/macros_8h.html" title=" " alt="" coords="117,313,200,339"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="115,264,144,301,139,304,111,267"/>
-<area shape="rect" id="Node000006" href="$dc/d17/opaque_8h.html" title=" " alt="" coords="141,167,288,192"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="206,119,213,153,207,154,201,119"/>
-<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="198,194,135,235,132,230,195,190"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="206,240,277,265"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="222,191,235,226,230,228,217,193"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="15,5,186,45"/>
+<area shape="rect" id="Node000002" href="$dc/d17/opaque_8h.html" title=" " alt="" coords="5,167,196,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,46,87,80,86,118,94,153,89,154,81,119,82,79,91,45"/>
+<area shape="rect" id="Node000007" href="$d7/d6c/condition_8h.html" title=" " alt="" coords="96,93,191,119"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="113,44,133,80,128,83,109,47"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="13,240,84,265"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,194,67,230,63,227,90,191"/>
+<area shape="rect" id="Node000004" href="$de/d03/platform_8h.html" title=" " alt="" coords="109,240,199,265"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="112,191,139,228,135,231,107,194"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="55,313,143,339"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="147,267,119,304,114,301,143,264"/>
+<area shape="rect" id="Node000006" href="$de/d3c/macros_8h.html" title=" " alt="" coords="167,313,250,339"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="165,264,194,301,189,304,161,267"/>
+<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="139,120,117,156,112,154,134,118"/>
 </map>

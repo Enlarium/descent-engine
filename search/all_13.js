@@ -18,10 +18,16 @@ var searchData=
   ['umul_5foverflow_5f8_15',['umul_overflow_8',['../d2/d35/arithmetic_8h.html#aaac4c424c4552acb4f22f096d64847c1',1,'arithmetic.h']]],
   ['umul_5fpartial_5f128_16',['umul_partial_128',['../d2/d35/arithmetic_8h.html#ae08204acb259cc018cdda14ee4a71dcf',1,'arithmetic.h']]],
   ['unreachable_17',['unreachable',['../da/d10/other_8h.html#a86d08c1b23d67eca942da0ac012d89f3',1,'other.h']]],
-  ['usub_5foverflow_5f16_18',['usub_overflow_16',['../d2/d35/arithmetic_8h.html#a52558846e8c45dde9949cf52d94ec6bf',1,'arithmetic.h']]],
-  ['usub_5foverflow_5f32_19',['usub_overflow_32',['../d2/d35/arithmetic_8h.html#a4c2f85113a5f18b746e804a52747539f',1,'arithmetic.h']]],
-  ['usub_5foverflow_5f64_20',['usub_overflow_64',['../d2/d35/arithmetic_8h.html#a8eec5a0227a5d23869474c3527a1ec38',1,'arithmetic.h']]],
-  ['usub_5foverflow_5f8_21',['usub_overflow_8',['../d2/d35/arithmetic_8h.html#a4a2956505f91477c0bec3080c0386991',1,'arithmetic.h']]],
-  ['usub_5fsaturating_5f64_22',['usub_saturating_64',['../d2/d35/arithmetic_8h.html#a00b4232abaaad40cb19f3b62ab211f00',1,'arithmetic.h']]],
-  ['utilities_2eh_23',['utilities.h',['../de/df0/utilities_8h.html',1,'']]]
+  ['user_5fdebug_18',['USER_DEBUG',['../d7/d7f/log_8h.html#a5549a1c14c4afad633dc673ea666bf07',1,'log.h']]],
+  ['user_5ferror_19',['USER_ERROR',['../d7/d7f/log_8h.html#a1d64a4c2166fafc5000fa95effd86777',1,'log.h']]],
+  ['user_5ffatal_20',['USER_FATAL',['../d7/d7f/log_8h.html#a37fbd8e0be355caced94d8f94b93544b',1,'log.h']]],
+  ['user_5finfo_21',['USER_INFO',['../d7/d7f/log_8h.html#ac9fbb32906dfc25ffd53a4d216b297cc',1,'log.h']]],
+  ['user_5ftrace_22',['USER_TRACE',['../d7/d7f/log_8h.html#ac76f9b1ce31233af4d73f60d14df7c20',1,'log.h']]],
+  ['user_5fwarn_23',['USER_WARN',['../d7/d7f/log_8h.html#a4fd3b763acf23b0a7eed18122e3addc3',1,'log.h']]],
+  ['usub_5foverflow_5f16_24',['usub_overflow_16',['../d2/d35/arithmetic_8h.html#a52558846e8c45dde9949cf52d94ec6bf',1,'arithmetic.h']]],
+  ['usub_5foverflow_5f32_25',['usub_overflow_32',['../d2/d35/arithmetic_8h.html#a4c2f85113a5f18b746e804a52747539f',1,'arithmetic.h']]],
+  ['usub_5foverflow_5f64_26',['usub_overflow_64',['../d2/d35/arithmetic_8h.html#a8eec5a0227a5d23869474c3527a1ec38',1,'arithmetic.h']]],
+  ['usub_5foverflow_5f8_27',['usub_overflow_8',['../d2/d35/arithmetic_8h.html#a4a2956505f91477c0bec3080c0386991',1,'arithmetic.h']]],
+  ['usub_5fsaturating_5f64_28',['usub_saturating_64',['../d2/d35/arithmetic_8h.html#a00b4232abaaad40cb19f3b62ab211f00',1,'arithmetic.h']]],
+  ['utilities_2eh_29',['utilities.h',['../de/df0/utilities_8h.html',1,'']]]
 ];

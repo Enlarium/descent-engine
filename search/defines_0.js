@@ -1,15 +1,15 @@
 var searchData=
 [
-  ['debug_5fallocator_0',['DEBUG_ALLOCATOR',['../d5/d77/logging_8h.html#a820a442df2f57eb131ad68b71393ccb2',1,'logging.h']]],
-  ['debug_5frendering_1',['DEBUG_RENDERING',['../d5/d77/logging_8h.html#a00b494e258abb7c0a70902aa649d2a82',1,'logging.h']]],
-  ['debug_5fscripting_2',['DEBUG_SCRIPTING',['../d5/d77/logging_8h.html#a4283d563a7941cf375e4b8220bf738c6',1,'logging.h']]],
-  ['debug_5fthreading_3',['DEBUG_THREADING',['../d5/d77/logging_8h.html#a36f72ca386bc50134e552e65bda71310',1,'logging.h']]],
-  ['descent_5fbuiltin_5fapi_4',['DESCENT_BUILTIN_API',['../dc/d65/api_8h.html#a79242acfc45ce2ed42926c29041a5403',1,'api.h']]],
-  ['descent_5fbuiltin_5fconst_5',['DESCENT_BUILTIN_CONST',['../dc/d65/api_8h.html#a35b7b157eff61e1526ff6ccaa3f868db',1,'api.h']]],
-  ['descent_5fbuiltin_5ffallback_6',['DESCENT_BUILTIN_FALLBACK',['../dc/d65/api_8h.html#ad730d023bef083e64e858b4c25da2af9',1,'api.h']]],
-  ['descent_5fhas_5fattribute_7',['DESCENT_HAS_ATTRIBUTE',['../dc/d65/api_8h.html#a2bdc76b13375a357eda56271ecff18f4',1,'api.h']]],
-  ['descent_5fhas_5fbuiltin_8',['DESCENT_HAS_BUILTIN',['../dc/d65/api_8h.html#ae3b25191ec3b12d2faf11f7b962e565a',1,'api.h']]],
-  ['descent_5fhas_5ffeature_9',['DESCENT_HAS_FEATURE',['../dc/d65/api_8h.html#ae7390ad85acf12d2003dc46f6f2d1ec4',1,'api.h']]],
-  ['descent_5fopaque_5fdefine_10',['DESCENT_OPAQUE_DEFINE',['../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf',1,'opaque.h']]],
-  ['descent_5fplatform_5fnegative_5ftwos_5fcomplement_11',['DESCENT_PLATFORM_NEGATIVE_TWOS_COMPLEMENT',['../de/d03/platform_8h.html#a2609246b5986d4430bc1673a8dacda3a',1,'platform.h']]]
+  ['allocator_5fdebug_0',['ALLOCATOR_DEBUG',['../d7/d7f/log_8h.html#a3478f75d833dab4d5da5b21a98db0dd1',1,'log.h']]],
+  ['allocator_5ferror_1',['ALLOCATOR_ERROR',['../d7/d7f/log_8h.html#ab2195fc836dbd31820f01f0b5ea46bd1',1,'log.h']]],
+  ['allocator_5ffatal_2',['ALLOCATOR_FATAL',['../d7/d7f/log_8h.html#a46e649747d053986796c2e250d4e7aba',1,'log.h']]],
+  ['allocator_5finfo_3',['ALLOCATOR_INFO',['../d7/d7f/log_8h.html#a1e8e822f0c19dd7319776ce824c7521e',1,'log.h']]],
+  ['allocator_5ftrace_4',['ALLOCATOR_TRACE',['../d7/d7f/log_8h.html#a9979d62d159c6f9a0c21516c74b031f6',1,'log.h']]],
+  ['allocator_5fwarn_5',['ALLOCATOR_WARN',['../d7/d7f/log_8h.html#a09461c9c649d89ab8236d0f1c52762b9',1,'log.h']]],
+  ['audio_5fdebug_6',['AUDIO_DEBUG',['../d7/d7f/log_8h.html#ac79a22181afa8fbfdd82b5b69bae5efb',1,'log.h']]],
+  ['audio_5ferror_7',['AUDIO_ERROR',['../d7/d7f/log_8h.html#a0b094d2ef96d15c56d34fe30f60c5bd6',1,'log.h']]],
+  ['audio_5ffatal_8',['AUDIO_FATAL',['../d7/d7f/log_8h.html#a2b5b91db6656036ad575e048580ef490',1,'log.h']]],
+  ['audio_5finfo_9',['AUDIO_INFO',['../d7/d7f/log_8h.html#ab59b62ef5aec8c5e25b8995a0f6b50a6',1,'log.h']]],
+  ['audio_5ftrace_10',['AUDIO_TRACE',['../d7/d7f/log_8h.html#a225ba79b2dbc834f28aff55132acbf8a',1,'log.h']]],
+  ['audio_5fwarn_11',['AUDIO_WARN',['../d7/d7f/log_8h.html#a9e6b04466a211c6a22270617316dbaf6',1,'log.h']]]
 ];
