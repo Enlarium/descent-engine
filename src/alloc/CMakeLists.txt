@@ -10,3 +10,5 @@ target_include_directories(${LIBRARY_NAME} PRIVATE
 
 target_link_libraries(${LIBRARY_NAME} PRIVATE
 )
+
+target_enable_iwyu(${LIBRARY_NAME})

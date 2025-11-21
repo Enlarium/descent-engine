@@ -2,6 +2,7 @@ set(EXECUTABLE_NAME "descent-exec")
 
 add_executable(${EXECUTABLE_NAME}
 	main.c
+	cli.c
 )
 
 target_include_directories(${EXECUTABLE_NAME} PRIVATE
@@ -9,9 +10,11 @@ target_include_directories(${EXECUTABLE_NAME} PRIVATE
 )
 
 target_link_libraries(${EXECUTABLE_NAME} PRIVATE
-	${LUA_LIBRARIES}
 	${Vulkan_LIBRARIES}
 	descent-alloc
+	descent-script
 	descent-thread
-	descent-logging
+	descent-log
+	descent-utilities
+	descent-cli
 )

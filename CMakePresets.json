@@ -14,10 +14,7 @@
 			"cacheVariables": {
 				"BUILD_SHARED_LIBS": "OFF",
 				"CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-				"Vulkan_INCLUDE_DIR": "/usr/include/vulkan",
-				"EXTERN_C_FLAGS": "-O2 -march=native -fPIC",
-				"EXTERN_CXX_FLAGS": "-O2 -march=native -fPIC -fno-exceptions",
-				"EXTERN_MACROS": "-DVULKAN_HPP_NO_EXCEPTIONS -DSPDLOG_NO_EXCEPTIONS"
+				"Vulkan_INCLUDE_DIR": "/usr/include/vulkan"
 			}
 		},
 		{

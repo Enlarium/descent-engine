@@ -14,7 +14,7 @@ RECURSIVE              = YES
 OPTIMIZE_OUTPUT_FOR_C  = YES
 EXTRACT_ALL            = YES
 EXTRACT_STATIC         = YES
-EXTRACT_PRIVATE        = YES   # if you want internal functions too
+EXTRACT_PRIVATE        = YES
 
 # Generate HTML documentation
 GENERATE_HTML          = YES

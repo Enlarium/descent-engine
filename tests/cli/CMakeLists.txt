@@ -1,6 +1,7 @@
-set(EXECUTABLE_NAME "descent-test-compile")
+set(EXECUTABLE_NAME "descent-test-cli")
 
 add_executable(${EXECUTABLE_NAME}
+	actions.c
 	main.c
 )
 
@@ -9,8 +10,8 @@ target_include_directories(${EXECUTABLE_NAME} PRIVATE
 )
 
 target_link_libraries(${EXECUTABLE_NAME} PRIVATE
-	descent-thread
-	descent-alloc
+	descent-cli
+	descent-utilities
 )
 
 add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})

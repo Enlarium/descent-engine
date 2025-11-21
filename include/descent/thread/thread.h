@@ -1,7 +1,21 @@
+/* Copyright 2025 XavierHarkonnen9 and Enlarium
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #ifndef DESCENT_THREAD_THREAD_H
 #define DESCENT_THREAD_THREAD_H
 
-#include <stddef.h>
 #include <stdint.h>
 
 #define THREAD_NAME_LENGTH 16
@@ -11,34 +25,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <descent/utilities/platform.h>
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-#define TLS _Thread_local
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-#define TLS __declspec(thread)
-#endif
-
-/**
- * @enum ThreadError
- * @brief Defines error codes returned by thread functions.
- */
-typedef enum {
-	THREAD_ERROR_UNKNOWN     = -1,   /**< Unknown error occurred */
-	THREAD_SUCCESS           = 0,    /**< Operation succeeded */
-	THREAD_ERROR_NO_SLOTS,           /**< No thread slots available */
-	THREAD_ERROR_HANDLE_INVALID,     /**< Thread handle is invalid */
-	THREAD_ERROR_HANDLE_UNMANAGED,   /**< Operation not allowed on unmanaged thread */
-	THREAD_ERROR_HANDLE_DETACHED,    /**< Operation not allowed on detached thread */
-	THREAD_ERROR_HANDLE_CLOSED,      /**< Operation on a closed thread */
-	THREAD_ERROR_FUNCTION_INVALID,   /**< Thread function pointer is invalid */
-	THREAD_ERROR_OS_CREATE_FAILED,   /**< Creating the thread failed at the OS level */
-	THREAD_ERROR_OS_JOIN_FAILED,     /**< Joining the thread failed at the OS level */
-	THREAD_ERROR_OS_DETACH_FAILED,   /**< Detaching the thread failed at the OS level */
-	THREAD_ERROR_OS_NAME_FAILED,     /**< Setting the thread's name failed at the OS level */
-	THREAD_ERROR_OS_AFFINITY_FAILED, /**< Setting the thread's affinity failed at the OS level */
-	THREAD_ERROR_OS_PRIORITY_FAILED, /**< Setting the thread's priority failed at the OS level */
-} ThreadError;
 
 /**
  * @enum ThreadPriority
@@ -86,18 +72,13 @@ typedef int (*ThreadFunction)(void *arg);
  */
 typedef uint64_t Thread;
 
+ThreadName thread_name(const char *string);
+
 /**
  * @brief Get the maximum number of concurrent threads supported.
  * @return Maximum concurrent threads.
  */
 int thread_max_concurrent(void);
-
-/**
- * @brief Return a human-readable string for a thread error enum.
- * @param e Thread error.
- * @return Pointer to string describing the error.
- */
-const char *thread_error_message(int e);
 
 /**
  * @brief Create a new thread.

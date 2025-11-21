@@ -1,3 +1,6 @@
 add_subdirectory(alloc)
 add_subdirectory(thread)
-add_subdirectory(logging)
+add_subdirectory(script)
+add_subdirectory(log)
+add_subdirectory(utilities)
+add_subdirectory(cli)

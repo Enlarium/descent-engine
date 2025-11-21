@@ -1,18 +1,19 @@
-// Copyright 2025 XavierHarkonnen9 and Enlarium
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//	 http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/* Copyright 2025 XavierHarkonnen9 and Enlarium
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-#include <descent/logging.h>
+#include <descent/log.h>
 
 #include <assert.h>
 #include <stdio.h>
@@ -23,7 +24,6 @@
 #include <descent/utilities/platform.h>
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 #include <unistd.h>
-#include <sys/stat.h>
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
 #include <windows.h>
 #endif
@@ -33,6 +33,7 @@
 #include <descent/thread/rwlock.h>
 #include <descent/thread/thread.h>
 #include <descent/utilities/intrin/bits.h>
+#include <descent/utilities/codes.h>
 
 #include "tables.h"
 
@@ -102,7 +103,7 @@ static inline int log_present_valid(int present) {
 	);
 }
 
-// Mutating helpers
+// Mutating Helpers
 
 static inline int log_sink_supports_color(LogSinkHandle h) {
 	assert(log_sink_handle_valid(h));
@@ -216,10 +217,10 @@ int log_sink_init(LogSinkHandle h, int format, int levels, int present) {
 
 int log_sink_file(LogSinkHandle h, const char *filepath, int mode) {
 	if (!log_sink_handle_valid(h)) return LOG_ERROR_INVALID_HANDLE;
-	if (!filepath) return LOG_ERROR_NULL_PATH;
+	if (!filepath) return DESCENT_ERROR_NULL_POINTER;
 	
 	FILE *output = fopen(filepath, (mode == LOG_SINK_WRITE) ? "w" : "a");
-	if (!output) return LOG_ERROR_ALLOCATION_FAILURE;
+	if (!output) return DESCENT_ERROR_OUT_OF_MEMORY;
 
 	log_sink_set(h, output);
 
@@ -330,9 +331,9 @@ int log_message(DescentModule m, LogLevel l, const char *fmt, ...) {
 }
 
 int log_submit(DescentModule m, LogLevel l, const char *fmt, va_list args) {
-	if (!log_module_valid(m)) return LOG_ERROR_INVALID_MODULE;
+	if (!log_module_valid(m)) return DESCENT_ERROR_INVALID_MODULE;
 	if (!log_levels_valid(l)) return LOG_ERROR_INVALID_LEVEL;
-	if (!fmt) return LOG_ERROR_NULL_POINTER;
+	if (!fmt) return DESCENT_ERROR_NULL_POINTER;
 
 	rwlock_read_lock(&submit_lock);
 
@@ -368,7 +369,7 @@ int log_submit(DescentModule m, LogLevel l, const char *fmt, va_list args) {
 		memcpy(msg->message, err_msg, sizeof(err_msg));
 		result = LOG_ERROR_FORMAT_MESSAGE;
 	} else if (result >= LOG_MESSAGE_SIZE) {
-		result = LOG_WARNING_TRUNCATED_MESSAGE;
+		result = DESCENT_WARNING_TRUNCATION;
 	} else {
 		result = 0;
 	}

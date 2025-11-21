@@ -9,7 +9,7 @@
 [![Language](https://img.shields.io/badge/language-C-green.svg)]()
 
 
-**Descent Engine** is an in-development game engine written primarily in C, with support for C++ integration. It's currently in an early stage - only the threading library is functional and in testing.
+**Descent Engine** is an in-development game engine written primarily in C, with support for C++ integration. It's currently in an early stage - only the threading and logging systems are functional and in testing.
 
 The engine is primarily developed and tested on Linux.
 
