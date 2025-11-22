@@ -6,8 +6,8 @@
 
 #include "actions.h"
 
-int check_parse(int argument_count, const char *arguments[], const int parameter_count, const CLI_Parameter *parameters, void *settings, int expected_result) {
-	int result = cli_parse(argument_count, arguments, parameter_count, parameters, settings);
+int check_parse(int argc, const char **argv, int parc, CLI_Parameter *parv, void *settings, int expected_result) {
+	int result = cli_parse(argc, argv, parc, parv, settings);
 	if(result != expected_result) {
 		printf("Return code: %s (%d)\n", code_string(result), result);
 

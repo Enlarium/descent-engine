@@ -29,8 +29,8 @@ int main(int argc, const char *argv[]) {
 	const char *output_file = NULL;
 
 	CLI_Parameter parameters[] = {
-		cli_create_option("help", 'h', 0, option_help),
 		cli_create_option("verbose", 'v', 0, option_version),
+		cli_create_option("help", 'h', 0, option_help),
 		cli_create_catchall(option_catchall)
 	};
 

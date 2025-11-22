@@ -13,13 +13,6 @@
  * limitations under the License.
  */
 
-// TODO:
-// - fast lookups
-// - duplicate checking
-// - automatic help generation
-// - mutually exclusive options
-// - default values (better handled in user data - just set a default, and if the command doesn't update it, it remains a default)
-
 #ifndef DESCENT_CLI_H
 #define DESCENT_CLI_H
 
@@ -62,7 +55,7 @@ typedef struct CLI_Parameter {
 		unsigned int argument_count;    /**< Number of option arguments expected. */
 		unsigned int position;          /**< Position index for positional arguments. 0 for catch-all. */
 	};
-	char name_short;                  /**< Short option name. '\0' if unused. */
+	char name_short;                  /**< Short option name. '\0' if unused. */	
 } CLI_Parameter;
 
 /**
@@ -74,15 +67,7 @@ typedef struct CLI_Parameter {
  * @param c The character to check.
  * @return Non-zero if it is a valid, 0 otherwise.
  */
-static inline int cli_is_valid_short_name(char c) {
-	if (c == '!') return 1;
-	if (c >= '#' && c <= '&') return 1;
-	if (c >= '0' && c <= '9') return 1;
-	if (c >= '?' && c <= 'Z') return 1;
-	if (c >= 'a' && c <= 'z') return 1;
-
-	return 0;
-}
+int cli_is_valid_short_name(char c);
 
 /**
  * @brief Check if a CLI_Parameter is a subcommand.
@@ -90,15 +75,7 @@ static inline int cli_is_valid_short_name(char c) {
  * @param p Parameter to check.
  * @return Non-zero if it is a subcommand, 0 otherwise.
  */
-static inline int cli_is_subcommand(CLI_Parameter p) {
-	return (
-		p.action == NULL &&
-		p.name_long != NULL &&
-		p.name_short == '\0' &&
-		p.parameter_count != 0 &&
-		p.parameters != NULL
-	);
-}
+int cli_is_subcommand(const CLI_Parameter *p);
 
 /**
  * @brief Check if a CLI_Parameter is a long option.
@@ -106,14 +83,7 @@ static inline int cli_is_subcommand(CLI_Parameter p) {
  * @param p Parameter to check.
  * @return Non-zero if it is a long option, 0 otherwise.
  */
-static inline int cli_is_long_option(CLI_Parameter p) {
-	return (
-		p.action != NULL &&
-		p.name_long != NULL &&
-		(p.name_short == '\0' || cli_is_valid_short_name(p.name_short)) &&
-		p.parameters == NULL
-	);
-}
+int cli_is_long_option(const CLI_Parameter *p);
 
 /**
  * @brief Check if a CLI_Parameter is a short option.
@@ -121,13 +91,7 @@ static inline int cli_is_long_option(CLI_Parameter p) {
  * @param p Parameter to check.
  * @return Non-zero if it is a short option, 0 otherwise.
  */
-static inline int cli_is_short_option(CLI_Parameter p) {
-	return (
-		p.action != NULL &&
-		cli_is_valid_short_name(p.name_short) &&
-		p.parameters == NULL
-	);
-}
+int cli_is_short_option(const CLI_Parameter *p);
 
 /**
  * @brief Check if a CLI_Parameter is any type of option.
@@ -135,9 +99,7 @@ static inline int cli_is_short_option(CLI_Parameter p) {
  * @param p Parameter to check.
  * @return Non-zero if it is a long or short option, 0 otherwise.
  */
-static inline int cli_is_option(CLI_Parameter p) {
-	return cli_is_long_option(p) || cli_is_short_option(p);
-}
+int cli_is_option(const CLI_Parameter *p);
 
 /**
  * @brief Check if a CLI_Parameter is a positional argument.
@@ -145,16 +107,7 @@ static inline int cli_is_option(CLI_Parameter p) {
  * @param p Parameter to check.
  * @return Non-zero if it is a positional argument, 0 otherwise.
  */
-static inline int cli_is_positional(CLI_Parameter p) {
-	return (
-		p.action != NULL &&
-		p.name_long == NULL &&
-		p.name_short == '\0' &&
-		p.position != 0 &&
-		p.position <= DESCENT_CLI_MAX_POSITIONALS &&
-		p.parameters == NULL
-	);
-}
+int cli_is_positional(const CLI_Parameter *p);
 
 /**
  * @brief Check if a CLI_Parameter is a catch-all argument.
@@ -162,70 +115,62 @@ static inline int cli_is_positional(CLI_Parameter p) {
  * @param p Parameter to check.
  * @return Non-zero if it is a catch-all argument, 0 otherwise.
  */
-static inline int cli_is_catchall(CLI_Parameter p) {
-	return (
-		p.action != NULL &&
-		p.name_long == NULL &&
-		p.name_short == '\0' &&
-		p.position == 0 &&
-		p.parameters == NULL
-	);
-}
+int cli_is_catchall(const CLI_Parameter *p);
 
 /**
  * @brief Create a subcommand parameter.
  *
  * @param name Name of the subcommand. Must be non-NULL.
- * @param parameter_count Number of subcommand parameters. Must be non-zero.
- * @param parameters Array of subcommand parameters. Must be non-NULL.
+ * @param parc Number of subcommand parameters. Must be non-zero.
+ * @param parv Array of subcommand parameters. Must be non-NULL.
  * @return Initialized CLI_Parameter representing a subcommand.
  */
-CLI_Parameter cli_create_subcommand(const char *name, unsigned int parameter_count, CLI_Parameter *parameters);
+CLI_Parameter cli_create_subcommand(const char *name, unsigned int parc, CLI_Parameter *parv);
 
 /**
  * @brief Create an option parameter.
  *
  * @param name_long Long option string. Can be NULL if unused.
  * @param name_short Short option character. Can be '\0' if unused.
- * @param argument_count Number of arguments the option expects.
- * @param action Function to call when option is matched. Must be non-NULL.
+ * @param argc Number of arguments the option expects.
+ * @param a Function to call when option is matched. Must be non-NULL.
  * @return Initialized CLI_Parameter representing an option.
  * @note Either `name_long` or `name_short` must be set.
  */
-CLI_Parameter cli_create_option(const char *name_long, char name_short, unsigned int argument_count, CLI_Action action);
+CLI_Parameter cli_create_option(const char *name_long, char name_short, unsigned int argc, CLI_Action a);
 
 /**
  * @brief Create a positional argument parameter.
  *
  * @param position Position index of the argument (starting at 1). Must be non-zero.
- * @param action Function to call when argument is matched. Must be non-NULL.
+ * @param a Function to call when argument is matched. Must be non-NULL.
  * @return Initialized CLI_Parameter representing a positional argument.
  */
-CLI_Parameter cli_create_positional(unsigned int position, CLI_Action action);
+CLI_Parameter cli_create_positional(unsigned int position, CLI_Action a);
 
 /**
  * @brief Create a catch-all parameter.
  *
  * Matches any argument not consumed by other parameters.
  *
- * @param action Function to call for unmatched arguments. Must be non-NULL.
+ * @param a Function to call for unmatched arguments. Must be non-NULL.
  * @return Initialized CLI_Parameter representing a catch-all argument.
  */
-CLI_Parameter cli_create_catchall(CLI_Action action);
+CLI_Parameter cli_create_catchall(CLI_Action a);
 
 /**
  * @brief Parse command-line arguments.
  *
  * Processes options, subcommands, positionals, and catch-all parameters.
  *
- * @param argument_count Number of arguments in the argv array.
- * @param arguments Array of argument strings.
- * @param parameter_count Number of parameters in the parameters array.
- * @param parameters Array of parameter definitions.
+ * @param argc Number of arguments in the argv array.
+ * @param argv Array of argument strings.
+ * @param parc Number of parameters in the parameters array.
+ * @param parv Array of parameter definitions.
  * @param settings User-defined pointer passed to option actions.
  * @return 0 on success, non-zero error code on failure.
  */
-int cli_parse(const int argument_count, const char **arguments, const int parameter_count, const CLI_Parameter *parameters, void *settings);
+int cli_parse(int argc, const char **argv, int parc, CLI_Parameter *parv, void *settings);
 
 /**
  * @brief Get the last flagged argument that caused an error.
