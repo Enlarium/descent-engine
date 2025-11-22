@@ -1,15 +1,13 @@
 # Descent Engine
 
 [![Build and Test (Linux)](https://github.com/Enlarium/descent-engine/actions/workflows/build-linux.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-linux.yml)
-[![Build and Test (macOS)](https://github.com/Enlarium/descent-engine/actions/workflows/build-macos.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-macos.yml)
 [![Build and Test (Windows)](https://github.com/Enlarium/descent-engine/actions/workflows/build-windows.yml/badge.svg)](https://github.com/Enlarium/descent-engine/actions/workflows/build-windows.yml)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](./LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20freeBSD%20%7C%20macOS%20%7C%20Windows-lightgrey.svg)]()
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-lightgrey.svg)]()
 [![Language](https://img.shields.io/badge/language-C-green.svg)]()
 
-
-**Descent Engine** is an in-development game engine written primarily in C, with support for C++ integration. It's currently in an early stage - only the threading and logging systems are functional and in testing.
+**Descent Engine** is an in-development game engine written primarily in C, with support for C++ integration. It's currently in an early stage - only the threading, logging, and CLI systems are functional and undergoing testing.
 
 The engine is primarily developed and tested on Linux.
 
@@ -34,6 +32,37 @@ Descent Engine aims to provide:
 - Call-once functions across threads.
 - Atomic operations for 32- and 64-bit types.
 - Intra-process spinlocks, ticket locks, condition variables, mutexes, recursive mutexes, read-write locks, semaphores, and barriers.
+
+### CLI Library
+
+- Fully-featured command-line argument parser for C programs.
+- Supports:
+	- Subcommands (nested commands like git commit).
+	- Short options (-v, -a) and long options (--verbose).
+	- Short option chaining (-abc) 
+	- Positional arguments (input.txt output.txt).
+	- Catch-all arguments for unmatched inputs.
+- Robust error reporting:
+	- Detects duplicate options, subcommands, or positionals.
+	- Tracks the argument that caused a parse error.
+- Flexible:
+	- Custom callbacks for each parameter.
+	- Supports complex argument trees.
+	- Thread-safe error tracking.
+
+### Logging Library
+
+- Modular, thread-safe logging for Descent Engine modules.
+- Supports:
+  - Log levels: TRACE, DEBUG, INFO, WARN, ERROR, FATAL.
+  - Module-specific logging: CORE, THREADING, ALLOCATOR, RENDERING, AUDIO, NETWORKING, etc.
+  - Multiple sinks: stdout, stderr, files.
+  - Flexible formatting: minimal, timestamped, module-prefixed, or full format.
+  - Presentation modes: plain, styled, or auto (e.g., ANSI color when terminal supports it).
+- Queue-based logging for thread safety and performance.
+- Compile-time macros to disable logging at certain levels for performance.
+- Easy initialization
+- Handles message truncation and provides warning codes for long messages.
 
 ### Allocation Library (In-Progress)
 
