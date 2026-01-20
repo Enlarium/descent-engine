@@ -1,0 +1,83 @@
+/* Copyright 2025 XavierHarkonnen9 and Enlarium
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#define WIN32_LEAN_AND_MEAN
+
+#include <descent/thread/futex.h>
+
+#include <stdint.h>
+#include <windows.h>
+
+#include <descent/thread/atomic.h>
+#include <descent/rcode.h>
+#include <intern/time.h>
+
+_Static_assert(sizeof(atomic_32) == 4, "atomic_32 must be 32-bit");
+_Static_assert(_Alignof(atomic_32) >= 4, "atomic_32 must be 4-byte aligned");
+
+rcode futex_wait(atomic_32 *futex, uint32_t expected) {
+	if (!futex) return DESCENT_ERROR_NULL;
+
+	if (WaitOnAddress((void *)&futex->_atomic, &expected, sizeof(expected), INFINITE)) return 0;
+
+	switch (GetLastError()) {
+		case ERROR_INVALID_PARAMETER: return DESCENT_ERROR_INVALID;
+		default:                      return DESCENT_ERROR_OS;
+	}
+}
+
+rcode futex_timedwait(atomic_32 *futex, uint32_t expected, uint64_t nanoseconds) {
+	if (!futex) return DESCENT_ERROR_NULL;
+	
+	DWORD timeout = time_to_timeout(nanoseconds);
+
+	if (WaitOnAddress((void *)&futex->_atomic, &expected, sizeof(expected), timeout)) return 0;
+
+	switch (GetLastError()) {
+		case ERROR_INVALID_PARAMETER: return DESCENT_ERROR_INVALID;
+		default:                      return DESCENT_ERROR_OS;
+	}
+}
+
+rcode futex_wake(atomic_32 *futex, uint32_t count) {
+	if (!futex) return DESCENT_ERROR_NULL;
+	
+#if defined(DESCENT_WINDOWS_FUTEX_WAKE_COUNT_ALL)
+
+	if (count) {
+		if (count == 1) WakeByAddressSingle((void *)&futex->_atomic);
+		else WakeByAddressAll((void *)&futex->_atomic);
+	}
+
+#else
+
+	while (count--) WakeByAddressSingle((void *)&futex->_atomic);
+
+#endif
+
+	return 0;
+}
+
+rcode futex_wake_next(atomic_32 *futex) {
+	if (!futex) return DESCENT_ERROR_NULL;
+	WakeByAddressSingle((void *)&futex->_atomic);
+	return 0;
+}
+
+rcode futex_wake_all(atomic_32 *futex) {
+	if (!futex) return DESCENT_ERROR_NULL;
+	WakeByAddressAll((void *)&futex->_atomic);
+	return 0;
+}

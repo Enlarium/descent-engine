@@ -20,7 +20,7 @@
 #include <string.h>
 
 #include <descent/cli.h>
-#include <descent/utilities/codes.h>
+#include <descent/rcode.h>
 
 static int check_inputs_flag(unsigned int argc, const char **argv, void *settings, const char *function_name) {
 	if (argc) {
@@ -33,7 +33,7 @@ static int check_inputs_flag(unsigned int argc, const char **argv, void *setting
 	}
 	if (!settings) {
 		printf("%s received a null pointer for parameter `settings`\n", function_name);
-		return DESCENT_ERROR_NULL_POINTER;
+		return DESCENT_ERROR_NULL;
 	}
 
 	return 0;
@@ -46,11 +46,11 @@ static int check_inputs_nonflag(unsigned int argc, const char **argv, void *sett
 	}
 	if (!argv) {
 		printf("%s received a null pointer for parameter `argv`\n", function_name);
-		return DESCENT_ERROR_NULL_POINTER;
+		return DESCENT_ERROR_NULL;
 	}
 	if (!settings) {
 		printf("%s received a null pointer for parameter `settings`\n", function_name);
-		return DESCENT_ERROR_NULL_POINTER;
+		return DESCENT_ERROR_NULL;
 	}
 
 	return 0;
@@ -59,15 +59,15 @@ static int check_inputs_nonflag(unsigned int argc, const char **argv, void *sett
 static int check_field(const char *expected, const char **argv, const char *function_name) {
 	if (!expected) {
 		printf("%s received a null pointer for parameter `expected`\n", function_name);
-		return DESCENT_ERROR_NULL_POINTER;
+		return DESCENT_ERROR_NULL;
 	}
 	if (!argv) {
 		printf("%s received a null pointer for parameter `argv`\n", function_name);
-		return DESCENT_ERROR_NULL_POINTER;
+		return DESCENT_ERROR_NULL;
 	}
 	if (!argv[0]) {
 		printf("%s received a null pointer for parameter element `argv[0]`\n", function_name);
-		return DESCENT_ERROR_NULL_POINTER;
+		return DESCENT_ERROR_NULL;
 	}
 
 	if (strcmp(expected, argv[0])) {
@@ -81,21 +81,21 @@ static int check_field(const char *expected, const char **argv, const char *func
 static int check_fields(unsigned int count, const char **expected, const char **argv, const char *function_name) {
 	if (!expected) {
 		printf("%s received a null pointer for parameter `expected`\n", function_name);
-		return DESCENT_ERROR_NULL_POINTER;
+		return DESCENT_ERROR_NULL;
 	}
 	if (!argv) {
 		printf("%s received a null pointer for parameter `argv`\n", function_name);
-		return DESCENT_ERROR_NULL_POINTER;
+		return DESCENT_ERROR_NULL;
 	}
 
 	for (unsigned int i = 0; i < count; ++i) {
 		if (!expected[i]) {
 			printf("%s received a null pointer for parameter element `expected[%u]`\n", function_name, i);
-			return DESCENT_ERROR_NULL_POINTER;
+			return DESCENT_ERROR_NULL;
 		}
 		if (!argv[i]) {
 			printf("%s received a null pointer for parameter element `argv[%u]`\n", function_name, i);
-			return DESCENT_ERROR_NULL_POINTER;
+			return DESCENT_ERROR_NULL;
 		}
 
 		if (strcmp(expected[i], argv[i])) {

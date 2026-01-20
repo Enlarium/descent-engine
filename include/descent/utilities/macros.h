@@ -37,4 +37,10 @@
  */
 #define STRINGIFY(x) STRINGIFY_PURE(x)
 
+#define POINTER_OFFSET(type, pointer, offset) ((type *)((char *)(pointer) + (size_t) (offset)))
+
+#define POINTER_OFFSET_CONST(type, pointer, offset) ((const type *)((const char *)(pointer) + (size_t) (offset)))
+
+#define ALIGNED_SIZE(type, align) ((sizeof(type) + align - 1) & ~(align - 1))
+
 #endif

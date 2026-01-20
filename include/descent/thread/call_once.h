@@ -16,47 +16,79 @@
 #ifndef DESCENT_THREAD_CALL_ONCE_H
 #define DESCENT_THREAD_CALL_ONCE_H
 
-#include "../utilities/opaque.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <descent/rcode.h>
+#include <descent/thread/atomic_types.h>
 
 /**
+ * @defgroup call-once Call-Once
+ * @ingroup thread
+ *
+ * @brief One-time function calls.
+ *
+ * Provides a call-once primitive for ensuring that a function is executed
+ * exactly once across all threads using the same call-once object.
+ *
+ * If multiple threads attempt to execute the function concurrently, only one
+ * will execute it; the others will block until initialization completes.
+ * 
+ * Once initialization completes successfully, all memory effects of the
+ * initialization function are visible to all threads returning from the
+ * call-once operation.
+ * 
+ * This mechanism is intra-process only and cannot be shared between processes.
+ */
+
+/**
+ * @ingroup call-once
+ * @brief Call-once initializer, equivalent to {0}.
+ */
+#define CALL_ONCE_INIT { ._function = ATOMIC_INIT(0), ._owner = ATOMIC_INIT(0), ._state = ATOMIC_INIT(0) }
+
+/**
+ * @ingroup call-once
  * @struct CallOnce
- * @brief Ensures a function is executed only once across all threads.
+ * @brief A one-time initialization primitive.
  *
- * Useful for initializing global or shared resources in a thread-safe manner.
+ * Ensures that a specified function is executed exactly once, even in the
+ * presence of multiple threads. Useful for initializing global or shared
+ * resources safely.
  * 
- * @note This mechanism is intra-process only. It cannot be shared between processes.
- */
-DESCENT_OPAQUE_DEFINE(CallOnce, DESCENT_OPAQUE_SIZE_CALL_ONCE)
-
-/**
- * @typedef CallOnceFunction
- * @brief Function type to call-once.
- */
-typedef void (*CallOnceFunction)(void);
-
-/**
- * @brief Initialize a call-once.
- * @param c Pointer to the CallOnce.
+ * Once a function has been executed, subsequent calls with the same
+ * call-once will return immediately.
  * 
- * @note After call_once executes, re-initializing the same CallOnce object is undefined behavior.
+ * Must be zero-initialized ({0} or CALL_ONCE_INIT) for static instances, or
+ * explicitly zeroed before use for dynamic instances.
  */
-void call_once_init(CallOnce *c);
+struct CallOnce {
+	atomic_ptr _function;
+	atomic_64  _owner;
+	atomic_32  _state;
+};
 
 /**
- * @brief Executes a function exactly once across all threads.
- * @param c Pointer to the CallOnce.
- * @param f Function to execute.
+ * @ingroup call-once
+ * @brief Executes a function exactly once, using the specified call-once.
  *
- * Subsequent calls after the first successful execution are no-ops.
+ * This function ensures that the provided function pointer @p f is called at
+ * most once across all threads that use the same call-once object. If multiple
+ * threads attempt to call @p f simultaneously, only one will execute it, and
+ * the others will block until execution is complete.
+ * 
+ * After @p f is called, calling this function with the same call-once and
+ * function will immediately return 0. If a different function is provided,
+ * this function will return @ref DESCENT_ERROR_INVALID.
+ * 
+ * If @p f calls @ref call_once on the same call-once used to invoke it, this
+ * function will return @ref THREAD_ERROR_DEADLOCK.
+ * 
+ * @param c Pointer to the call-once. Must not be NULL.
+ * @param f Pointer to the function to execute once. Must not be NULL.
+ * @return
+ * - 0 on success.
+ * - @ref DESCENT_ERROR_NULL if either parameter is null.
+ * - @ref THREAD_ERROR_DEADLOCK on re-entrant invocation.
+ * - @ref DESCENT_ERROR_INVALID if a different function is provided on re-call.
  */
-void call_once(CallOnce *c, CallOnceFunction f);
-
-#ifdef __cplusplus
-}
-#endif
+rcode call_once(struct CallOnce *c, void (*f)(void));
 
 #endif

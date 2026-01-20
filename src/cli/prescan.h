@@ -16,8 +16,11 @@
 #ifndef DESCENT_SOURCE_CLI_PRESCAN_H
 #define DESCENT_SOURCE_CLI_PRESCAN_H
 
+#include <string.h>
+#include <stdlib.h>
+
 #include <descent/cli.h>
-#include <descent/utilities/codes.h>
+#include <descent/rcode.h>
 
 #include "context.h"
 
@@ -46,27 +49,9 @@ static inline int cli_comparator(const void *a, const void *b) {
 	return strcmp(long_a, long_b);
 }
 
-static inline int cli_prescan(CLI_ParseContext *c) {
-	puts("Unsorted Parameters:");
-	for (unsigned int i = 0; i < c->parameter_count; ++i) {
-		if (cli_is_subcommand(&c->parameters[i]))        printf("  (%02u) subcommand %s\n", i, c->parameters[i].name_long);
-		else if (cli_is_long_option(&c->parameters[i]))  printf("  (%02u) option     %s\n", i, c->parameters[i].name_long);
-		else if (cli_is_short_option(&c->parameters[i])) printf("  (%02u) option     %c\n", i, c->parameters[i].name_short);
-		else if (cli_is_positional(&c->parameters[i]))   printf("  (%02u) positional %u\n", i, c->parameters[i].position);
-		else if (cli_is_catchall(&c->parameters[i]))     printf("  (%02u) catchall\n", i);
-	}
-
+static inline rcode cli_prescan(CLI_ParseContext *c) {
 	// Sort the parameter array lexicographically
 	qsort(c->parameters, c->parameter_count, sizeof(c->parameters[0]), cli_comparator);
-
-	puts("Sorted Parameters:");
-	for (unsigned int i = 0; i < c->parameter_count; ++i) {
-		if (cli_is_subcommand(&c->parameters[i]))        printf("  (%02u) subcommand %s\n", i, c->parameters[i].name_long);
-		else if (cli_is_long_option(&c->parameters[i]))  printf("  (%02u) option     %s\n", i, c->parameters[i].name_long);
-		else if (cli_is_short_option(&c->parameters[i])) printf("  (%02u) option     %c\n", i, c->parameters[i].name_short);
-		else if (cli_is_positional(&c->parameters[i]))   printf("  (%02u) positional %u\n", i, c->parameters[i].position);
-		else if (cli_is_catchall(&c->parameters[i]))     printf("  (%02u) catchall\n", i);
-	}
 
 	// Default to no subcommands or long options
 	c->first_subcommand = c->parameter_count;
@@ -82,13 +67,11 @@ static inline int cli_prescan(CLI_ParseContext *c) {
 		if (par->name_long) {
 			// Record the first subcommand
 			if (c->first_subcommand == c->parameter_count && cli_is_subcommand(par)) {
-				printf("Found first subcommand at index %u\n", i);
 				c->first_subcommand = i;
 			}
 
 			// Record the first long option
 			else if (c->first_long_option == c->parameter_count && cli_is_long_option(par)) {
-				printf("Found first long option at index %u\n", i);
 				c->first_long_option = i;
 			}
 		}
@@ -108,14 +91,14 @@ static inline int cli_prescan(CLI_ParseContext *c) {
 			}
 
 			if (cli_is_short_option(par)) {
-				int index = cli_short_to_index(par->name_short);
+				unsigned int index = (unsigned int) cli_short_to_index(par->name_short);
 				if (!c->shorts[index]) c->shorts[index] = par;
 				else return CLI_ERROR_DUPLICATE_PARAMETER;
 			}
 		}
 		
 		else if (cli_is_positional(par)) {
-				int index = par->position - 1;
+				unsigned int index = par->position - 1;
 				if (!c->positionals[index]) c->positionals[index] = par;
 				else return CLI_ERROR_DUPLICATE_PARAMETER;
 		}

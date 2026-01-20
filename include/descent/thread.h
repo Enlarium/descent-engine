@@ -16,15 +16,29 @@
 #ifndef DESCENT_THREAD_H
 #define DESCENT_THREAD_H
 
-#include "thread/atomic.h"
-#include "thread/barrier.h"
-#include "thread/condition.h"
-#include "thread/mutex.h"
-#include "thread/recursive_mutex.h"
-#include "thread/rwlock.h"
-#include "thread/semaphore.h"
-#include "thread/spinlock.h"
-#include "thread/thread.h"
-#include "thread/ticket_lock.h"
+/**
+ * @defgroup thread Thread
+ *
+ * @brief Threading and synchronization primitives.
+ *
+ * This module provides low-level threading and synchronization facilities,
+ * including thread management, mutual exclusion, condition variables,
+ * semaphores, and queue-based locks.
+ *
+ * All mechanisms in this module are intra-process only and are not safe for
+ * use across process boundaries.
+ */
+
+#include <descent/thread/atomic.h>
+#include <descent/thread/call_once.h>
+// #include <descent/thread/barrier.h> // TODO: Unimplemented
+#include <descent/thread/condition.h>
+#include <descent/thread/futex.h>
+#include <descent/thread/mutex.h>
+#include <descent/thread/qutex.h>
+// #include <descent/thread/rwlock.h> // TODO: Unimplemented
+#include <descent/thread/semaphore.h>
+#include <descent/thread/thread.h>
+#include <descent/thread/tls.h>
 
 #endif

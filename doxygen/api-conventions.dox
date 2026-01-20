@@ -1,0 +1,22 @@
+/**
+ * @defgroup api-conventions API Conventions
+ */
+
+/**
+ * @page api-conventions-page API Conventions
+ *
+ * @ingroup api-conventions
+ *
+ * This section defines naming, visibility, lifetime, threading, and ABI
+ * conventions that apply to all public interfaces unless explicitly stated
+ * otherwise.
+ *
+ * ## Private structure members
+ *
+ * Any structure member whose name begins with an underscore (`_`) is a
+ * private implementation detail.
+ *
+ * - Must not be accessed or modified by user code
+ * - May change, be reordered, or be removed in any future release
+ * - Do not form part of the API or ABI contract
+ */

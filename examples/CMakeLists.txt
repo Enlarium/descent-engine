@@ -12,9 +12,8 @@ target_include_directories(${EXECUTABLE_NAME} PRIVATE
 target_link_libraries(${EXECUTABLE_NAME} PRIVATE
 	${Vulkan_LIBRARIES}
 	descent-alloc
-	descent-script
-	descent-thread
-	descent-log
-	descent-utilities
 	descent-cli
+	descent-core
+	descent-thread
+	descent-rcode
 )

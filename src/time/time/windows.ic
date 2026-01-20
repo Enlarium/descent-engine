@@ -1,0 +1,72 @@
+/* Copyright 2025 XavierHarkonnen9 and Enlarium
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+#include <descent/time.h>
+#include <intern/time.h>
+
+#include <descent/rcode.h>
+#include <descent/thread/atomic.h>
+
+static atomic_64 reference_time = ATOMIC_INIT(0);
+static atomic_64 processor_freq = ATOMIC_INIT(0);
+
+rcode time_init(void) {
+	LARGE_INTEGER now = 0;
+	LARGE_INTEGER freq = 0;
+
+	if (!QueryPerformanceFrequency(&freq)) return DESCENT_FATAL_TIMER;
+	if (!QueryPerformanceCounter(&now))    return DESCENT_FATAL_TIMER;
+
+	atomic_store_64(&reference_time, (uint64_t) now.QuadPart, ATOMIC_RELEASE);
+	atomic_store_64(&processor_freq, (uint64_t) freq.QuadPart, ATOMIC_RELEASE);
+
+	return 0;
+}
+
+uint64_t time_nanoseconds(void) {
+	LARGE_INTEGER now = 0;
+
+	// We can assume that QueryPerformanceCounter() succeeds after time_init()
+	// succeeds.
+	QueryPerformanceCounter(&now);
+
+	uint64_t reference = atomic_load_64(&reference_time, ATOMIC_ACQUIRE);
+	uint64_t frequency = atomic_load_64(&processor_freq, ATOMIC_ACQUIRE);
+
+	uint64_t delta = (uint64_t) now.QuadPart - reference;
+	uint64_t seconds = delta / frequency;
+	uint64_t remainder = delta % frequency;
+
+	return seconds * NSEC_PER_SEC + (remainder * NSEC_PER_SEC) / frequency;
+}
+
+uint64_t time_max_timeout(void) {
+	return DESCENT_MAXIMUM_TIMEOUT;
+}
+
+timeout_native time_to_timeout(uint64_t nanoseconds) {
+	// Timeouts are capped at DESCENT_MAXIMUM_TIMEOUT.
+	if (nanoseconds > DESCENT_MAXIMUM_TIMEOUT) nanoseconds = DESCENT_MAXIMUM_TIMEOUT;
+
+	// Windows timeouts are measured in milliseconds (with a default granularity
+	// of 15.6 ms).
+	// Current strategy is to round timeouts down.
+	timeout_native result = nanoseconds / NSEC_PER_MSEC;
+
+	return result;
+}

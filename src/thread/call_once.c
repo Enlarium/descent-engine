@@ -14,43 +14,83 @@
  */
 
 #include <descent/thread/call_once.h>
+#include <intern/thread/call_once_u.h>
 
-#include <descent/utilities/platform.h>
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-#include <pthread.h>
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-#include <windows.h>
-#endif
+#include <stdbool.h>
+#include <stdint.h>
 
-#include <descent/utilities/opaque.h>
+#include <descent/rcode.h>
+#include <descent/thread/atomic.h>
+#include <descent/thread/futex.h>
+#include <descent/utilities/builtin.h>
+#include <intern/thread/hints.h>
+#include <intern/thread/tid.h>
 
-#include "implementation.h"
+enum {
+	CALL_ONCE_UNCALLED = 0,
+	CALL_ONCE_CALLED,
+	CALL_ONCE_COMPLETE,
+};
 
-_Static_assert(DESCENT_OPAQUE_SIZE_CALL_ONCE >= sizeof(CallOnceImplementation), "Call-once opaque type is too small for its implementation!");
-_Static_assert(_Alignof(CallOnce) >= _Alignof(CallOnceImplementation), "Call-once opaque type is under-aligned for its implementation!");
+rcode call_once(struct CallOnce *c, void (*f)(void)) {
+	if (!c || !f) return DESCENT_ERROR_NULL;
 
-#if defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-BOOL CALLBACK call_once_wrapper(PINIT_ONCE InitOnce, PVOID Parameter,PVOID *Context) {
-	CallOnceFunction function = (CallOnceFunction) Parameter;
-  function();
-  return TRUE;
+	// Optimize for fast path where function is already called
+	bool fast_path = (atomic_load_32(&c->_state, ATOMIC_ACQUIRE) == CALL_ONCE_COMPLETE);
+	if (builtin_expect(fast_path, true)) {
+		// Internal function record never changes after completion
+		// Check that the provided function matches the called function
+		int valid_function = atomic_load_ptr(&c->_function, ATOMIC_ACQUIRE) == (uintptr_t) f;
+		return valid_function ? 0 : DESCENT_ERROR_INVALID;
+	}
+
+	// Check that the current thread has permission to call this function
+	if (builtin_expect(tid_is_self(TID_NONE), false)) return DESCENT_ERROR_FORBIDDEN;
+	
+	uint32_t expected = CALL_ONCE_UNCALLED;
+	if (atomic_compare_exchange_32(&c->_state, &expected, CALL_ONCE_CALLED, ATOMIC_RELEASE, ATOMIC_RELAXED)) {
+		atomic_store_ptr (&c->_function, (uintptr_t) f, ATOMIC_RELEASE);
+		atomic_store_64(&c->_owner, tid_self(), ATOMIC_RELEASE);
+
+		f();
+
+		atomic_store_64(&c->_owner, TID_NONE, ATOMIC_RELEASE);
+		atomic_store_32(&c->_state, CALL_ONCE_COMPLETE, ATOMIC_RELEASE);
+
+		rcode result = futex_wake_all(&c->_state);
+		if (result) return result;
+	}
+
+	else if (atomic_load_64(&c->_owner, ATOMIC_ACQUIRE) == tid_self()) {
+		return THREAD_ERROR_DEADLOCK;
+	}
+
+	else while (atomic_load_32(&c->_state, ATOMIC_ACQUIRE) != CALL_ONCE_COMPLETE) {
+		// Since reversion from CALL_ONCE_CALLED to CALL_ONCE_UNCALLED is impossible,
+		// the state is either CALL_ONCE_CALLED or CALL_ONCE_COMPLETE
+		rcode result = futex_wait(&c->_state, CALL_ONCE_CALLED);
+		if (result) return result;
+	}
+
+	int valid_function = atomic_load_ptr(&c->_function, ATOMIC_ACQUIRE) == (uintptr_t) f;
+	return valid_function ? 0 : DESCENT_ERROR_INVALID;
 }
-#endif
 
-void call_once_init(CallOnce *oc) {
-	CallOnceImplementation *c = (CallOnceImplementation *)oc;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	c->_once = PTHREAD_ONCE_INIT;
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	c->_once = INIT_ONCE_STATIC_INIT;
-#endif
-}
+void call_once_u(struct CallOnce_u *c, void (*f)(void)) {
+	// Optimize for fast path
+	bool fast_path = (atomic_load_32(&c->_state, ATOMIC_ACQUIRE) == CALL_ONCE_COMPLETE);
+	if (builtin_expect(fast_path, true)) return;
+	
+	uint32_t expected = CALL_ONCE_UNCALLED;
+	if (atomic_compare_exchange_32(&c->_state, &expected, CALL_ONCE_CALLED, ATOMIC_RELEASE, ATOMIC_RELAXED)) {
+		f();
+		atomic_store_32(&c->_state, CALL_ONCE_COMPLETE, ATOMIC_RELEASE);
+		futex_wake_all(&c->_state);
+	}
 
-void call_once(CallOnce *oc, CallOnceFunction f) {
-	CallOnceImplementation *c = (CallOnceImplementation *)oc;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	pthread_once(&c->_once, f);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	InitOnceExecuteOnce(&c->_once, call_once_wrapper, (PVOID)f, NULL);
-#endif
+	else while (atomic_load_32(&c->_state, ATOMIC_ACQUIRE) != CALL_ONCE_COMPLETE) {
+		// Since reversion from CALL_ONCE_CALLED to CALL_ONCE_UNCALLED is impossible,
+		// the state is either CALL_ONCE_CALLED or CALL_ONCE_COMPLETE
+		futex_wait(&c->_state, CALL_ONCE_CALLED);
+	}
 }

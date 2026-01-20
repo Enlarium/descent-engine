@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <descent/utilities/codes.h>
+#include <descent/rcode.h>
 
 int option_help(unsigned int argc, const char **argv, void *settings) {
 	(void) argc;

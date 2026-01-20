@@ -15,62 +15,57 @@
 
 #include <descent/thread/semaphore.h>
 
-#include <descent/utilities/platform.h>
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-#include <semaphore.h>
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-#include <windows.h>
-#endif
+#include <stdint.h>
+#include <stdbool.h>
 
-#include <descent/utilities/opaque.h>
+#include <descent/rcode.h>
+#include <descent/thread/atomic.h>
+#include <descent/thread/condition.h>
+#include <descent/thread/futex.h>
 
-#include "implementation.h"
+int semaphore_wait(struct Semaphore *s) {
+	if (!s) return DESCENT_ERROR_NULL;
+	
+	for (;;)  {
+		uint32_t count = atomic_load_32(&s->_count, ATOMIC_RELAXED);
 
-_Static_assert(DESCENT_OPAQUE_SIZE_SEMAPHORE >= sizeof(SemaphoreImplementation), "Semaphore opaque type is too small for its implementation!");
-_Static_assert(_Alignof(Semaphore) >= _Alignof(SemaphoreImplementation), "Semaphore opaque type is under-aligned for its implementation!");
+		if (count > 0) {
+			if (atomic_compare_exchange_32(&s->_count, &count, count - 1, ATOMIC_ACQUIRE, ATOMIC_RELAXED)) {
+				return 0;
+			}
+		}
 
-int semaphore_init(Semaphore *os, unsigned int initial_count) {
-	SemaphoreImplementation *s = (SemaphoreImplementation *)os;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sem_init(&s->_semaphore, 0, initial_count);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	s->_semaphore = CreateSemaphoreW(NULL, (LONG)initial_count, LONG_MAX, NULL);
-	return !s->_semaphore;
-#endif
+		else {
+			rcode result = futex_wait(&s->_count, 0);
+			if (result) return result;
+		}
+	}
 }
 
-int semaphore_destroy(Semaphore *os) {
-	SemaphoreImplementation *s = (SemaphoreImplementation *)os;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sem_destroy(&s->_semaphore);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !CloseHandle(s->_semaphore);
-#endif
+int semaphore_trywait(struct Semaphore *s) {
+	if (!s) return DESCENT_ERROR_NULL;
+
+	uint32_t count = atomic_load_32(&s->_count, ATOMIC_RELAXED);
+
+	if (count > 0) {
+		if (atomic_compare_exchange_32(&s->_count, &count, count - 1, ATOMIC_ACQUIRE, ATOMIC_RELAXED)) {
+			return 0;
+		}
+	}
+
+	return THREAD_INFO_BUSY;
 }
 
-int semaphore_wait(Semaphore *os) {
-	SemaphoreImplementation *s = (SemaphoreImplementation *)os;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sem_wait(&s->_semaphore);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return WaitForSingleObject(s->_semaphore, INFINITE) != WAIT_OBJECT_0;
-#endif
-}
+int semaphore_signal(struct Semaphore *s) {
+	if (!s) return DESCENT_ERROR_NULL;
+	
+	for (;;) {
+		uint32_t count = atomic_load_32(&s->_count, ATOMIC_RELAXED);
 
-int semaphore_trywait(Semaphore *os) {
-	SemaphoreImplementation *s = (SemaphoreImplementation *)os;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sem_trywait(&s->_semaphore);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return WaitForSingleObject(s->_semaphore, 0) != WAIT_OBJECT_0;
-#endif
-}
+		if (count >= s->_maximum) return DESCENT_ERROR_OVERFLOW;
 
-int semaphore_post(Semaphore *os) {
-	SemaphoreImplementation *s = (SemaphoreImplementation *)os;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sem_post(&s->_semaphore);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !ReleaseSemaphore(s->_semaphore, 1, NULL);
-#endif
+		if (atomic_compare_exchange_32(&s->_count, &count, count + 1, ATOMIC_RELEASE, ATOMIC_RELAXED)) {
+			return futex_wake_next(&s->_count);
+		}
+	}
 }

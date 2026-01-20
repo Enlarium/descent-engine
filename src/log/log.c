@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// TODO: Allow user to define their own modules and module strings
+
 #include <descent/log.h>
 
 #include <assert.h>
@@ -25,6 +27,7 @@
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 #include <unistd.h>
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
 
@@ -33,7 +36,7 @@
 #include <descent/thread/rwlock.h>
 #include <descent/thread/thread.h>
 #include <descent/utilities/intrin/bits.h>
-#include <descent/utilities/codes.h>
+#include <descent/rcode.h>
 
 #include "tables.h"
 
@@ -217,10 +220,10 @@ int log_sink_init(LogSinkHandle h, int format, int levels, int present) {
 
 int log_sink_file(LogSinkHandle h, const char *filepath, int mode) {
 	if (!log_sink_handle_valid(h)) return LOG_ERROR_INVALID_HANDLE;
-	if (!filepath) return DESCENT_ERROR_NULL_POINTER;
+	if (!filepath) return DESCENT_ERROR_NULL;
 	
 	FILE *output = fopen(filepath, (mode == LOG_SINK_WRITE) ? "w" : "a");
-	if (!output) return DESCENT_ERROR_OUT_OF_MEMORY;
+	if (!output) return DESCENT_ERROR_MEMORY;
 
 	log_sink_set(h, output);
 
@@ -331,9 +334,9 @@ int log_message(DescentModule m, LogLevel l, const char *fmt, ...) {
 }
 
 int log_submit(DescentModule m, LogLevel l, const char *fmt, va_list args) {
-	if (!log_module_valid(m)) return DESCENT_ERROR_INVALID_MODULE;
+	if (!log_module_valid(m)) return DESCENT_ERROR_MODULE;
 	if (!log_levels_valid(l)) return LOG_ERROR_INVALID_LEVEL;
-	if (!fmt) return DESCENT_ERROR_NULL_POINTER;
+	if (!fmt) return DESCENT_ERROR_NULL;
 
 	rwlock_read_lock(&submit_lock);
 
@@ -369,7 +372,7 @@ int log_submit(DescentModule m, LogLevel l, const char *fmt, va_list args) {
 		memcpy(msg->message, err_msg, sizeof(err_msg));
 		result = LOG_ERROR_FORMAT_MESSAGE;
 	} else if (result >= LOG_MESSAGE_SIZE) {
-		result = DESCENT_WARNING_TRUNCATION;
+		result = DESCENT_WARN_TRUNCATION;
 	} else {
 		result = 0;
 	}

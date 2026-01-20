@@ -13,719 +13,285 @@
  * limitations under the License.
  */
 
-#include <descent/thread/thread.h>
-
-#include <inttypes.h>
-#include <stdint.h>
-#include <string.h>
-
 #include <descent/utilities/platform.h>
+#if defined(DESCENT_PLATFORM_LINUX)
+// Needed for pthread_setname_np on Linux
+#define _GNU_SOURCE
+#endif
+
+#include <descent/thread/thread.h>
+#include <intern/thread/thread.h>
+
+#include <stdint.h>
+
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
 #include <pthread.h>
-#include <sched.h>
-#include <time.h>
-#include <unistd.h>
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-#include <processthreadsapi.h>
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
 
-#include <descent/log.h>
+#include <descent/rcode.h>
+#include <descent/string/nchar.h>
+#include <descent/string/utf_8.h>
 #include <descent/thread/atomic.h>
-#include <descent/thread/intrin.h>
 #include <descent/thread/tls.h>
-#include <descent/utilities/codes.h>
-
-#include "thread_context.h"
-#include "thread_handle.h"
-
-// Thread State Progression:
-// UNUSED --choose-> RESERVED --wrapper(init)-> RUNNING --wrapper(exit)-> FINISHED --join/detach-> UNUSED
-// RUNNING --detach-> DETACHED --wrapper(exit)-> UNUSED
-
-// Any unmanaged threads will be parsed as invalid, so they can't be joined or detached
-#define THREAD_SELF_UNMANAGED ((Thread) 0xFFFFFFFFFFFFFFFF)
+#include <intern/thread/call_once_u.h>
+#include <intern/thread/tid.h>
 
 #if defined(DESCENT_PLATFORM_TYPE_POSIX)
+typedef pthread_t thread_handle;
 #define THREAD_WRAPPER_SIGNATURE void *
-#define THREAD_WRAPPER_RETURN (void*)(intptr_t)
+#define THREAD_WRAPPER_RETURN NULL
 #elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+typedef HANDLE thread_handle;
 #define THREAD_WRAPPER_SIGNATURE unsigned __stdcall
-#define THREAD_WRAPPER_RETURN (unsigned)
+#define THREAD_WRAPPER_RETURN 0
 #endif
 
-// All managed threads start as unmanaged, but update themselves when they initialize
-static TLS Thread self = THREAD_SELF_UNMANAGED;
+struct Thread {
+	thread_handle handle;
+	nchar         name[DESCENT_THREAD_NAME_SIZE];
+	int         (*function)(void *);
+	void         *argument;
+	thread_id     id;
+	atomic_int    state;
+	atomic_int    code;
+};
 
-static ThreadContext thread_pool[DESCENT_MAX_THREADS] = {0};
+static struct Thread unique[DESCENT_UNIQUE_THREAD_COUNT_MAX] = {0};
+static struct Thread worker[DESCENT_WORKER_THREAD_COUNT_MAX] = {0};
+static unsigned int worker_count = 0;
 
-static inline ThreadContext *choose_thread_context(void) {
-	for (int i = 0; i < DESCENT_MAX_THREADS; ++i) {
-		ThreadContext *context = &thread_pool[i];
-
-		for (;;) {
-			uint64_t meta       = atomic_load_64(&context->meta);
-			uint32_t state      = thread_context_state(meta);
-			uint32_t generation = thread_context_generation(meta);
-
-			if (state != THREAD_STATE_UNUSED) break;
-
-			uint64_t new_meta = thread_context_construct(THREAD_STATE_RESERVED, generation);
-
-			if (atomic_compare_exchange_64(&context->meta, &meta, new_meta)) return context;
-
-			thread_pause();
-		}
-	}
-
-	return NULL;
+static inline rcode thread_set_name(const nchar *name) {
+#if defined(DESCENT_PLATFORM_TYPE_POSIX)
+	// Supported on Linux and FreeBSD, our only two POSIX targets
+	int result = pthread_setname_np(pthread_self(), name);
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+	int result = FAILED(SetThreadDescription(GetCurrentThread(), name));
+#endif
+	return result ? DESCENT_ERROR_OS : 0;
 }
 
-static THREAD_WRAPPER_SIGNATURE thread_function_wrapper(void *p) {
-	// ThreadContext's static fields are not to be accessed by any function other than this
-	// or thread_create, and thread_create cannot modify a context while it is running.
+static THREAD_WRAPPER_SIGNATURE thread_wrapper(void *p) {
+	struct Thread *thread = (struct Thread *)p;
 
-	ThreadContext *context = (ThreadContext*)p;
+	// We don't particularly care if thread naming fails
+	(void) thread_set_name(thread->name);
 
-	uint64_t meta = atomic_load_64(&context->meta);
-	uint32_t generation = thread_context_generation(meta);
-
-	self = thread_construct((uint32_t) (context - thread_pool), generation);
-
-	THREADING_TRACE("[%s] [%016" PRIX64 "] called", __func__, self);
-
-	atomic_store_64(&context->meta, thread_context_construct(THREAD_STATE_RUNNING, generation));
-
-	int result = context->function(context->argument);
-
-	// Clear fields before closing
-	context->function = NULL;
-	context->argument = NULL;
-
-	// Check if the thread is still in the default running state first
-	// If THREAD_STATE_RUNNING, go to THREAD_STATE_FINISHED
-	// Expect THREAD_STATE_RUNNING (testing) on the current generation (certain)
-	meta = thread_context_construct(THREAD_STATE_RUNNING, generation);
-	if (atomic_compare_exchange_64(&context->meta, &meta, thread_context_construct(THREAD_STATE_FINISHED, generation))) {
-		THREADING_TRACE("[%s] [%016" PRIX64 "] set state from RUNNING to FINISHED", __func__, self);
-	} else {
-		THREADING_TRACE("[%s] [%016" PRIX64 "] state is %s, skipping transition to FINISHED", __func__, self, thread_state_short(thread_context_state(meta)));
+	// We do care if a TID assignment fails, since it's necessary for a lot of
+	// library operations
+	rcode tid_result = tid_assign(thread->id);
+	if (tid_result) {
+		atomic_store_int(&thread->code, tid_result, ATOMIC_RELEASE);
+		atomic_store_int(&thread->state, THREAD_STATE_INCOMPLETE, ATOMIC_RELEASE);
+		return THREAD_WRAPPER_RETURN;
 	}
+
+	// Mark thread as running
+	atomic_store_int(&thread->state, THREAD_STATE_RUNNING, ATOMIC_RELEASE);
+
+	// Run provided function
+	int result = thread->function(thread->argument);
+
+	// Mark thread as complete
+	atomic_store_int(&thread->code, result, ATOMIC_RELEASE);
+	atomic_store_int(&thread->state, THREAD_STATE_FINISHED, ATOMIC_RELEASE);
 	
-	// The thread can still be detached while finished, check this second
-	// If THREAD_STATE_DETACHED, go straight to THREAD_STATE_UNUSED and increment generation
-	// Expect THREAD_STATE_DETACHED (testing) on the current generation (certain)
-	meta = thread_context_construct(THREAD_STATE_DETACHED, generation);
-	if (atomic_compare_exchange_64(&context->meta, &meta, thread_context_construct(THREAD_STATE_UNUSED, generation + 1))) {
-		THREADING_TRACE("[%s] [%016" PRIX64 "] set state from DETACHED to UNUSED, incremented generation", __func__, self);
-	} else {
-		THREADING_TRACE("[%s] [%016" PRIX64 "] state is %s, cleanup deferred", __func__, self, thread_state_short(thread_context_state(meta)));
-	}
-	
-	return THREAD_WRAPPER_RETURN result;
+	return THREAD_WRAPPER_RETURN;
 }
 
-ThreadName thread_name(const char *string) {
-	ThreadName result = {0};
+static inline rcode thread_spawn(
+	struct Thread *thread,
+	int (*function)(void *),
+	void *argument,
+	const char *name,
+	thread_id id
+) {
+	if (!thread || !function) return DESCENT_ERROR_NULL;
+	
+	// Only the main thread has permission to call this function
+	if (!tid_is_self(TID_MAIN)) return DESCENT_ERROR_FORBIDDEN;
 
-	if (string) {
-		strncpy(result.name, string, THREAD_NAME_LENGTH - 1);
-		result.name[THREAD_NAME_LENGTH - 1] = '\0';
+	// Do not allow spawning in active slots.
+	// Only unused and incomplete thread slots can be spawned.
+	switch (atomic_load_int(&thread->state, ATOMIC_ACQUIRE)) {
+		case THREAD_STATE_STARTING:
+		case THREAD_STATE_RUNNING:
+		case THREAD_STATE_FINISHED:
+			return THREAD_ERROR_ACTIVE;
+	}
+
+	// Create a native thread name if possible
+	char tname[DESCENT_THREAD_NAME_SIZE] = {0};
+
+	if (utf8_copy_truncate(DESCENT_THREAD_NAME_SIZE, tname, name)) {
+		chars_to_nchars(DESCENT_THREAD_NAME_SIZE, thread->name, NULL, "D-THREAD", 8);
+	}
+	else if (chars_to_nchars(DESCENT_THREAD_NAME_SIZE, thread->name, NULL, tname, 0)) {
+		chars_to_nchars(DESCENT_THREAD_NAME_SIZE, thread->name, NULL, "D-THREAD", 8);
+	}
+	
+	thread->function = function;
+	thread->argument = argument;
+	thread->id       = id;
+	
+	atomic_store_int(&thread->state, THREAD_STATE_STARTING, ATOMIC_RELEASE);
+	atomic_store_int(&thread->code, 0, ATOMIC_RELEASE);
+
+#if defined(DESCENT_PLATFORM_TYPE_POSIX)
+	int result = pthread_create(&thread->handle, NULL, thread_wrapper, thread);
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+	thread->handle = (thread_handle) _beginthreadex(NULL, 0, thread_wrapper, thread, 0, NULL);
+	int result = !thread->handle;
+#endif
+
+	if (result) {
+		atomic_store_int(&thread->state, THREAD_STATE_INCOMPLETE, ATOMIC_RELEASE);
+		atomic_store_int(&thread->code, DESCENT_ERROR_OS, ATOMIC_RELEASE);
+		return DESCENT_ERROR_OS;
+	}
+
+	return 0;
+}
+
+static inline int thread_collect(struct Thread *thread) {
+	if (!thread) return DESCENT_ERROR_NULL;
+
+	// Only the main thread has permission to call this function
+	if (!tid_is_self(TID_MAIN)) return DESCENT_ERROR_FORBIDDEN;
+
+	// Handle states that do not require joining
+	switch (atomic_load_int(&thread->state, ATOMIC_ACQUIRE)) {
+		case THREAD_STATE_UNUSED:
+		case THREAD_STATE_INCOMPLETE:
+			return THREAD_ERROR_INACTIVE;
+	}
+
+#if defined(DESCENT_PLATFORM_TYPE_POSIX)
+
+	int result = pthread_join(thread->handle, NULL);
+	if (result) return DESCENT_ERROR_OS;
+
+#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
+
+	DWORD ignore_code;
+	if (
+		(WaitForSingleObject(thread->handle, INFINITE) != WAIT_OBJECT_0) ||
+		!GetExitCodeThread(thread->handle, &ignore_code)
+	) return DESCENT_ERROR_OS;
+
+	// Even if this fails, the thread has been joined
+	// OS leaks are beyond our ability to address
+	CloseHandle(thread->handle);
+
+#endif
+
+	atomic_store_int(&thread->state, THREAD_STATE_UNUSED, ATOMIC_RELEASE);
+	atomic_store_int(&thread->code, 0, ATOMIC_RELEASE);
+
+	return 0;
+}
+
+static inline int thread_state(struct Thread *thread) {
+	if (!thread) return THREAD_STATE_INVALID;
+
+	// Only the main thread has permission to call this function
+	if (!tid_is_self(TID_MAIN)) return THREAD_STATE_INVALID;
+
+	return (int) atomic_load_int(&thread->state, ATOMIC_ACQUIRE);
+}
+
+int thread_code(struct Thread *thread) {
+	if (!thread) return 0;
+
+	// Only the main thread has permission to call this function
+	if (!tid_is_self(TID_MAIN)) return 0;
+
+	return (int) atomic_load_int(&thread->code, ATOMIC_ACQUIRE);
+}
+
+unsigned int thread_unique_max(void) {
+	return DESCENT_UNIQUE_THREAD_COUNT_MAX;
+}
+
+unsigned int thread_worker_max(void) {
+	return DESCENT_WORKER_THREAD_COUNT_MAX;
+}
+
+rcode thread_spawn_unique(unsigned int id, int (*function)(void *), void *argument, const char *name) {
+	if (id >= DESCENT_UNIQUE_THREAD_COUNT_MAX) return DESCENT_ERROR_FORBIDDEN;
+	return thread_spawn(&unique[id], function, argument, name, tid_generate_unique(id));
+}
+
+rcode thread_collect_unique(unsigned int id) {
+	if (id >= DESCENT_UNIQUE_THREAD_COUNT_MAX) return DESCENT_ERROR_FORBIDDEN;
+	return thread_collect(&unique[id]);
+}
+
+int thread_state_unique(unsigned int id) {
+	if (id >= DESCENT_UNIQUE_THREAD_COUNT_MAX) return THREAD_STATE_INVALID;
+	return thread_state(&unique[id]);
+}
+
+int thread_code_unique(unsigned int id) {
+	if (id >= DESCENT_UNIQUE_THREAD_COUNT_MAX) return 0;
+	return thread_code(&unique[id]);
+}
+
+rcode thread_spawn_worker(unsigned int count, int (*function)(void *), void *argument) {
+	// Only the main thread has permission to call this function
+	if (!tid_is_self(TID_MAIN)) return DESCENT_ERROR_FORBIDDEN;
+
+	if (count > DESCENT_WORKER_THREAD_COUNT_MAX) return THREAD_ERROR_INVALID;
+
+	// Check if workers are already active
+	if (worker_count) return THREAD_ERROR_ACTIVE;
+	
+	// Update worker count
+	worker_count = count;
+
+	int result = 0;
+	nchar name[DESCENT_THREAD_NAME_SIZE];
+	
+	// Try to create all threads
+	for (unsigned int i = 0; i < count; ++i) {
+		nchars_format(DESCENT_THREAD_NAME_SIZE, name, "D-WORKER %u", i);
+		
+		int worker_result = thread_spawn(&worker[i], function, argument, name, tid_generate_worker(i));
+		if (worker_result) result = DESCENT_WARN_INCOMPLETE;
 	}
 
 	return result;
 }
 
-int thread_max_concurrent(void) {
-	return DESCENT_MAX_THREADS;
-}
+rcode thread_collect_worker(void) {
+	// Only the main thread has permission to call this function
+	if (!tid_is_self(TID_MAIN)) return DESCENT_ERROR_FORBIDDEN;
 
-int thread_create(Thread *t, ThreadFunction f, void *arg, const ThreadAttributes *a) {
-	THREADING_TRACE("[%s] [%016" PRIX64 "] called", __func__, self);
-
-	if (!t) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] caller provided null thread", __func__, self);
-		return THREAD_ERROR_HANDLE_INVALID;
-	}
-
-	if (!f) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] caller provided null function", __func__, self);
-		return THREAD_ERROR_FUNCTION_INVALID;
-	}
-
-	ThreadContext *context = choose_thread_context();
-	if (!context) {
-		THREADING_WARN("[%s] [%016" PRIX64 "] out of thread slots", __func__, self);
-		return THREAD_ERROR_NO_SLOTS;
-	}
-	THREADING_TRACE("[%s] [%016" PRIX64 "] reserved context at index %u, set state to RESERVED", __func__, self, (uint32_t) (context - thread_pool));
-
-	ThreadAttributes attributes = {0};
-	if (a) attributes = *a;
-
-	context->function = f;
-	context->argument = arg;
-
-	thread_handle handle;
-
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-
-	pthread_attr_t pthread_attributes;
-	pthread_attr_init(&pthread_attributes);
-
-	if (attributes.stack_size) {
-		// Round up to minimum size
-		size_t stack_size = (size_t) ((long) attributes.stack_size > PTHREAD_STACK_MIN ? attributes.stack_size : PTHREAD_STACK_MIN);
-
-		// Round up to page size
-		size_t page_size = (size_t) sysconf(_SC_PAGESIZE);
-		stack_size = (stack_size + page_size - 1) & ~(page_size - 1);
-
-		pthread_attr_setstacksize(&pthread_attributes, stack_size);
-
-		THREADING_INFO("[%s] [%016" PRIX64 "] set stack size to %zu", __func__, self, stack_size);
-	}
-
-	int result = pthread_create(&handle, &pthread_attributes, thread_function_wrapper, context);
-
-	pthread_attr_destroy(&pthread_attributes);
-
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-
-	if (attributes.stack_size) THREADING_INFO("[%s] [%016" PRIX64 "] set stack size to %zu", __func__, self, stack_size);
-
-	handle = (thread_handle) _beginthreadex(NULL, attributes.stack_size, thread_function_wrapper, context, 0, NULL);
-	int result = !handle;
+	int result = 0;
 	
-#endif
-
-	uint64_t meta = atomic_load_64(&context->meta);
-	uint32_t generation = thread_context_generation(meta);
-
-	if (result) {
-		// Reset the slot: state = UNUSED, generation unchanged
-		atomic_store_64(&context->meta, thread_context_construct(THREAD_STATE_UNUSED, generation));
-		THREADING_WARN("[%s] [%016" PRIX64 "] OS could not create thread", __func__, self);
-		return THREAD_ERROR_OS_CREATE_FAILED;
-	}
-
-	atomic_store_thread_handle(&context->handle, handle);
-
-	*t = thread_construct((uint32_t) (context - thread_pool), generation);
-
-	THREADING_TRACE("[%s] [%016" PRIX64 "] created thread %016" PRIX64, __func__, self, *t);
-	return 0;
-}
-
-int thread_join(Thread t, int *code) {
-	THREADING_TRACE("[%s] [%016" PRIX64 "] called on thread %016" PRIX64, __func__, self, t);
-
-	if (!thread_is_managed(t)) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] cannot join unmanaged thread", __func__, self);
-		return THREAD_ERROR_HANDLE_UNMANAGED;
-	}
-
-	if (!thread_is_managed(t)) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] provided invalid thread", __func__, self);
-		return THREAD_ERROR_HANDLE_INVALID;
-	}
-
-	uint32_t index = thread_index(t);
-	uint32_t expected_generation = thread_generation(t);
-	ThreadContext *context = &thread_pool[index];
-
-	thread_handle handle = atomic_load_thread_handle(&context->handle);
-
-	// Load meta AFTER handle - meta will always be at least as new as the handle.
-	for (;;) {
-		uint64_t meta       = atomic_load_64(&context->meta);
-		uint32_t state      = thread_context_state(meta);
-		uint32_t generation = thread_context_generation(meta);
-
-		// If the generation of the index is greater than the generation of the handle,
-		// the handle refers to an thread that has been closed.
-		if (generation > expected_generation) {
-			THREADING_DEBUG("[%s] [%016" PRIX64 "] thread %016" PRIX64 " is already closed", __func__, self, t);
-			return THREAD_ERROR_HANDLE_CLOSED;
-		}
-
-		// If the generation of the index is less than the generation of the handle,
-		// the handle refers to a "future" thread. This indicates that the handle
-		// has been tampered with.
-		if (generation < expected_generation) {
-			THREADING_WARN("[%s] [%016" PRIX64 "] thread %016" PRIX64 " refers to future thread", __func__, self, t);
-			return THREAD_ERROR_HANDLE_INVALID;
-		}
-
-		switch (state) {
-			case THREAD_STATE_RESERVED:
-				// Wait until the thread is initialized to join it
-				continue;
-			case THREAD_STATE_RUNNING: // Fall through
-			case THREAD_STATE_FINISHED: {
-				uint64_t desired = thread_context_construct(THREAD_STATE_JOINING, generation);
-				if (atomic_compare_exchange_64(&context->meta, &meta, desired)) {
-					THREADING_TRACE("[%s] [%016" PRIX64 "] set state of %016" PRIX64 " to JOINING", __func__, self, t);
-					goto thread_join_state_complete;
-				} else {
-					THREADING_TRACE("[%s] [%016" PRIX64 "] could not set state of %016" PRIX64 " to JOINING, retrying", __func__, self, t);
-					continue;
-				}
-			}
-			case THREAD_STATE_DETACHED:
-					THREADING_DEBUG("[%s] [%016" PRIX64 "] thread %016" PRIX64 " is already detached", __func__, self, t);
-				return THREAD_ERROR_HANDLE_DETACHED;
-			default: // INVALID (impossible), JOINING, UNUSED
-					THREADING_DEBUG("[%s] [%016" PRIX64 "] thread %016" PRIX64 " is already closed", __func__, self, t);
-				return THREAD_ERROR_HANDLE_CLOSED;
-		}
-
-		thread_pause();
-	}
-
-	thread_join_state_complete:;
-
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-
-	void *exit_code;
-	int error = pthread_join(handle, &exit_code);
-	if (error) {
-		THREADING_WARN("[%s] [%016" PRIX64 "] OS could not join thread %016" PRIX64, __func__, self, t);
-		return THREAD_ERROR_OS_JOIN_FAILED;
-	}
-
-	if (code) *code = (int)(intptr_t)exit_code;
-
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-
-	DWORD exit_code;
-	if (
-		(WaitForSingleObject(handle, INFINITE) != WAIT_OBJECT_0) ||
-		!GetExitCodeThread(handle, &exit_code)
-	) {
-		THREADING_WARN("[%s] [%016" PRIX64 "] OS could not join thread %016" PRIX64, __func__, self, t);
-		return THREAD_ERROR_OS_JOIN_FAILED;
-	}
-
-	// Even if this fails, the thread has been joined
-	CloseHandle(handle);
-
-	if (code) *code = (int)exit_code;
-
-#endif
-
-	uint64_t new_meta = thread_context_construct(THREAD_STATE_UNUSED, expected_generation + 1);
-	atomic_store_64(&context->meta, new_meta);
-	THREADING_TRACE("[%s] [%016" PRIX64 "] closed thread %016" PRIX64, __func__, self, t);
-
-	return 0;
-}
-
-int thread_detach(Thread t) {
-	THREADING_TRACE("[%s] [%016" PRIX64 "] called on thread %016" PRIX64, __func__, self, t);
-
-	if (!thread_is_managed(t)) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] cannot detach unmanaged thread", __func__, self);
-		return THREAD_ERROR_HANDLE_UNMANAGED;
-	}
-
-	if (!thread_is_managed(t)) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] provided invalid thread", __func__, self);
-		return THREAD_ERROR_HANDLE_INVALID;
-	}
-
-	uint32_t index = thread_index(t);
-	uint32_t expected_generation = thread_generation(t);
-	ThreadContext *context = &thread_pool[index];
-
-	thread_handle handle = atomic_load_thread_handle(&context->handle);
-
-	// Load meta AFTER handle - meta will always be at least as new as the handle.
-	int finished = 0;
-	for (;;) {
-		uint64_t meta       = atomic_load_64(&context->meta);
-		uint32_t state      = thread_context_state(meta);
-		uint32_t generation = thread_context_generation(meta);
-
-		// If the generation of the index is greater than the generation of the handle,
-		// the handle refers to an thread that has been closed.
-		if (generation > expected_generation) {
-			THREADING_DEBUG("[%s] [%016" PRIX64 "] thread %016" PRIX64 " is already closed", __func__, self, t);
-			return THREAD_ERROR_HANDLE_CLOSED;
-		}
-
-		// If the generation of the index is less than the generation of the handle,
-		// the handle refers to a "future" thread. This indicates that the handle
-		// has been tampered with.
-		if (generation < expected_generation) {
-			THREADING_DEBUG("[%s] [%016" PRIX64 "] thread %016" PRIX64 " refers to future thread", __func__, self, t);
-			return THREAD_ERROR_HANDLE_INVALID;
-		}
-
-		switch (state) {
-			case THREAD_STATE_RESERVED:
-				// Wait until the thread is initialized to detach it
-				continue;
-			case THREAD_STATE_FINISHED: finished = 1; // Fall through
-			case THREAD_STATE_RUNNING: {
-				uint64_t desired = thread_context_construct(THREAD_STATE_DETACHED, generation);
-				if (atomic_compare_exchange_64(&context->meta, &meta, desired)) {
-					THREADING_TRACE("[%s] [%016" PRIX64 "] set state of %016" PRIX64 " to DETACHED", __func__, self, t);
-					goto thread_detach_state_complete;
-				} else {
-					THREADING_TRACE("[%s] [%016" PRIX64 "] could not set state of %016" PRIX64 " to DETACHED, retrying", __func__, self, t);
-					continue;
-				}
-			}
-			case THREAD_STATE_DETACHED:
-				THREADING_DEBUG("[%s] [%016" PRIX64 "] thread %016" PRIX64 " is already detached", __func__, self, t);
-				return THREAD_ERROR_HANDLE_DETACHED;
-			default: // INVALID (impossible), JOINING, UNUSED
-				THREADING_DEBUG("[%s] [%016" PRIX64 "] thread %016" PRIX64 " is already closed", __func__, self, t);
-				return THREAD_ERROR_HANDLE_CLOSED;
-		}
-
-		thread_pause();
-	}
-
-	thread_detach_state_complete:;
-
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	if (pthread_detach(handle)) {
-		THREADING_WARN("[%s] [%016" PRIX64 "] OS could not detach thread %016" PRIX64, __func__, self, t);
-		return THREAD_ERROR_OS_DETACH_FAILED;
-	}
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	if (!CloseHandle(handle)) {
-		THREADING_WARN("[%s] [%016" PRIX64 "] OS could not detach thread %016" PRIX64, __func__, self, t);
-		return THREAD_ERROR_OS_DETACH_FAILED;
-	}
-#endif
-
-	if (finished) {
-		uint64_t new_meta = thread_context_construct(THREAD_STATE_UNUSED, expected_generation + 1);
-		atomic_store_64(&context->meta, new_meta);
-		THREADING_TRACE("[%s] [%016" PRIX64 "] closed thread %016" PRIX64 ", set state to UNUSED", __func__, self, t);
-	}
-
-	return 0;
-}
-
-void thread_exit(int code) {
-	THREADING_TRACE("[%s] [%016" PRIX64 "] called with code %d", __func__, self, code);
-
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	pthread_exit((void *)(intptr_t)code);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	_endthreadex((unsigned)code);
-#endif
-}
-
-Thread thread_self(void) {
-	return self;
-}
-
-int thread_equal(Thread t1, Thread t2) {
-	return (t1 == t2) && thread_is_managed(t1);
-}
-
-ThreadName thread_get_name(void) {
-	ThreadName n = {0};
-
-	int result = 0;
-
-	if (thread_is_managed(self)) {
-#if defined(DESCENT_PLATFORM_LINUX)
-		result = pthread_getname_np(pthread_self(), n.name, THREAD_NAME_LENGTH);
-#elif defined(DESCENT_PLATFORM_FREEBSD)
-		result = pthread_get_name_np(pthread_self(), n.name, THREAD_NAME_LENGTH);
-#elif defined(DESCENT_PLATFORM_MACOS)
-		result = pthread_getname_np(pthread_self(), n.name, THREAD_NAME_LENGTH);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-		PWSTR wname = NULL;
-		// Check that GetThreadDescription succeeds AND wname is set to a valid address
-		result = FAILED(GetThreadDescription(GetCurrentThread(), &wname)) || !wname;
-		if (!result) {
-			// Check that WideCharToMultiByte succeeds
-			result = WideCharToMultiByte(CP_UTF8, 0, wname, -1, n.name, THREAD_NAME_LENGTH - 1, NULL, NULL) == 0;
-			LocalFree(wname);
-		}
-#endif
-	} else {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] attempted to get name for unmanaged thread", __func__, self);
-	}
-
-	n.name[THREAD_NAME_LENGTH - 1] = '\0';
-
-	if (result) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] failed to get name", __func__, self);
-		n.name[0] = '\0';
-	}
-
-	return n;
-}
-
-int thread_set_name(ThreadName n) {
-	if (!thread_is_managed(self)) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] attempted to set name for unmanaged thread to %s", __func__, self, n.name);
-		return THREAD_ERROR_HANDLE_UNMANAGED;
-	}
-
-	// Sanitize input
-	n.name[THREAD_NAME_LENGTH - 1] = '\0';
-
-	int result = 0;
-
-#if defined(DESCENT_PLATFORM_LINUX)
-	result = pthread_setname_np(pthread_self(), n.name);
-#elif defined(DESCENT_PLATFORM_FREEBSD)
-	result = pthread_set_name_np(pthread_self(), n.name);
-#elif defined(DESCENT_PLATFORM_MACOS)
-	result = pthread_setname_np(n.name);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	wchar_t wname[THREAD_NAME_LENGTH] = {0};
-	if(mbstowcs_s(NULL, wname, THREAD_NAME_LENGTH, n.name, THREAD_NAME_LENGTH)) wname[0] = '\0';
-	result = FAILED(SetThreadDescription(GetCurrentThread(), wname));
-#endif
-
-	if (result) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] failed to set name to %s", __func__, self, n.name);
-		return THREAD_ERROR_OS_NAME_FAILED;
-	}
-
-	return 0;
-}
-
-uint64_t thread_get_affinity(void) {
-	uint64_t affinity = 0;
-
-	int result = 0;
-
-	if (thread_is_managed(self)) {
-#if defined(DESCENT_PLATFORM_LINUX) || defined(DESCENT_PLATFORM_FREEBSD)
-		cpu_set_t cpuset;
-		CPU_ZERO(&cpuset);
-
-		result = pthread_getaffinity_np(pthread_self(), sizeof(cpuset), &cpuset);
-
-		if(!result)
-			for (unsigned i = 0; i < sizeof(affinity) * 8; ++i)
-				if (CPU_ISSET(i, &cpuset)) affinity |= (1ULL << i);
-#elif defined(DESCENT_PLATFORM_MACOS)
-		// No thread affinity analogue
-		result = 0; 
-		affinity = THREAD_AFFINITY_ALL;
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-		DWORD_PTR processMask = 0;
-		result = !GetThreadAffinityMask(GetCurrentThread(), &processMask);
-		if (!result) affinity = (uint64_t) processMask;
-#endif
-	} else {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] attempted to get affinity for unmanaged thread", __func__, self);
-	}
-
-	if (result) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] failed to get affinity", __func__, self);
-		affinity = 0;
-	}
-
-	return affinity;
-}
-
-int thread_set_affinity(uint64_t affinity) {
-	if (!thread_is_managed(self)) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] attempted to set affinity for unmanaged thread to %016" PRIX64, __func__, self, affinity);
-		return THREAD_ERROR_HANDLE_UNMANAGED;
-	}
-
-	int result = 0;
-
-	if (affinity) {
-#if defined(DESCENT_PLATFORM_LINUX) || defined(DESCENT_PLATFORM_FREEBSD)
-		cpu_set_t cpuset;
-		CPU_ZERO(&cpuset);
-
-		for (unsigned i = 0; i < sizeof(affinity) * 8; ++i)
-			if (affinity & (1ULL << i)) CPU_SET(i, &cpuset);
-
-		result = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
-#elif defined(DESCENT_PLATFORM_MACOS)
-		// No thread affinity analogue
-		result = 0;
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-		result = !SetThreadAffinityMask(GetCurrentThread(), (DWORD_PTR)affinity);
-#endif
-	} else {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] provided with affinity of %016" PRIX64 ", ignoring", __func__, self, affinity);
-	}
-
-	if (result) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] failed to set affinity to %016" PRIX64, __func__, self, affinity);
-		return THREAD_ERROR_OS_AFFINITY_FAILED;
-	}
-
-	return 0;
-}
-
-ThreadPriority thread_get_priority(void) {
-	ThreadPriority p = THREAD_PRIORITY_DEFAULT;
-
-	int result = 0;
-
-	if (thread_is_managed(self)) {
-#if defined(DESCENT_PLATFORM_LINUX)
-	int policy;
-	struct sched_param param;
-	result = pthread_getschedparam(pthread_self(), &policy, &param);
-
-	if (!result) {
-		switch(policy) {
-			case SCHED_BATCH:
-				p = THREAD_PRIORITY_HIGH;
-				break;
-			case SCHED_OTHER:
-				p = THREAD_PRIORITY_DEFAULT;
-				break;
-			default:
-				result = 1;
+	// Try to collect all threads
+	for (unsigned int i = 0; i < worker_count; ++i) {
+		int worker_result = thread_collect(&worker[i]);
+
+		if (worker_result && worker_result != THREAD_ERROR_INACTIVE) {
+			result = DESCENT_ERROR_STATE;
 		}
 	}
-#elif defined(DESCENT_PLATFORM_FREEBSD)
-// No thread priority analogue
-	result = 0;
-#elif defined(DESCENT_PLATFORM_MACOS)
-	pthread_qos_class_t qos;
-	int relative_priority;
-	result = pthread_get_qos_class_self_np(&qos, &relative_priority);
 
-	if (!result) {
-		switch(qos) {
-			case QOS_CLASS_UTILITY:
-				p = THREAD_PRIORITY_LOW;
-				break;
-			case QOS_CLASS_DEFAULT:
-				p = THREAD_PRIORITY_DEFAULT;
-				break;
-			case QOS_CLASS_USER_INTERACTIVE:
-				p = THREAD_PRIORITY_HIGH;
-				break;
-			default:
-				result = 1;
-		}
-	}
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	int win_priority = GetThreadPriority(GetCurrentThread());
+	// Update worker count
+	if (!result) worker_count = 0;
 
-	if (!result) {
-		switch(win_priority) {
-			case THREAD_PRIORITY_BELOW_NORMAL:
-				p = THREAD_PRIORITY_LOW;
-				break;
-			case THREAD_PRIORITY_NORMAL:
-				p = THREAD_PRIORITY_DEFAULT;
-				break;
-			case THREAD_PRIORITY_HIGHEST:
-				p = THREAD_PRIORITY_HIGH;
-				break;
-			default:
-				result = 1;
-		}
-	}
-#endif
-	} else {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] attempted to get priority for unmanaged thread", __func__, self);
-	}
-
-	if (result) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] failed to get affinity", __func__, self);
-		p = THREAD_PRIORITY_DEFAULT;
-	}
-
-	return p;
+	return result;
 }
 
-int thread_set_priority(ThreadPriority p) {
-	if (!thread_is_managed(self)) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] attempted to set priority for unmanaged thread to %d", __func__, self, p);
-		return THREAD_ERROR_HANDLE_UNMANAGED;
-	}
-
-	// Normalize range
-	p = (p > 0) - (p < 0);
-
-	int result = 0;
-
-#if defined(DESCENT_PLATFORM_LINUX)
-	struct sched_param param = {0};
-	switch (p) {
-		case THREAD_PRIORITY_LOW:
-			result = pthread_setschedparam(pthread_self(), SCHED_BATCH, &param);
-			break;
-		case THREAD_PRIORITY_DEFAULT:
-			result = pthread_setschedparam(pthread_self(), SCHED_OTHER, &param);
-			break;
-		case THREAD_PRIORITY_HIGH:
-			result = pthread_setschedparam(pthread_self(), SCHED_OTHER, &param);
-			break;
-	}
-#elif defined(DESCENT_PLATFORM_FREEBSD)
-// No thread priority analogue
-	result = 0;
-#elif defined(DESCENT_PLATFORM_MACOS)
-	switch (p) {
-		case THREAD_PRIORITY_LOW:
-			result = pthread_set_qos_class_self_np(QOS_CLASS_UTILITY, 0);
-			break;
-		case THREAD_PRIORITY_DEFAULT:
-			result = pthread_set_qos_class_self_np(QOS_CLASS_DEFAULT, 0);
-			break;
-		case THREAD_PRIORITY_HIGH:
-			result = pthread_set_qos_class_self_np(QOS_CLASS_USER_INTERACTIVE, 0);
-			break;
-	}
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-		switch (p) {
-			case THREAD_PRIORITY_LOW:
-				result = !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
-				break;
-			case THREAD_PRIORITY_DEFAULT:
-				result = !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
-				break;
-			case THREAD_PRIORITY_HIGH:
-				result = !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
-				break;
-		}
-#endif
-
-	if (result) {
-		THREADING_DEBUG("[%s] [%016" PRIX64 "] failed to set priority to %d", __func__, self, p);
-		return THREAD_ERROR_OS_PRIORITY_FAILED;
-	}
-
-	return 0;
+int thread_state_worker(unsigned int id) {
+	if (id >= worker_count) return THREAD_STATE_INVALID;
+	return thread_state(&worker[id]);
 }
 
-int thread_yield(void) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!sched_yield();
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !SwitchToThread();
-#endif
-}
-
-long thread_sleep_granularity(void) {
-	// TODO
-	return 0;
-}
-
-int thread_sleep(uint64_t nanoseconds) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	struct timespec duration;
-	duration.tv_sec  = (time_t) (nanoseconds / 1000000000);
-	duration.tv_nsec = (long) (nanoseconds % 1000000000);
-	return !!nanosleep(&duration, NULL);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	Sleep((DWORD) nanoseconds / 1000000);
-	return 0;
-#endif
+int thread_code_worker(unsigned int id) {
+	if (id >= worker_count) return 0;
+	return thread_code(&worker[id]);
 }

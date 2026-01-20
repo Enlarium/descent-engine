@@ -16,53 +16,80 @@
 #ifndef DESCENT_THREAD_CONDITION_H
 #define DESCENT_THREAD_CONDITION_H
 
-#include "../utilities/opaque.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <descent/rcode.h>
+#include <descent/thread/atomic_types.h>
 
 /**
- * @struct Condition
- * @brief A condition variable.
+ * @defgroup condition Condition Variables
+ * @ingroup thread
  *
- * Allows threads to wait for a condition to become true and supports signaling
- * one or all waiting threads.
- * 
- * @note This mechanism is intra-process only. It cannot be shared between processes.
+ * @brief Thread synchronization via condition variables.
+ *
+ * Condition variables allow threads to wait for arbitrary conditions to
+ * become true while releasing an associated lock. A waiting thread will
+ * atomically release the lock and suspend execution until it is signaled,
+ * then re-acquire the lock before returning.
+ *
+ * Condition variables do not carry state. A signal or broadcast has no
+ * effect if no threads are waiting at the time it is issued.
+ *
+ * All waits may experience spurious wakeups. Callers must always re-check
+ * the associated condition predicate after waking.
+ *
+ * Signaling a condition variable establishes a happens-before relationship
+ * with threads that successfully return from a corresponding wait.
+ *
+ * This mechanism is intra-process only and cannot be shared between processes.
  */
-DESCENT_OPAQUE_DEFINE(Condition, DESCENT_OPAQUE_SIZE_CONDITION)
 
 /**
- * @brief Initializes a condition variable.
- * @param c Pointer to the Condition.
- * @return 0 on success, non-zero on failure.
+ * @ingroup condition Condition
+ * @brief Condition variable initializer, equivalent to {0}.
  */
-int condition_init(Condition *c);
+#define CONDITION_INIT { ._generation = ATOMIC_INIT(0) }
 
 /**
- * @brief Destroys a condition variable.
- * @param c Pointer to the Condition.
- * @return 0 on success, non-zero on failure.
+ * @ingroup condition Condition
+ * @struct Condition
+ * @brief A cross-platform condition variable.
+ *
+ * Used in combination with a lock to allow threads to wait for specific
+ * conditions to be signaled. Condition variables allow a thread to sleep
+ * while temporarily releasing a lock, then reacquire it upon waking.
+ *
+ * Must be zero-initialized ({0} or CONDITION_INIT) for static instances, or
+ * explicitly zeroed before use for dynamic instances.
  */
-int condition_destroy(Condition *c);
+struct Condition {
+	atomic_32 _generation;
+};
 
 /**
- * @brief Signals one thread waiting on the condition.
- * @param c Pointer to the Condition.
- * @return 0 on success, non-zero on failure.
+ * @ingroup condition Condition
+ * @brief Wakes one thread waiting on the condition variable.
+ *
+ * If multiple threads are waiting, only one is guaranteed to be woken.
+ *
+ * @param c Pointer to the condition variable.
+ * @return
+ * - 0 on success.
+ * - @ref DESCENT_ERROR_NULL if @p c is null.
+ * - @ref DESCENT_ERROR_FORBIDDEN if the calling thread is unmanaged.
  */
-int condition_signal(Condition *c);
+rcode condition_signal(struct Condition *c);
 
 /**
- * @brief Signals all threads waiting on the condition.
- * @param c Pointer to the Condition.
- * @return 0 on success, non-zero on failure.
+ * @ingroup condition Condition
+ * @brief Wakes all threads waiting on the condition variable.
+ *
+ * All threads currently waiting on the condition variable will be woken.
+ *
+ * @param c Pointer to the condition variable.
+ * @return
+ * - 0 on success.
+ * - @ref DESCENT_ERROR_NULL if @p c is null.
+ * - @ref DESCENT_ERROR_FORBIDDEN if the calling thread is unmanaged.
  */
-int condition_broadcast(Condition *c);
-
-#ifdef __cplusplus
-}
-#endif
+rcode condition_broadcast(struct Condition *c);
 
 #endif

@@ -1,0 +1,9 @@
+[submodule "extern/tomlc17"]
+	path = extern/tomlc17/tomlc17
+	url = git@github.com:cktan/tomlc17.git
+[submodule "extern/yyjson"]
+	path = extern/yyjson/yyjson
+	url = git@github.com:ibireme/yyjson.git
+[submodule "extern/lua/lua"]
+	path = extern/lua/lua
+	url = git@github.com:lua/lua.git

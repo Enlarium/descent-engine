@@ -1,14 +1,23 @@
+# Ignore everything
 /*
+
+# Whitelist root files
 !.gitignore
-!/.github
-!/examples
-!/include
-!/src
-!/tests
 !CMakeLists.txt
 !CMakePresets.json
-!CODING_STANDARDS.md
-!Doxyfile
 !LICENSE.md
 !README.md
-!ROADMAP.md
+
+# Whitelist directories
+!/.github
+!/config
+!/doxygen
+!/examples
+!/extern
+!/include
+!/intern
+!/src
+!/tests
+
+# Blacklist generated files
+/include/descent/metadata.h

@@ -13,98 +13,220 @@
  * limitations under the License.
  */
 
-#include <descent/thread/rwlock.h>
+#include <descent/thread/mutex.h>
 
-#include <stddef.h>
+#include <stdint.h>
+#include <stdbool.h>
 
-#include <descent/utilities/platform.h>
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-#include <pthread.h>
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-#include <windows.h>
-#endif
+#include <descent/rcode.h>
+#include <descent/thread/atomic.h>
+#include <descent/thread/condition.h>
+#include <descent/thread/futex.h>
+#include <descent/thread/tls.h>
+#include <intern/thread/tid.h>
 
-#include <descent/utilities/opaque.h>
+#define WRITE_STATE_BIT (1u << 31)
+#define WRITE_PEND_BIT  (1u << 30)
+#define MAXIMUM_READERS (THREAD_MAX > 0xFF ? 0xFF : THREAD_MAX)
 
-#include "implementation.h"
+_Static_assert(WRITE_STATE_BIT > MAXIMUM_READERS, "WRITE_STATE_BIT must be greater than MAXIMUM_READERS");
+_Static_assert(WRITE_PEND_BIT > MAXIMUM_READERS, "WRITE_PEND_BIT must be greater than MAXIMUM_READERS");
 
-_Static_assert(DESCENT_OPAQUE_SIZE_RWLOCK >= sizeof(RWLockImplementation), "Read-write lock opaque type is too small for its implementation!");
-_Static_assert(_Alignof(RWLock) >= _Alignof(RWLockImplementation), "Read-write lock opaque type is under-aligned for its implementation!");
+enum {
+	RWLOCK_UNUSED = 0,
+	RWLOCK_READING,
+	RWLOCK_WRITING,
+};
 
-int rwlock_init(RWLock *ol) {
-	RWLockImplementation *l = (RWLockImplementation *)ol;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_rwlock_init(&l->_lock, NULL);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	InitializeSRWLock(&l->_lock);
+struct RWLock {
+	atomic_32 _state;   // Bits: [WRITE_STATE_BIT | WRITE_PEND_BIT | reader_count (30 bits)]
+	atomic_64 _owner;   // Bitmask of owners (threads holding this lock)
+};
+
+// The highest bit of _state marks whether the lock is in read or write mode
+// The second-highest bit of _state marks whether the lock is in read or write mode
+// The lower 30 bits of _state count lock holders
+
+// Considerations:
+// There can be multiple locks
+// A thread can hold one (or more) locks and try to obtain another
+// Locks must be well-behaved:
+// - Forbid waiting on a held lock
+// - Forbid unlocking a lock not held
+
+// Atomically switch lock from write to read
+// Prefers writers initially, uses eventual fairness once the lock has been held by a
+// single writer for more than 1 ms
+
+static inline rcode _rwlock_read_lock_base(struct RWLock *r, bool try) {
+	if (!r) return DESCENT_ERROR_NULL;
+
+	for (;;) {
+		uint32_t state = atomic_load_32(&r->_state, ATOMIC_ACQUIRE);
+
+		// This triggers if:
+		// - WRITE_STATE_BIT is set
+		// - WRITE_PEND_BIT is set
+		// - MAXIMUM_READERS is exceeded
+		bool busy = state > MAXIMUM_READERS;
+
+		if (busy) {
+			if (try) {
+				return THREAD_INFO_BUSY;
+			} else {
+				futex_wait(&r->_state, state);
+			}
+		}
+
+		else if (atomic_compare_exchange_32(&r->_state, &state, state + 1, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE)) {
+			break;
+		}
+	}
+
 	return 0;
-#endif
 }
 
-int rwlock_destroy(RWLock *ol) {
-	RWLockImplementation *l = (RWLockImplementation *)ol;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_rwlock_destroy(&l->_lock);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	(void)l;
+static inline rcode _rwlock_write_lock_base(struct RWLock *r, bool try) {
+	if (!r) return DESCENT_ERROR_NULL;
+	if (thread_state != RWLOCK_UNUSED) return THREAD_ERROR_DEADLOCK;
+
+	// Place a pend on the lock
+	atomic_or_fetch_32(&r->_state, WRITE_PEND_BIT, ATOMIC_RELEASE);
+
+	for (;;) {
+		uint32_t state = WRITE_PEND_BIT;
+
+		if (atomic_compare_exchange_32(&r->_state, &state, WRITE_STATE_BIT, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE)) {
+			break;
+		}
+
+		rcode result = futex_wait(&r->_state, state);
+		if (result) return result;
+	}
+
+	thread_state = RWLOCK_WRITING;
 	return 0;
-#endif
 }
 
-int rwlock_read_lock(RWLock *ol) {
-	RWLockImplementation *l = (RWLockImplementation *)ol;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_rwlock_rdlock(&l->_lock);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	AcquireSRWLockShared(&l->_lock);
+rcode rwlock_read_lock(struct RWLock *r) {
+	return _rwlock_read_lock_base(r, false);
+}
+
+rcode rwlock_read_trylock(struct RWLock *r) {
+	return _rwlock_read_lock_base(r, true);
+}
+
+rcode rwlock_read_unlock(struct RWLock *r) {
+	if (!r) return DESCENT_ERROR_NULL;
+
+	// Writer bit is never set while any readers exist
+	if (thread_state != RWLOCK_READING) return DESCENT_ERROR_FORBIDDEN;
+
+	uint32_t state = atomic_fetch_sub_32(&r->_state, 1, ATOMIC_ACQ_REL);
+
+	uint32_t readers = state & MAXIMUM_READERS;
+	if (readers == 1u) {
+		futex_wake_all(&r->_state);
+	}
+
+	thread_state = RWLOCK_UNUSED;
 	return 0;
-#endif
 }
 
-int rwlock_read_trylock(RWLock *ol) {
-	RWLockImplementation *l = (RWLockImplementation *)ol;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_rwlock_tryrdlock(&l->_lock);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !TryAcquireSRWLockShared(&l->_lock);
-#endif
+rcode rwlock_write_lock(struct RWLock *r) {
+	return _rwlock_write_lock_base(r, false);
 }
 
-int rwlock_read_unlock(RWLock *ol) {
-	RWLockImplementation *l = (RWLockImplementation *)ol;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_rwlock_unlock(&l->_lock);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	ReleaseSRWLockShared(&l->_lock);
+rcode rwlock_write_trylock(struct RWLock *r) {
+	return _rwlock_write_lock_base(r, true);
+}
+
+rcode rwlock_downlock(struct RWLock *r) {
+	if (!r) return DESCENT_ERROR_NULL;
+
+	if (thread_state != RWLOCK_WRITING) return DESCENT_ERROR_FORBIDDEN;
+
+	// TODO
+	return DESCENT_ERROR_UNSUPPORTED;
+}
+
+rcode rwlock_write_unlock(struct RWLock *r) {
+	if (!r) return DESCENT_ERROR_NULL;
+
+	if (thread_state != RWLOCK_WRITING) return DESCENT_ERROR_FORBIDDEN;
+
+	atomic_store_32(&r->_state, 0u, ATOMIC_RELEASE);
+	futex_wake_all(&r->_state);
+
+	thread_state = RWLOCK_UNUSED;
 	return 0;
-#endif
 }
 
-int rwlock_write_lock(RWLock *ol) {
-	RWLockImplementation *l = (RWLockImplementation *)ol;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_rwlock_wrlock(&l->_lock);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	AcquireSRWLockExclusive(&l->_lock);
+rcode mutex_lock(struct Mutex *m) {
+	if (!m) return DESCENT_ERROR_NULL;
+
+	uint32_t expected = MUTEX_UNLOCKED;
+	if (atomic_compare_exchange_32(&m->_state, &expected, MUTEX_LOCKED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE)) {
+		atomic_store_32(&m->_owner, ftid_self(), ATOMIC_RELEASE);
+		return 0;
+	}
+
+	if (atomic_load_32(&m->_owner, ATOMIC_ACQUIRE) == ftid_self()) return THREAD_ERROR_DEADLOCK;
+
+	do {
+		expected = MUTEX_LOCKED;
+		bool exchange = atomic_compare_exchange_32(&m->_state, &expected, MUTEX_CONTENDED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE);
+
+		if (exchange || expected == MUTEX_CONTENDED) {
+			futex_wait(&m->_state, MUTEX_CONTENDED);
+		}
+
+		expected = MUTEX_UNLOCKED;
+	} while (atomic_compare_exchange_32(&m->_state, &expected, MUTEX_CONTENDED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE));
+
+	atomic_store_32(&m->_owner, ftid_self(), ATOMIC_RELEASE);
+
 	return 0;
-#endif
 }
 
-int rwlock_write_trylock(RWLock *ol) {
-	RWLockImplementation *l = (RWLockImplementation *)ol;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_rwlock_trywrlock(&l->_lock);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !TryAcquireSRWLockExclusive(&l->_lock);
-#endif
+rcode mutex_trylock(struct Mutex *m) {
+	if (!m) return DESCENT_ERROR_NULL;
+
+	uint32_t expected = MUTEX_UNLOCKED;
+	if (atomic_compare_exchange_32(&m->_state, &expected, MUTEX_LOCKED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE)) {
+		atomic_store_32(&m->_owner, ftid_self(), ATOMIC_RELEASE);
+		return 0;
+	}
+
+	return DESCENT_WARN_BUSY;
 }
 
-int rwlock_write_unlock(RWLock *ol) {
-	RWLockImplementation *l = (RWLockImplementation *)ol;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_rwlock_unlock(&l->_lock);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	ReleaseSRWLockExclusive(&l->_lock);
+rcode mutex_unlock(struct Mutex *m) {
+	if (!m) return DESCENT_ERROR_NULL;
+
+	// Only the owner can mutate the _owner field
+	uint32_t self = ftid_self();
+	if (!atomic_compare_exchange_32(&m->_owner, &self, FTID_NONE, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE)) {
+		return DESCENT_ERROR_FORBIDDEN;
+	}
+
+	if (atomic_fetch_sub_32(&m->_state, 1, ATOMIC_RELEASE)) {
+		atomic_store_32(&m->_state, 0, ATOMIC_RELEASE);
+		futex_wake_next(&m->_state);
+	}
+
 	return 0;
-#endif
+}
+
+rcode mutex_wait(struct Mutex *m, struct Condition *c) {
+	if (!m || !c) return DESCENT_ERROR_NULL;
+
+	uint32_t expected = atomic_load_32(&c->_generation, ATOMIC_RELAXED);
+	
+	rcode result = mutex_unlock(m);
+	if (result) return result;
+
+	futex_wait(&c->_generation, expected);
+
+	return mutex_lock(m);
 }

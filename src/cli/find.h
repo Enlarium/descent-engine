@@ -21,14 +21,14 @@
 #include "context.h"
 
 static inline CLI_Parameter *cli_find_subcommand(CLI_ParseContext *c, const char *name) {
-	printf("Finding subcommand: %s\n", name);
+	// printf("Finding subcommand: %s\n", name);
 
 	unsigned int left  = c->first_subcommand;
 	unsigned int right = c->first_long_option - 1;
 
-	unsigned int i = 0;
+	// unsigned int i = 0;
 	while (left <= right) {
-		printf("  binary search step %u\n", i++);
+		// printf("  binary search step %u\n", i++);
 		unsigned int mid = left + (right - left) / 2;
 		CLI_Parameter *par = &c->parameters[mid];
 
@@ -36,7 +36,7 @@ static inline CLI_Parameter *cli_find_subcommand(CLI_ParseContext *c, const char
 		if (cmp > 0) left  = mid + 1;
 		if (cmp < 0) right = mid - 1;
 		else {
-			printf("Found subcommand: %s\n", par->name_long);
+			// printf("Found subcommand: %s\n", par->name_long);
 			return par;
 		}
 	}
@@ -45,14 +45,14 @@ static inline CLI_Parameter *cli_find_subcommand(CLI_ParseContext *c, const char
 }
 
 static inline CLI_Parameter *cli_find_long(CLI_ParseContext *c, const char *name) {
-	printf("Finding long option: %s\n", name);
+	// printf("Finding long option: %s\n", name);
 
 	unsigned int left  = c->first_long_option;
 	unsigned int right = c->parameter_count - 1;
 
-	unsigned int i = 0;
+	// unsigned int i = 0;
 	while (left <= right) {
-		printf("  binary search step %u\n", i++);
+		// printf("  binary search step %u\n", i++);
 		unsigned int mid = left + (right - left) / 2;
 		CLI_Parameter *par = &c->parameters[mid];
 
@@ -60,7 +60,7 @@ static inline CLI_Parameter *cli_find_long(CLI_ParseContext *c, const char *name
 		if (cmp > 0) left  = mid + 1;
 		if (cmp < 0) right = mid - 1;
 		else {
-			printf("Found long option: %s\n", par->name_long);
+			// printf("Found long option: %s\n", par->name_long);
 			return par;
 		}
 	}
@@ -69,16 +69,16 @@ static inline CLI_Parameter *cli_find_long(CLI_ParseContext *c, const char *name
 }
 
 static inline CLI_Parameter *cli_find_short(CLI_ParseContext *c, char n) {
-	printf("Finding short option: %c\n", n);
+	// printf("Finding short option: %c\n", n);
 
 	if (cli_is_valid_short_name(n)) return c->shorts[cli_short_to_index(n)];
 	return NULL;
 }
 
 static inline CLI_Parameter *cli_find_positional(CLI_ParseContext *c) {
-	printf("Finding positional: %u\n", c->positional_index);
+	// printf("Finding positional: %u\n", c->positional_index);
 
-	int index = c->positional_index - 1;
+	unsigned int index = c->positional_index - 1;
 
 	if (index <= DESCENT_CLI_MAX_POSITIONALS && c->positionals[index]) {
 		return c->positionals[index];
@@ -88,7 +88,7 @@ static inline CLI_Parameter *cli_find_positional(CLI_ParseContext *c) {
 }
 
 static inline CLI_Parameter *cli_find_catchall(CLI_ParseContext *c) {
-	printf("Finding catchall\n");
+	// printf("Finding catchall\n");
 	return c->catchall;
 }
 

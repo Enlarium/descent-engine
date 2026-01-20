@@ -16,8 +16,6 @@
 #ifndef DESCENT_CLI_H
 #define DESCENT_CLI_H
 
-#include <stddef.h>
-
 #ifndef DESCENT_CLI_MAX_ARGUMENTS
 #define DESCENT_CLI_MAX_ARGUMENTS 256
 #endif
@@ -25,6 +23,10 @@
 #ifndef DESCENT_CLI_MAX_POSITIONALS
 #define DESCENT_CLI_MAX_POSITIONALS 16
 #endif
+
+#include <stdbool.h>
+
+#include <descent/rcode.h>
 
 /**
  * @brief Function type for CLI actions.
@@ -38,7 +40,7 @@
  * @param settings User-defined settings pointer passed to the parser.
  * @return 0 on success, non-zero error code on failure.
  */
-typedef int (*CLI_Action)(unsigned int argument_count, const char **arguments, void *settings);
+typedef rcode (*CLI_Action)(unsigned int argument_count, const char **arguments, void *settings);
 
 
 /**
@@ -67,7 +69,7 @@ typedef struct CLI_Parameter {
  * @param c The character to check.
  * @return Non-zero if it is a valid, 0 otherwise.
  */
-int cli_is_valid_short_name(char c);
+bool cli_is_valid_short_name(char c);
 
 /**
  * @brief Check if a CLI_Parameter is a subcommand.
@@ -75,7 +77,7 @@ int cli_is_valid_short_name(char c);
  * @param p Parameter to check.
  * @return Non-zero if it is a subcommand, 0 otherwise.
  */
-int cli_is_subcommand(const CLI_Parameter *p);
+bool cli_is_subcommand(const CLI_Parameter *p);
 
 /**
  * @brief Check if a CLI_Parameter is a long option.
@@ -83,7 +85,7 @@ int cli_is_subcommand(const CLI_Parameter *p);
  * @param p Parameter to check.
  * @return Non-zero if it is a long option, 0 otherwise.
  */
-int cli_is_long_option(const CLI_Parameter *p);
+bool cli_is_long_option(const CLI_Parameter *p);
 
 /**
  * @brief Check if a CLI_Parameter is a short option.
@@ -91,7 +93,7 @@ int cli_is_long_option(const CLI_Parameter *p);
  * @param p Parameter to check.
  * @return Non-zero if it is a short option, 0 otherwise.
  */
-int cli_is_short_option(const CLI_Parameter *p);
+bool cli_is_short_option(const CLI_Parameter *p);
 
 /**
  * @brief Check if a CLI_Parameter is any type of option.
@@ -99,7 +101,7 @@ int cli_is_short_option(const CLI_Parameter *p);
  * @param p Parameter to check.
  * @return Non-zero if it is a long or short option, 0 otherwise.
  */
-int cli_is_option(const CLI_Parameter *p);
+bool cli_is_option(const CLI_Parameter *p);
 
 /**
  * @brief Check if a CLI_Parameter is a positional argument.
@@ -107,7 +109,7 @@ int cli_is_option(const CLI_Parameter *p);
  * @param p Parameter to check.
  * @return Non-zero if it is a positional argument, 0 otherwise.
  */
-int cli_is_positional(const CLI_Parameter *p);
+bool cli_is_positional(const CLI_Parameter *p);
 
 /**
  * @brief Check if a CLI_Parameter is a catch-all argument.
@@ -115,7 +117,7 @@ int cli_is_positional(const CLI_Parameter *p);
  * @param p Parameter to check.
  * @return Non-zero if it is a catch-all argument, 0 otherwise.
  */
-int cli_is_catchall(const CLI_Parameter *p);
+bool cli_is_catchall(const CLI_Parameter *p);
 
 /**
  * @brief Create a subcommand parameter.
@@ -170,7 +172,7 @@ CLI_Parameter cli_create_catchall(CLI_Action a);
  * @param settings User-defined pointer passed to option actions.
  * @return 0 on success, non-zero error code on failure.
  */
-int cli_parse(int argc, const char **argv, int parc, CLI_Parameter *parv, void *settings);
+rcode cli_parse(unsigned int argc, const char **argv, unsigned int parc, CLI_Parameter *parv, void *settings);
 
 /**
  * @brief Get the last flagged argument that caused an error.

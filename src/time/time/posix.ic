@@ -1,0 +1,79 @@
+/* Copyright 2025 XavierHarkonnen9 and Enlarium
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include <descent/utilities/platform.h>
+#if defined(DESCENT_PLATFORM_LINUX)
+// Needed for CLOCK_MONOTONIC on Linux
+#define _GNU_SOURCE
+#endif
+
+#include <time.h>
+
+#include <descent/time.h>
+#include <intern/time.h>
+
+#include <descent/rcode.h>
+#include <descent/thread/atomic.h>
+
+// Assume time_t is signed because INT32_MAX is less than UINT32_MAX
+_Static_assert(DESCENT_MAXIMUM_TIMEOUT / NSEC_PER_SEC <= INT32_MAX, "DESCENT_MAXIMUM_TIMEOUT exceeds time_t range");
+_Static_assert(sizeof(time_t) >= 4, "time_t must be at least 32 bits");
+
+// We choose a reference second to compare all other times to. Nanoseconds can
+// be discarded because the reference point is arbitrary, we just want to
+// prevent overflow by starting time_now() close to 0.
+static atomic_64 reference_time = ATOMIC_INIT(0);
+
+rcode time_init(void) {
+	struct timespec now = {0};
+
+	int result = clock_gettime(CLOCK_MONOTONIC, &now);
+	if (result) return DESCENT_FATAL_TIMER;
+
+	atomic_store_64(&reference_time, (uint64_t) now.tv_sec, ATOMIC_RELEASE);
+	return 0;
+}
+
+uint64_t time_nanoseconds(void) {
+	struct timespec now = {0};
+
+	// We can assume that clock_gettime() succeeds after time_init() succeeds.
+	// - EFAULT: variable now is local and within accessible address space.
+	// - EINVAL: calls with CLOCK_MONOTONIC succeeded during time_init().
+	clock_gettime(CLOCK_MONOTONIC, &now);
+
+	uint64_t reference = atomic_load_64(&reference_time, ATOMIC_ACQUIRE);
+
+	uint64_t normalized = (uint64_t) now.tv_nsec;
+	normalized += NSEC_PER_SEC * ((uint64_t) now.tv_sec - reference);
+
+	return normalized;
+}
+
+uint64_t time_max_timeout(void) {
+	return DESCENT_MAXIMUM_TIMEOUT;
+}
+
+timeout_native time_to_timeout(uint64_t nanoseconds) {
+	// Timeouts are capped at DESCENT_MAXIMUM_TIMEOUT.
+	if (nanoseconds > DESCENT_MAXIMUM_TIMEOUT) nanoseconds = DESCENT_MAXIMUM_TIMEOUT;
+
+	timeout_native result = {
+		.tv_sec  = (time_t) (nanoseconds / NSEC_PER_SEC),
+		.tv_nsec = (long)   (nanoseconds % NSEC_PER_SEC)
+	};
+
+	return result;
+}

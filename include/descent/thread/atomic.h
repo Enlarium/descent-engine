@@ -16,625 +16,1077 @@
 #ifndef DESCENT_THREAD_ATOMIC_H
 #define DESCENT_THREAD_ATOMIC_H
 
+#include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
-#include "../utilities/platform.h"
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-#include <stdatomic.h>
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-#include <windows.h>
-// TODO: I don't care how hacky I have to be, I want this monstrous gigafile out of my interface.
-#endif
-
-// Check whether true 64-bit atomic operations are available on Windows
-#ifdef DESCENT_PLATFORM_TYPE_WINDOWS
-#if defined(DESCENT_PLATFORM_WINDOWS_64) || (_WIN32_WINNT >= 0x0600)
-#define DESCENT_WINDOWS_INTERLOCKED_64 1
-#else
-#include "mutex.h"
-#define DESCENT_WINDOWS_INTERLOCKED_64 0
-#endif
-#endif
-
-// Check the pointer type size
-#if UINTPTR_MAX == 0xFFFFFFFFUL
-#define DESCENT_POINTER_32
-#elif UINTPTR_MAX != 0xFFFFFFFFFFFFFFFFULL
-#error "Pointers must be either 32 or 64 bits wide"
-#endif
-
-// All memory ordering is sequentially consistent to ensure cross-platform behavior is consistent
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
+#include <descent/thread/atomic_types.h>
 
 /**
- * @typedef atomic_32
- * @brief 32-bit atomic type.
+ * @def atomic_always_lock_free
+ * @ingroup atomic
+ * @brief Indicates whether atomic operations on the given type are always
+ * lock-free.
  * 
- * @note All defined operations on this type are sequentially consistent.
- */
-typedef _Atomic uint32_t  atomic_32;
-
-/**
- * @typedef atomic_64
- * @brief 64-bit atomic type.
+ * This macro evaluates to a compile-time constant expression.
  * 
- * @note All defined operations on this type are sequentially consistent.
+ * @param ptr Pointer to an instance of the atomic data type.
+ * @return True if operations are always lock-free, false otherwise.
  */
-typedef _Atomic uint64_t  atomic_64;
+#define atomic_always_lock_free(ptr) __atomic_always_lock_free(sizeof(*(ptr)), ptr)
 
 /**
- * @typedef atomic_ptr
- * @brief Atomic pointer container.
+ * @def atomic_is_lock_free
+ * @ingroup atomic
+ * @brief Indicates whether atomic operations on the given object are
+ * lock-free.
  * 
- * @note All defined operations on this type are sequentially consistent.
- */
-typedef _Atomic uintptr_t atomic_ptr;
-
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-
-/**
- * @typedef atomic_32
- * @brief 32-bit atomic type.
+ * The result may depend on runtime properties such as object alignment or
+ * address.
  * 
- * @note All defined operations on this type are sequentially consistent.
+ * @param ptr Pointer to an instance of the atomic data type.
+ * @return True if operations are lock-free, false otherwise.
  */
-typedef __declspec(align(4)) volatile uint32_t  atomic_32;
+#define atomic_is_lock_free(ptr) __atomic_is_lock_free(sizeof(*(ptr)), ptr)
 
-#if DESCENT_WINDOWS_INTERLOCKED_64
 /**
- * @typedef atomic_64
- * @brief 64-bit atomic type.
+ * @ingroup atomic
+ * @brief Memory ordering constraints for atomic operations.
+ */
+enum {
+	ATOMIC_RELAXED = __ATOMIC_RELAXED, /**< Provides atomicity with no ordering or synchronization guarantees. */
+	ATOMIC_ACQUIRE = __ATOMIC_ACQUIRE, /**< Prevents later memory operations from moving before the atomic operation. */
+	ATOMIC_RELEASE = __ATOMIC_RELEASE, /**< Prevents earlier memory operations from moving after the atomic operation. */
+	ATOMIC_ACQ_REL = __ATOMIC_ACQ_REL, /**< Combines @ref ATOMIC_ACQUIRE and @ref ATOMIC_RELEASE semantics. */
+	ATOMIC_SEQ_CST = __ATOMIC_SEQ_CST  /**< All threads appear to execute atomics in the same sequence. */
+};
+
+/**
+ * @ingroup atomic
+ * @brief Atomically loads the value of an atomic integer and returns it.
  * 
- * @note All defined operations on this type are sequentially consistent.
- */
-typedef __declspec(align(8)) volatile uint64_t  atomic_64;
-#else
-/**
- * @typedef atomic_64
- * @brief 64-bit atomic type.
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_ACQUIRE
+ * - @ref ATOMIC_SEQ_CST
  * 
- * @note All defined operations on this type are sequentially consistent.
+ * @param ptr Pointer to the atomic integer.
+ * @param order Memory ordering constraint.
+ * @return The loaded value.
  */
-typedef __declspec(align(8)) struct {
-	mutex_t lock;
-	volatile uint64_t value;
-} atomic_64;
-#endif
+static inline int atomic_load_int(atomic_int *ptr, int order) {
+	return (int) __atomic_load_n(&ptr->_atomic, order);
+}
 
 /**
- * @typedef atomic_ptr
- * @brief Atomic pointer container.
+ * @ingroup atomic
+ * @brief Atomically stores a value into an atomic integer.
  * 
- * @note All defined operations on this type are sequentially consistent.
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_RELEASE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to store.
+ * @param order Memory ordering constraint.
  */
-typedef __declspec(align(sizeof(uintptr_t))) volatile uintptr_t atomic_ptr;
-
-// If atomic_ptr is 64-bit, then atomic_64 will also be a single 64-bit type
-
-#endif
-
-/**
- * @brief Atomically compare and exchange a 32-bit value.
- * @param object Pointer to the atomic_32 variable.
- * @param expected Pointer to the expected value. Updated to `object` if exchange fails.
- * @param desired Value to store if `object` equals `expected`.
- * @return 1 if successful, 0 otherwise.
- */
-static inline int atomic_compare_exchange_32(atomic_32 *object, uint32_t *expected, uint32_t desired) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_compare_exchange_strong(object, expected, desired);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	uint32_t original = (uint32_t) InterlockedCompareExchange((LONG*)object, (LONG)desired, (LONG)*expected);
-	if (original == *expected) return 1;
-	else {
-		*expected = original;
-		return 0;
-	}
-#endif
+static inline void atomic_store_int(atomic_int *ptr, int val, int order) {
+	__atomic_store_n(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically compare and exchange a 64-bit value.
- * @param object Pointer to the atomic_64 variable.
- * @param expected Pointer to the expected value. Updated to `object` if exchange fails.
- * @param desired Value to store if `object` equals `expected`.
- * @return 1 if successful, 0 otherwise.
+ * @ingroup atomic
+ * @brief Atomically stores a value into an atomic integer and returns the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to store.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic integer.
  */
-static inline int atomic_compare_exchange_64(atomic_64 *object, uint64_t *expected, uint64_t desired) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_compare_exchange_strong(object, expected, desired);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 1
-	uint64_t original = (uint64_t) InterlockedCompareExchange64((LONG64*)object, (LONG64)desired, (LONG64)*expected);
-	if (original == *expected) return 1;
-	else {
-		*expected = original;
-		return 0;
-	}
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 0
-	mutex_lock(&object->lock);
-	if (object->value == *expected) {
-		object->value = desired;
-		mutex_unlock(&object->lock);
-		return 1;
-	} else {
-		*expected = object->value;
-		mutex_unlock(&object->lock);
-		return 0;
-	}
-#endif
+static inline int atomic_exchange_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_exchange_n(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically compare and exchange a pointer value.
- * @param object Pointer to the atomic_ptr variable.
- * @param expected Pointer to the expected value. Updated to `object` if exchange fails.
- * @param desired Value to store if `object` equals `expected`.
- * @return 1 if successful, 0 otherwise.
+ * @ingroup atomic
+ * @brief Atomically compares the value of an atomic integer with an expected
+ * value and, if they are equal, replaces it with a desired value.
+ * 
+ * All memory orderings are valid for @p success_order.
+ * 
+ * Valid memory orderings for @p failure_order are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_ACQUIRE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic integer.
+ * @param expected Pointer to the expected value. If the comparison fails, this
+ * value is updated with the current value of the atomic integer.
+ * @param desired The value to store if the comparison succeeds.
+ * @param success_order Memory ordering constraint if the exchange is successful.
+ * @param failure_order Memory ordering constraint if the exchange fails.
+ * @return True if the exchange was performed, false otherwise.
  */
-static inline int atomic_compare_exchange_ptr(atomic_ptr *object, uintptr_t *expected, uintptr_t desired) {
-#ifdef DESCENT_POINTER_32
-	return atomic_compare_exchange_32((atomic_32 *)object, (uint32_t *)expected, (uint32_t) desired);
-#else
-	return atomic_compare_exchange_64((atomic_64 *)object, (uint64_t *)expected, (uint64_t) desired);
-#endif
+static inline bool atomic_compare_exchange_int(atomic_int *ptr, int *expected, int desired, int success_order, int failure_order) {
+	return __atomic_compare_exchange_n(&ptr->_atomic, expected, desired, 0, success_order, failure_order);
 }
 
 /**
- * @brief Atomically exchanges a 32-bit value.
- * @param object Pointer to the atomic_32 variable.
- * @param desired New value to set.
- * @return The previous value of the atomic variable.
+ * @ingroup atomic
+ * @brief Atomically adds a value to an atomic integer and returns the new
+ * value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to add.
+ * @param order Memory ordering constraint.
+ * @return The new value after addition.
  */
-static inline uint32_t atomic_exchange_32(atomic_32 *object, uint32_t desired) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_exchange(object, desired);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return (uint32_t) InterlockedExchange((LONG*)object, (LONG)desired);
-#endif
+static inline int atomic_add_fetch_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_add_fetch(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically exchanges a 64-bit value.
- * @param object Pointer to the atomic_64 variable.
- * @param desired New value to set.
- * @return The previous value of the atomic variable.
+ * @ingroup atomic
+ * @brief Atomically subtracts a value from an atomic integer and returns the
+ * new value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to subtract.
+ * @param order Memory ordering constraint.
+ * @return The new value after subtraction.
  */
-static inline uint64_t atomic_exchange_64(atomic_64 *object, uint64_t desired) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_exchange(object, desired);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 1
-	return (uint64_t) InterlockedExchange64((LONG64*)object, (LONG64)desired);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 0
-	mutex_lock(&object->lock);
-	uint64_t old = object->value;
-	object->value = desired;
-	mutex_unlock(&object->lock);
-	return old;
-#endif
-}
-
-
-/**
- * @brief Atomically exchanges a pointer value.
- * @param object Pointer to the atomic_ptr variable.
- * @param desired New pointer value to set.
- * @return The previous pointer value.
- */
-static inline uintptr_t atomic_exchange_ptr(atomic_ptr *object, uintptr_t desired) {
-#ifdef DESCENT_POINTER_32
-	return (uintptr_t) atomic_exchange_32((atomic_32 *)object, (uint32_t) desired);
-#else
-	return (uintptr_t) atomic_exchange_64((atomic_64 *)object, (uint64_t) desired);
-#endif
-}
-
-
-/**
- * @brief Atomically adds a value to a 32-bit atomic variable.
- * @param object Pointer to the atomic_32 variable.
- * @param operand Value to add.
- * @return The value before the addition.
- */
-static inline uint32_t atomic_fetch_add_32(atomic_32 *object, uint32_t operand) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_fetch_add(object, operand);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return (uint32_t) InterlockedExchangeAdd((LONG*)object, (LONG)operand);
-#endif
+static inline int atomic_sub_fetch_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_sub_fetch(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically adds a value to a 64-bit atomic variable.
- * @param object Pointer to the atomic_64 variable.
- * @param operand Value to add.
- * @return The value before the addition.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise AND between an atomic integer and a
+ * value, storing the result into the atomic integer and returning it.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to AND with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the AND operation.
  */
-static inline uint64_t atomic_fetch_add_64(atomic_64 *object, uint64_t operand) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_fetch_add(object, operand);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 1
-	return (uint64_t) InterlockedExchangeAdd64((LONG64*)object, (LONG64)operand);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 0
-	mutex_lock(&object->lock);
-	uint64_t old = object->value;
-	object->value += operand;
-	mutex_unlock(&object->lock);
-	return old;
-#endif
+static inline int atomic_and_fetch_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_and_fetch(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically adds a value to a pointer-sized atomic variable.
- * @param object Pointer to the atomic_ptr variable.
- * @param operand Value to add.
- * @return The value before the addition.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise XOR between an atomic integer and a
+ * value, storing the result into the atomic integer and returning it.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to XOR with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the XOR operation.
  */
-static inline uintptr_t atomic_fetch_add_ptr(atomic_ptr *object, uintptr_t operand) {
-#ifdef DESCENT_POINTER_32
-	return (uintptr_t)  atomic_fetch_add_32((atomic_32 *)object, (uint32_t) operand);
-#else
-	return (uintptr_t)  atomic_fetch_add_64((atomic_64 *)object, (uint64_t) operand);
-#endif
+static inline int atomic_xor_fetch_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_xor_fetch(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically subtracts a value from a 32-bit atomic variable.
- * @param object Pointer to the atomic_32 variable.
- * @param operand Value to subtract.
- * @return The value before the subtraction.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise OR between an atomic integer and a
+ * value, storing the result into the atomic integer and returning it.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to OR with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the OR operation.
  */
-static inline uint32_t atomic_fetch_sub_32(atomic_32 *object, uint32_t operand) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_fetch_sub(object, operand);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return (uint32_t) InterlockedExchangeAdd((LONG*)object, -((LONG)operand));
-#endif
+static inline int atomic_or_fetch_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_or_fetch(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically subtracts a value from a 64-bit atomic variable.
- * @param object Pointer to the atomic_64 variable.
- * @param operand Value to subtract.
- * @return The value before the subtraction.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise NAND between an atomic integer and a
+ * value, storing the result into the atomic integer and returning it.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to NAND with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the NAND operation.
  */
-static inline uint64_t atomic_fetch_sub_64(atomic_64 *object, uint64_t operand) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_fetch_sub(object, operand);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 1
-	return (uint64_t) InterlockedExchangeAdd64((LONG64*)object, -((LONG64)operand));
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 0
-	mutex_lock(&object->lock);
-	uint64_t old = object->value;
-	object->value -= operand;
-	mutex_unlock(&object->lock);
-	return old;
-#endif
+static inline int atomic_nand_fetch_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_nand_fetch(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically subtracts a value from a pointer-sized atomic variable.
- * @param object Pointer to the atomic_ptr variable.
- * @param operand Value to subtract.
- * @return The value before the subtraction.
+ * @ingroup atomic
+ * @brief Atomically adds a value to an atomic integer and returns the old
+ * value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to add.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic integer.
  */
-static inline uintptr_t atomic_fetch_sub_ptr(atomic_ptr *object, uintptr_t operand) {
-#ifdef DESCENT_POINTER_32
-	return (uintptr_t)  atomic_fetch_sub_32((atomic_32 *)object, (uint32_t) operand);
-#else
-	return (uintptr_t)  atomic_fetch_sub_64((atomic_64 *)object, (uint64_t) operand);
-#endif
+static inline int atomic_fetch_add_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_fetch_add(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically performs bitwise AND on a 32-bit atomic variable.
- * @param object Pointer to the atomic_32 variable.
- * @param operand Operand for AND operation.
- * @return The value before the operation.
+ * @ingroup atomic
+ * @brief Atomically subtracts a value from an atomic integer and returns the
+ * old value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to subtract.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic integer.
  */
-static inline uint32_t atomic_fetch_and_32(atomic_32 *object, uint32_t operand) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_fetch_and(object, operand);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return (uint32_t) InterlockedAnd((LONG*)object, (LONG)operand);
-#endif
-}
-
-
-/**
- * @brief Atomically performs bitwise AND on a 64-bit atomic variable.
- * @param object Pointer to the atomic_64 variable.
- * @param operand Operand for AND operation.
- * @return The value before the operation.
- */
-static inline uint64_t atomic_fetch_and_64(atomic_64 *object, uint64_t operand) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_fetch_and(object, operand);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 1
-	return (uint64_t) InterlockedAnd64((LONG64*)object, (LONG64)operand);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 0
-	mutex_lock(&object->lock);
-	uint64_t old = object->value;
-	object->value &= operand;
-	mutex_unlock(&object->lock);
-	return old;
-#endif
+static inline int atomic_fetch_sub_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_fetch_sub(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically performs bitwise AND on a pointer-sized atomic variable.
- * @param object Pointer to the atomic_ptr variable.
- * @param operand Operand for AND operation.
- * @return The value before the operation.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise AND between an atomic integer and a
+ * value, storing the result into the atomic integer and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to AND with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic integer.
  */
-static inline uintptr_t atomic_fetch_and_ptr(atomic_ptr *object, uintptr_t operand) {
-#ifdef DESCENT_POINTER_32
-	return (uintptr_t)  atomic_fetch_and_32((atomic_32 *)object, (uint32_t) operand);
-#else
-	return (uintptr_t)  atomic_fetch_and_64((atomic_64 *)object, (uint64_t) operand);
-#endif
+static inline int atomic_fetch_and_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_fetch_and(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically performs bitwise OR on a 32-bit atomic variable.
- * @param object Pointer to the atomic_32 variable.
- * @param operand Operand for OR operation.
- * @return The value before the operation.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise XOR between an atomic integer and a
+ * value, storing the result into the atomic integer and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to XOR with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic integer.
  */
-static inline uint32_t atomic_fetch_or_32(atomic_32 *object, uint32_t operand) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_fetch_or(object, operand);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return (uint32_t) InterlockedOr((LONG*)object, (LONG)operand);
-#endif
-}
-
-
-/**
- * @brief Atomically performs bitwise OR on a 64-bit atomic variable.
- * @param object Pointer to the atomic_64 variable.
- * @param operand Operand for OR operation.
- * @return The value before the operation.
- */
-static inline uint64_t atomic_fetch_or_64(atomic_64 *object, uint64_t operand) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_fetch_or(object, operand);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 1
-	return (uint64_t) InterlockedOr64((LONG64*)object, (LONG64)operand);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 0
-	mutex_lock(&object->lock);
-	uint64_t old = object->value;
-	object->value |= operand;
-	mutex_unlock(&object->lock);
-	return old;
-#endif
+static inline int atomic_fetch_xor_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_fetch_xor(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically performs bitwise OR on a pointer-sized atomic variable.
- * @param object Pointer to the atomic_ptr variable.
- * @param operand Operand for OR operation.
- * @return The value before the operation.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise OR between an atomic integer and a
+ * value, storing the result into the atomic integer and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to OR with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic integer.
  */
-static inline uintptr_t atomic_fetch_or_ptr(atomic_ptr *object, uintptr_t operand) {
-#ifdef DESCENT_POINTER_32
-	return (uintptr_t)  atomic_fetch_or_32((atomic_32 *)object, (uint32_t) operand);
-#else
-	return (uintptr_t)  atomic_fetch_or_64((atomic_64 *)object, (uint64_t) operand);
-#endif
+static inline int atomic_fetch_or_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_fetch_or(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically performs bitwise XOR on a 32-bit atomic variable.
- * @param object Pointer to the atomic_32 variable.
- * @param operand Operand for XOR operation.
- * @return The value before the operation.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise NAND between an atomic integer and a
+ * value, storing the result into the atomic integer and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic integer.
+ * @param val The value to NAND with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic integer.
  */
-static inline uint32_t atomic_fetch_xor_32(atomic_32 *object, uint32_t operand) {
-	#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-		return atomic_fetch_xor(object, operand);
-	#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-		return (uint32_t) InterlockedXor((LONG*)object, (LONG)operand);
-	#endif
+static inline int atomic_fetch_nand_int(atomic_int *ptr, int val, int order) {
+	return (int) __atomic_fetch_nand(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Atomically performs bitwise XOR on a 64-bit atomic variable.
- * @param object Pointer to the atomic_64 variable.
- * @param operand Operand for XOR operation.
- * @return The value before the operation.
+ * @ingroup atomic
+ * @brief Atomically loads the value of an atomic uint32_t and returns it.
+ * 
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_ACQUIRE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param order Memory ordering constraint.
+ * @return The loaded value.
  */
-static inline uint64_t atomic_fetch_xor_64(atomic_64 *object, uint64_t operand) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_fetch_xor(object, operand);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 1
-	return (uint64_t) InterlockedXor64((LONG64*)object, (LONG64)operand);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 0
-	mutex_lock(&object->lock);
-	uint64_t old = object->value;
-	object->value ^= operand;
-	mutex_unlock(&object->lock);
-	return old;
-#endif
+static inline uint32_t atomic_load_32(atomic_32 *ptr, int order) {
+	return (uint32_t) __atomic_load_n(&ptr->_atomic, order);
 }
 
 /**
- * @brief Atomically performs bitwise XOR on a pointer-sized atomic variable.
- * @param object Pointer to the atomic_ptr variable.
- * @param operand Operand for XOR operation.
- * @return The value before the operation.
+ * @ingroup atomic
+ * @brief Atomically stores a value into an atomic uint32_t.
+ * 
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_RELEASE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to store.
+ * @param order Memory ordering constraint.
  */
-static inline uintptr_t atomic_fetch_xor_ptr(atomic_ptr *object, uintptr_t operand) {
-#ifdef DESCENT_POINTER_32
-	return (uintptr_t)  atomic_fetch_xor_32((atomic_32 *)object, (uint32_t) operand);
-#else
-	return (uintptr_t)  atomic_fetch_xor_64((atomic_64 *)object, (uint64_t) operand);
-#endif
-}
-
-
-/**
- * @brief Initializes a 32-bit atomic variable.
- * @param object Pointer to the atomic_32 variable.
- * @param desired Initial value.
- */
-static inline void atomic_init_32(atomic_32 *object, uint32_t desired) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	atomic_init(object, desired);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	*object = desired;
-#endif
+static inline void atomic_store_32(atomic_32 *ptr, uint32_t val, int order) {
+	__atomic_store_n(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Initializes a 64-bit atomic variable.
- * @param object Pointer to the atomic_64 variable.
- * @param desired Initial value.
+ * @ingroup atomic
+ * @brief Atomically stores a value into an atomic uint32_t and returns the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to store.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint32_t.
  */
-static inline void atomic_init_64(atomic_64 *object, uint64_t desired) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	atomic_init(object, desired);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 1
-	*object = desired;
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 0
-	mutex_init(&object->lock);
-	object->value = desired;
-#endif
+static inline uint32_t atomic_exchange_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_exchange_n(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Initializes a pointer-sized atomic variable.
- * @param object Pointer to the atomic_ptr variable.
- * @param desired Initial pointer value.
+ * @ingroup atomic
+ * @brief Atomically compares the value of an atomic uint32_t with an expected
+ * value and, if they are equal, replaces it with a desired value.
+ * 
+ * All memory orderings are valid for @p success_order.
+ * 
+ * Valid memory orderings for @p failure_order are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_ACQUIRE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param expected Pointer to the expected value. If the comparison fails, this
+ * value is updated with the current value of the atomic uint32_t.
+ * @param desired The value to store if the comparison succeeds.
+ * @param success_order Memory ordering constraint if the exchange is successful.
+ * @param failure_order Memory ordering constraint if the exchange fails.
+ * @return True if the exchange was performed, false otherwise.
  */
-static inline void atomic_init_ptr(atomic_ptr *object, uintptr_t desired) {
-#ifdef DESCENT_POINTER_32
-	atomic_init_32((atomic_32 *)object, (uint32_t) desired);
-#else
-	atomic_init_64((atomic_64 *)object, (uint64_t) desired);
-#endif
+static inline bool atomic_compare_exchange_32(atomic_32 *ptr, uint32_t *expected, uint32_t desired, int success_order, int failure_order) {
+	return __atomic_compare_exchange_n(&ptr->_atomic, expected, desired, 0, success_order, failure_order);
 }
 
 /**
- * @brief Loads a 32-bit atomic variable.
- * @param object Pointer to the atomic_32 variable.
- * @return The current value.
+ * @ingroup atomic
+ * @brief Atomically adds a value to an atomic uint32_t and returns the new
+ * value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to add.
+ * @param order Memory ordering constraint.
+ * @return The new value after addition.
  */
-static inline uint32_t atomic_load_32(const atomic_32 *object) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_load(object);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return (uint32_t) InterlockedCompareExchange((LONG*)object, 0, 0);
-#endif
+static inline uint32_t atomic_add_fetch_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_add_fetch(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Loads a 64-bit atomic variable.
- * @param object Pointer to the atomic_64 variable.
- * @return The current value.
+ * @ingroup atomic
+ * @brief Atomically subtracts a value from an atomic uint32_t and returns the
+ * new value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to subtract.
+ * @param order Memory ordering constraint.
+ * @return The new value after subtraction.
  */
-static inline uint64_t atomic_load_64(const atomic_64 *object) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return atomic_load(object);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 1
-	return (uint64_t) InterlockedCompareExchange64((LONG64*)object, 0, 0);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 0
-	mutex_lock((mutex_t*)&object->lock);
-	uint64_t val = object->value;
-	mutex_unlock((mutex_t*)&object->lock);
-	return val;
-#endif
+static inline uint32_t atomic_sub_fetch_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_sub_fetch(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise AND between an atomic uint32_t and a
+ * value, storing the result into the atomic uint32_t and returning it.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to AND with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the AND operation.
+ */
+static inline uint32_t atomic_and_fetch_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_and_fetch(&ptr->_atomic, val, order);
 }
 
 
 /**
- * @brief Loads a pointer-sized atomic variable.
- * @param object Pointer to the atomic_ptr variable.
- * @return The current pointer value.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise XOR between an atomic uint32_t and a
+ * value, storing the result into the atomic uint32_t and returning it.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to XOR with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the XOR operation.
  */
-static inline uintptr_t atomic_load_ptr(const atomic_ptr *object) {
-#ifdef DESCENT_POINTER_32
-	return atomic_load_32((atomic_32 *)object);
-#else
-	return atomic_load_64((atomic_64 *)object);
-#endif
+static inline uint32_t atomic_xor_fetch_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_xor_fetch(&ptr->_atomic, val, order);
+}
+
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise OR between an atomic uint32_t and a
+ * value, storing the result into the atomic uint32_t and returning it.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to OR with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the OR operation.
+ */
+static inline uint32_t atomic_or_fetch_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_or_fetch(&ptr->_atomic, val, order);
+}
+
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise NAND between an atomic uint32_t and a
+ * value, storing the result into the atomic uint32_t and returning it.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to NAND with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the NAND operation.
+ */
+static inline uint32_t atomic_nand_fetch_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_nand_fetch(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Stores a value to a 32-bit atomic variable.
- * @param object Pointer to the atomic_32 variable.
- * @param desired Value to store.
+ * @ingroup atomic
+ * @brief Atomically adds a value to an atomic uint32_t and returns the old
+ * value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to add.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint32_t.
  */
-static inline void atomic_store_32(atomic_32 *object, uint32_t desired) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	atomic_store(object, desired);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	InterlockedExchange((LONG*)object, (LONG)desired);
-#endif
+static inline uint32_t atomic_fetch_add_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_fetch_add(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Stores a value to a 64-bit atomic variable.
- * @param object Pointer to the atomic_64 variable.
- * @param desired Value to store.
+ * @ingroup atomic
+ * @brief Atomically subtracts a value from an atomic uint32_t and returns the
+ * old value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to subtract.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint32_t.
  */
-static inline void atomic_store_64(atomic_64 *object, uint64_t desired) {
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	atomic_store(object, desired);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 1
-	InterlockedExchange64((LONG64*)object, (LONG64)desired);
-#elif DESCENT_WINDOWS_INTERLOCKED_64 == 0
-	mutex_lock(&object->lock);
-	object->value = desired;
-	mutex_unlock(&object->lock);
-#endif
+static inline uint32_t atomic_fetch_sub_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_fetch_sub(&ptr->_atomic, val, order);
 }
 
 /**
- * @brief Stores a value to a pointer-sized atomic variable.
- * @param object Pointer to the atomic_ptr variable.
- * @param desired Pointer value to store.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise AND between an atomic uint32_t and a
+ * value, storing the result into the atomic uint32_t and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to AND with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint32_t.
  */
-static inline void atomic_store_ptr(atomic_ptr *object, uintptr_t desired) {
-#ifdef DESCENT_POINTER_32
-	atomic_store_32((atomic_32 *)object, (uint32_t) desired);
-#else
-	atomic_store_64((atomic_64 *)object, (uint64_t) desired);
-#endif
+static inline uint32_t atomic_fetch_and_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_fetch_and(&ptr->_atomic, val, order);
 }
 
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-
 /**
- * @brief Compiler fence to prevent reordering of memory operations around this point.
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise XOR between an atomic uint32_t and a
+ * value, storing the result into the atomic uint32_t and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to XOR with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint32_t.
  */
-#define atomic_s_fence() atomic_signal_fence(memory_order_seq_cst)
-
-/**
- * @brief Thread fence to enforce ordering of memory operations across threads.
- */
-#define atomic_t_fence() atomic_thread_fence(memory_order_seq_cst)
-
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-
-/**
- * @brief Compiler fence to prevent reordering of memory operations around this point.
- */
-#define atomic_s_fence() _ReadWriteBarrier()
-
-/**
- * @brief Thread fence to enforce ordering of memory operations across threads.
- */
-#define atomic_t_fence() MemoryBarrier()
-
-#endif
-
-#ifdef __cplusplus
+static inline uint32_t atomic_fetch_xor_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_fetch_xor(&ptr->_atomic, val, order);
 }
-#endif
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise OR between an atomic uint32_t and a
+ * value, storing the result into the atomic uint32_t and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to OR with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint32_t.
+ */
+static inline uint32_t atomic_fetch_or_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_fetch_or(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise NAND between an atomic uint32_t and a
+ * value, storing the result into the atomic uint32_t and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint32_t.
+ * @param val The value to NAND with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint32_t.
+ */
+static inline uint32_t atomic_fetch_nand_32(atomic_32 *ptr, uint32_t val, int order) {
+	return (uint32_t) __atomic_fetch_nand(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically loads the value of an atomic uint64_t and returns it.
+ * 
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_ACQUIRE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param order Memory ordering constraint.
+ * @return The loaded value.
+ */
+static inline uint64_t atomic_load_64(atomic_64 *ptr, int order) {
+	return (uint64_t) __atomic_load_n(&ptr->_atomic, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically stores a value into an atomic uint64_t.
+ * 
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_RELEASE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to store.
+ * @param order Memory ordering constraint.
+ */
+static inline void atomic_store_64(atomic_64 *ptr, uint64_t val, int order) {
+	__atomic_store_n(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically stores a value into an atomic uint64_t and returns the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to store.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint64_t.
+ */
+static inline uint64_t atomic_exchange_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_exchange_n(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically compares the value of an atomic uint64_t with an expected
+ * value and, if they are equal, replaces it with a desired value.
+ * 
+ * All memory orderings are valid for @p success_order.
+ * 
+ * Valid memory orderings for @p failure_order are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_ACQUIRE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param expected Pointer to the expected value. If the comparison fails, this
+ * value is updated with the current value of the atomic uint64_t.
+ * @param desired The value to store if the comparison succeeds.
+ * @param success_order Memory ordering constraint if the exchange is successful.
+ * @param failure_order Memory ordering constraint if the exchange fails.
+ * @return True if the exchange was performed, false otherwise.
+ */
+static inline bool atomic_compare_exchange_64(atomic_64 *ptr, uint64_t *expected, uint64_t desired, int success_order, int failure_order) {
+	return __atomic_compare_exchange_n(&ptr->_atomic, expected, desired, 0, success_order, failure_order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically adds a value to an atomic uint64_t and returns the new
+ * value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to add.
+ * @param order Memory ordering constraint.
+ * @return The new value after addition.
+ */
+static inline uint64_t atomic_add_fetch_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_add_fetch(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically subtracts a value from an atomic uint64_t and returns the
+ * new value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to subtract.
+ * @param order Memory ordering constraint.
+ * @return The new value after subtraction.
+ */
+static inline uint64_t atomic_sub_fetch_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_sub_fetch(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise AND between an atomic uint64_t and a
+ * value, storing the result into the atomic uint64_t and returning it.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to AND with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the AND operation.
+ */
+static inline uint64_t atomic_and_fetch_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_and_fetch(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise XOR between an atomic uint64_t and a
+ * value, storing the result into the atomic uint64_t and returning it.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to XOR with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the XOR operation.
+ */
+static inline uint64_t atomic_xor_fetch_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_xor_fetch(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise OR between an atomic uint64_t and a
+ * value, storing the result into the atomic uint64_t and returning it.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to OR with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the OR operation.
+ */
+static inline uint64_t atomic_or_fetch_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_or_fetch(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise NAND between an atomic uint64_t and a
+ * value, storing the result into the atomic uint64_t and returning it.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to NAND with.
+ * @param order Memory ordering constraint.
+ * @return The new value after the NAND operation.
+ */
+static inline uint64_t atomic_nand_fetch_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_nand_fetch(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically adds a value to an atomic uint64_t and returns the old
+ * value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to add.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint64_t.
+ */
+static inline uint64_t atomic_fetch_add_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_fetch_add(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically subtracts a value from an atomic uint64_t and returns the
+ * old value.
+ *
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to subtract.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint64_t.
+ */
+static inline uint64_t atomic_fetch_sub_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_fetch_sub(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise AND between an atomic uint64_t and a
+ * value, storing the result into the atomic uint64_t and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to AND with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint64_t.
+ */
+static inline uint64_t atomic_fetch_and_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_fetch_and(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise XOR between an atomic uint64_t and a
+ * value, storing the result into the atomic uint64_t and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to XOR with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint64_t.
+ */
+static inline uint64_t atomic_fetch_xor_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_fetch_xor(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise OR between an atomic uint64_t and a
+ * value, storing the result into the atomic uint64_t and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to OR with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint64_t.
+ */
+static inline uint64_t atomic_fetch_or_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_fetch_or(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically performs a bitwise NAND between an atomic uint64_t and a
+ * value, storing the result into the atomic uint64_t and returning the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic uint64_t.
+ * @param val The value to NAND with.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic uint64_t.
+ */
+static inline uint64_t atomic_fetch_nand_64(atomic_64 *ptr, uint64_t val, int order) {
+	return (uint64_t) __atomic_fetch_nand(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically loads the value of an atomic pointer and returns it.
+ * 
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_ACQUIRE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic pointer.
+ * @param order Memory ordering constraint.
+ * @return The loaded value.
+ */
+static inline uintptr_t atomic_load_ptr(atomic_ptr *ptr, int order) {
+	return (uintptr_t) __atomic_load_n(&ptr->_atomic, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically stores a value into an atomic pointer.
+ * 
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_RELEASE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic pointer.
+ * @param val The value to store.
+ * @param order Memory ordering constraint.
+ */
+static inline void atomic_store_ptr(atomic_ptr *ptr, uintptr_t val, int order) {
+	__atomic_store_n(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically stores a value into an atomic pointer and returns the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic pointer.
+ * @param val The value to store.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic pointer.
+ */
+static inline uintptr_t atomic_exchange_ptr(atomic_ptr *ptr, uintptr_t val, int order) {
+	return (uintptr_t) __atomic_exchange_n(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically compares the value of an atomic pointer with an expected
+ * value and, if they are equal, replaces it with a desired value.
+ * 
+ * All memory orderings are valid for @p success_order.
+ * 
+ * Valid memory orderings for @p failure_order are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_ACQUIRE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic pointer.
+ * @param expected Pointer to the expected value. If the comparison fails, this
+ * value is updated with the current value of the atomic pointer.
+ * @param desired The value to store if the comparison succeeds.
+ * @param success_order Memory ordering constraint if the exchange is successful.
+ * @param failure_order Memory ordering constraint if the exchange fails.
+ * @return True if the exchange was performed, false otherwise.
+ */
+static inline bool atomic_compare_exchange_ptr(atomic_ptr *ptr, uintptr_t *expected, uintptr_t desired, int success_order, int failure_order) {
+	return __atomic_compare_exchange_n(&ptr->_atomic, expected, desired, 0, success_order, failure_order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically loads the value of an atomic boolean and returns it.
+ * 
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_ACQUIRE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic boolean.
+ * @param order Memory ordering constraint.
+ * @return The loaded value.
+ */
+static inline bool atomic_load_bool(atomic_bool *ptr, int order) {
+	return (bool) __atomic_load_n(&ptr->_atomic, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically stores a value into an atomic boolean.
+ * 
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_RELEASE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic boolean.
+ * @param val The value to store.
+ * @param order Memory ordering constraint.
+ */
+static inline void atomic_store_bool(atomic_bool *ptr, bool val, int order) {
+	__atomic_store_n(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically stores a value into an atomic boolean and returns the old
+ * value.
+ * 
+ * All memory orderings are valid.
+ *
+ * @param ptr Pointer to the atomic boolean.
+ * @param val The value to store.
+ * @param order Memory ordering constraint.
+ * @return The old value of the atomic boolean.
+ */
+static inline bool atomic_exchange_bool(atomic_bool *ptr, bool val, int order) {
+	return (bool) __atomic_exchange_n(&ptr->_atomic, val, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically compares the value of an atomic bool with an expected
+ * value and, if they are equal, replaces it with a desired value.
+ * 
+ * All memory orderings are valid for @p success_order.
+ * 
+ * Valid memory orderings for @p failure_order are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_ACQUIRE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic bool.
+ * @param expected Pointer to the expected value. If the comparison fails, this
+ * value is updated with the current value of the atomic bool.
+ * @param desired The value to store if the comparison succeeds.
+ * @param success_order Memory ordering constraint if the exchange is successful.
+ * @param failure_order Memory ordering constraint if the exchange fails.
+ * @return True if the exchange was performed, false otherwise.
+ */
+static inline bool atomic_compare_exchange_bool(atomic_bool *ptr, bool *expected, bool desired, int success_order, int failure_order) {
+	return __atomic_compare_exchange_n(&ptr->_atomic, expected, desired, 0, success_order, failure_order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically sets an atomic boolean and returns the old value.
+ * 
+ * All memory orderings are valid.
+ * 
+ * @param ptr Pointer to the atomic boolean.
+ * @param order Memory ordering constraint.
+ */
+static inline bool atomic_test_and_set(atomic_bool *ptr, int order) {
+	return __atomic_test_and_set(&ptr->_atomic, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Atomically clears an atomic boolean.
+ * 
+ * Valid memory orderings are:
+ * - @ref ATOMIC_RELAXED
+ * - @ref ATOMIC_RELEASE
+ * - @ref ATOMIC_SEQ_CST
+ * 
+ * @param ptr Pointer to the atomic boolean.
+ * @param order Memory ordering constraint.
+ */
+static inline void atomic_clear(atomic_bool *ptr, int order) {
+	__atomic_clear(&ptr->_atomic, order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Establishes a memory fence between threads.
+ *
+ * Prevents certain memory operations issued before the fence from being
+ * reordered with memory operations issued after the fence, according to the
+ * specified memory ordering constraint.
+ *
+ * This function does not access or modify any atomic object; it only enforces
+ * ordering constraints on memory operations as observed by other threads.
+ *
+ * All memory orderings are valid.
+ *
+ * @param order Memory ordering constraint.
+ */
+static inline void atomic_thread_fence(int order) {
+	__atomic_thread_fence(order);
+}
+
+/**
+ * @ingroup atomic
+ * @brief Establishes a memory fence with respect to signal handlers.
+ *
+ * Prevents certain memory operations issued before the fence from being
+ * reordered with memory operations issued after the fence, according to the
+ * specified memory ordering constraint.
+ *
+ * This function only affects compiler reordering with respect to signal
+ * handlers and does not emit any hardware memory barrier instructions.
+ *
+ * All memory orderings are valid.
+ *
+ * @param order Memory ordering constraint.
+ */
+static inline void atomic_signal_fence(int order) {
+	__atomic_signal_fence(order);
+}
 
 #endif

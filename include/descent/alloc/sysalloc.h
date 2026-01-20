@@ -18,15 +18,46 @@
 
 #include <stddef.h>
 
+#include <descent/rcode.h>
+
+#ifndef DESCENT_MAX_ALLOC
+#define DESCENT_MAX_ALLOC 0x10000000000ULL
+#endif
+
+enum {
+	// Reading, writing, and executing are forbidden
+	SYSALLOC_ACCESS_NONE = 0,
+	// Reading permitted
+	SYSALLOC_ACCESS_READ = 1,
+	// Writing permitted
+	SYSALLOC_ACCESS_WRITE = 2,
+	// Execution permitted
+	SYSALLOC_ACCESS_EXEC = 4,
+	// Reading and writing permitted
+	SYSALLOC_ACCESS_READ_WRITE = SYSALLOC_ACCESS_READ | SYSALLOC_ACCESS_WRITE,
+	// Reading and executing permitted
+	SYSALLOC_ACCESS_READ_EXEC = SYSALLOC_ACCESS_READ | SYSALLOC_ACCESS_EXEC,
+	// Writing and executing permitted
+	SYSALLOC_ACCESS_WRITE_EXEC = SYSALLOC_ACCESS_WRITE | SYSALLOC_ACCESS_EXEC,
+	// Reading, writing, and executing permitted
+	SYSALLOC_ACCESS_READ_WRITE_EXEC = SYSALLOC_ACCESS_READ_WRITE | SYSALLOC_ACCESS_EXEC,
+};
+
 typedef struct {
-	void *alloc;
+	void  *base;
 	size_t size;
-} Alloc;
+} Sysalloc;
 
-size_t block_size(void);
+size_t sysalloc_granularity(void);
 
-Alloc sysalloc(size_t size);
+rcode sysalloc(Sysalloc *s, int access);
 
-int sysfree(Alloc *a);
+rcode sysalloc_reserve(Sysalloc *s);
+
+rcode sysalloc_commit(Sysalloc *s, size_t offset, size_t size, int access);
+
+rcode sysalloc_decommit(Sysalloc *s, size_t offset, size_t size);
+
+rcode sysfree(Sysalloc *s);
 
 #endif

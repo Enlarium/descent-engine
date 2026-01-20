@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <descent/utilities/codes.h>
+#include <descent/rcode.h>
 #include <descent/cli.h>
 
 #include "actions.h"

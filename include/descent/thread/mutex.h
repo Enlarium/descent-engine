@@ -16,78 +16,112 @@
 #ifndef DESCENT_THREAD_MUTEX_H
 #define DESCENT_THREAD_MUTEX_H
 
-#include <descent/utilities/opaque.h>
+#include <stdint.h>
 
-#include "condition.h"
+#include <descent/thread/atomic_types.h>
+#include <descent/thread/condition.h>
 
-#define MUTEX_INITIALIZER {0} // TODO: needs checks
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+/**
+ * @brief Static mutex initializer, equivalent to {0}.
+ */
+#define MUTEX_INIT {._owner = ATOMIC_INIT(0), ._state = ATOMIC_INIT(0)}
 
 /**
  * @struct Mutex
  * @brief A non-recursive mutex.
  *
- * This mutex allows only one thread to hold the lock at a time. It is non-recursive,
- * meaning a thread attempting to lock it multiple times without unlocking will deadlock.
+ * Ensures that only one thread can hold the lock at a time. Recursive locking is
+ * not allowed; attempts to re-lock from the owning thread return a deadlock error.
  * 
- * @note This mechanism is intra-process only. It cannot be shared between processes.
+ * @warning Closing a thread while it owns a mutex leaves the mutex in an undefined state.
+ * @note This mechanism is intra-process only and cannot be shared between processes.
  */
-DESCENT_OPAQUE_DEFINE(Mutex, DESCENT_OPAQUE_SIZE_MUTEX)
+struct Mutex {
+	atomic_64 _owner;
+	atomic_32 _state;
+};
 
 /**
- * @brief Initialize a mutex.
- * @param m Pointer to the Mutex.
- * @return 0 on success, non-zero on failure.
- */
-int mutex_init(Mutex *m);
-
-/**
- * @brief Destroy a mutex.
- * @param m Pointer to the Mutex.
- * @return 0 on success, non-zero on failure.
- */
-int mutex_destroy(Mutex *m);
-
-/**
- * @brief Lock a mutex.
- * @param m Pointer to the Mutex.
- * @return 0 on success, non-zero on failure.
+ * @brief Locks the mutex, blocking the calling thread if necessary.
  *
- * Blocks until the mutex is acquired.
- */
-int mutex_lock(Mutex *m);
-
-/**
- * @brief Attempt to lock a mutex without blocking.
- * @param m Pointer to the Mutex.
- * @return 0 if the lock was acquired, non-zero if the mutex is already held by another thread.
- */
-int mutex_trylock(Mutex *m);
-
-/**
- * @brief Unlock a mutex.
- * @param m Pointer to the Mutex.
- * @return 0 on success, non-zero on failure.
- */
-int mutex_unlock(Mutex *m);
-
-/**
- * @brief Wait for a condition to be signaled.
+ * If the mutex is already locked by another thread, the calling thread
+ * will wait until it becomes available. Recursive locking by the same
+ * thread is not allowed.
  *
- * Atomically releases the mutex and waits for the condition variable to be signaled.
- * When the condition is signaled or broadcast, the mutex is reacquired before returning.
- *
- * @param c Pointer to the Condition.
- * @param m Pointer to the Mutex.
- * @return 0 on success, non-zero on failure.
+ * @param m Pointer to the mutex to lock.
+ * @return
+ * - 0: Lock acquired successfully.
+ * - @ref DESCENT_ERROR_NULL: @p m is NULL.
+ * - @ref DESCENT_ERROR_FORBIDDEN: Calling thread is invalid.
+ * - @ref THREAD_ERROR_DEADLOCK: Calling thread already owns the mutex.
  */
-int condition_wait(Condition *c, Mutex *m);
+rcode mutex_lock(struct Mutex *m);
 
-#ifdef __cplusplus
-}
-#endif
+/**
+ * @brief Attempts to lock the mutex, blocking up to the specified timeout.
+ *
+ * If the mutex is already locked by another thread, the calling thread
+ * will wait until it becomes available. Recursive locking by the same
+ * thread is not allowed.
+ *
+ * Timeouts are capped at the value returned by @ref time_max_timeout().
+ *
+ * @param m Pointer to the mutex to lock.
+ * @param nanoseconds The maximum number of nanoseconds to wait.
+ * @return
+ * - 0: Lock acquired successfully.
+ * - @ref THREAD_INFO_TIMEOUT: Lock could not be acquired within the timeout.
+ * - @ref DESCENT_ERROR_NULL: @p m is NULL.
+ * - @ref DESCENT_ERROR_FORBIDDEN: Calling thread is invalid.
+ * - @ref THREAD_ERROR_DEADLOCK: Calling thread already owns the mutex.
+ */
+rcode mutex_timedlock(struct Mutex *m, uint64_t nanoseconds);
+
+/**
+ * @brief Attempts to lock the mutex without blocking.
+ *
+ * If the mutex is already locked by another thread, this function returns
+ * immediately. Recursive locking by the same thread is not allowed.
+ * 
+ * @param m Pointer to the mutex to try locking.
+ * @return
+ * - 0: Lock acquired successfully.
+ * - @ref THREAD_INFO_BUSY: Mutex is already locked by another thread.
+ * - @ref DESCENT_ERROR_NULL: @p m is NULL.
+ * - @ref DESCENT_ERROR_FORBIDDEN: Calling thread is invalid.
+ */
+rcode mutex_trylock(struct Mutex *m);
+
+/**
+ * @brief Unlocks a previously locked mutex.
+ *
+ * Only the thread that owns the mutex may unlock it. Unlocking a mutex not
+ * held by the calling thread will fail.
+ *
+ * @param m Pointer to the mutex to unlock.
+ * @return
+ * - 0: Mutex unlocked successfully.
+ * - @ref DESCENT_ERROR_NULL: @p m is NULL.
+ * - @ref DESCENT_ERROR_FORBIDDEN: Mutex is not owned by the calling thread.
+ */
+rcode mutex_unlock(struct Mutex *m);
+
+/**
+ * @brief Waits indefinitely on a condition variable while holding the mutex.
+ *
+ * The calling thread must hold the mutex before calling this function.
+ * The mutex is released while waiting and re-acquired before returning.
+ * 
+ * @param m Pointer to the mutex currently held.
+ * @param c Pointer to the condition variable to wait on.
+ * @return
+ * - 0: Successfully waited and re-acquired the mutex.
+ * - @ref DESCENT_ERROR_NULL: Either @p m or @p c is NULL.
+ * - @ref DESCENT_ERROR_FORBIDDEN: Calling thread is invalid.
+ * - Other mutex errors: Any error returned by @ref mutex_unlock or
+ *   @ref mutex_lock.
+ * @note Spurious wakeups are possible; always check the associated predicate.
+ */
+rcode mutex_wait(struct Mutex *m, struct Condition *c);
 
 #endif

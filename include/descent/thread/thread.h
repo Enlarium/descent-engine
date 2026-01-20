@@ -17,209 +17,141 @@
 #define DESCENT_THREAD_THREAD_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
-#define THREAD_NAME_LENGTH 16
+#include <descent/rcode.h>
 
-#define THREAD_AFFINITY_ALL UINT64_MAX
+enum {
+	THREAD_STATE_INVALID = -1,
+	THREAD_STATE_UNUSED  = 0,
+	THREAD_STATE_STARTING,
+	THREAD_STATE_RUNNING,
+	THREAD_STATE_FINISHED,
+	THREAD_STATE_INCOMPLETE
+};
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <descent/thread/tls.h>
+
+// Unmanaged TIDS cannot use this library's threading functions
+
+// Persistent subsystems like rendering, audio, and networking can be implemented through
+// unique threads. Easily-parallelized tasks should be implemented through a job system
+// on worker threads.
 
 /**
- * @enum ThreadPriority
- * @brief Thread priority levels.
+ * @brief Gets the maximum number of unique threads that can be created.
+ * @return The maximum number of unique threads.
  */
-typedef enum {
-	THREAD_PRIORITY_LOW     = -1, /**< Low priority thread */
-	THREAD_PRIORITY_DEFAULT = 0,  /**< Default priority thread */
-	THREAD_PRIORITY_HIGH    = 1   /**< High priority thread */
-} ThreadPriority;
+unsigned int thread_unique_max(void);
 
 /**
- * @struct ThreadName
- * @brief Container for thread name. Limited to 15 characters followed by a null terminator.
+ * @brief Gets the maximum number of worker threads that can be created.
+ * @return The maximum number of worker threads.
  */
-typedef struct {
-	char name[THREAD_NAME_LENGTH];
-} ThreadName;
+unsigned int thread_worker_max(void);
 
 /**
- * @struct ThreadAttributes
- * @brief Attributes for creating a thread.
- */
-typedef struct {
-	unsigned int stack_size; /**< Thread stack size in bytes (0 for default) */
-} ThreadAttributes;
-
-/**
- * @typedef ThreadFunction
- * @brief Function type executed by a thread.
- * @param arg Pointer to arguments for the thread function (can be NULL).
- * @return Integer exit code for the thread.
- */
-typedef int (*ThreadFunction)(void *arg);
-
-/**
- * @typedef Thread
- * @brief Opaque handle representing a thread.
+ * @brief Spawns a unique thread on the given thread ID.
  * 
- * @note This handle is not the same as the platform's native thread handle.
+ * Unique threads implement a single function on a single thread.
  * 
- * @note Threads created through the Descent thread system must not be manipulated
- * using the underlying thread API or other thread libraries. Doing so results
- * in undefined behavior.
+ * @param id The ID of the unique thread. Must be less than thread_unique_max().
+ * @param function The function invoked by the spawned thread. Must not be NULL
+ * @param argument The argument passed to the thread function. Can be NULL if the
+ * function supports it.
+ * @param name A name for the thread, used for debugging purposes. Should be
+ * UTF-8 encoded. Can be NULL. Thread names may be truncated on some platforms.
+ * @return 0 on success, non-zero error code on failure.
+ * @note This function should only be called from the main thread. Calling it from
+ * any other thread will return DESCENT_ERROR_FORBIDDEN.
  */
-typedef uint64_t Thread;
-
-ThreadName thread_name(const char *string);
+rcode thread_spawn_unique(unsigned int id, int (*function)(void *), void *argument, const char *name);
 
 /**
- * @brief Get the maximum number of concurrent threads supported.
- * @return Maximum concurrent threads.
+ * @brief Collects the unique thread on the given thread ID.
+ * 
+ * Joins the specified unique thread. After collection, the codes and state will be
+ * reset and the thread ID can be used to spawn a new thread.
+ * 
+ * @param id The ID of the unique thread.
+ * @return 0 on success, non-zero error code on failure.
+ * @note This function should only be called from the main thread. Calling it from
+ * any other thread will return DESCENT_ERROR_FORBIDDEN.
  */
-int thread_max_concurrent(void);
+rcode thread_collect_unique(unsigned int id);
 
 /**
- * @brief Create a new thread.
- * 
- * The thread executes the function `f` with argument `arg`.
- * The thread must be joined or detached to free resources.
- * 
- * @param t Output pointer to receive the thread handle. Should not be NULL.
- * @param f Thread function to execute. Should not be NULL.
- * @param arg Argument passed to the thread function. Can be NULL.
- * @param a Thread attributes. Can be NULL for defaults.
- * @return 0 on success, ThreadError on failure.
+ * @brief Gets the state of the unique thread on the given thread ID.
+ * @param id The ID of the unique thread.
+ * @return The state of the unique thread.
+ * @note This function should only be called from the main thread. Calling it from
+ * any other thread will return THREAD_STATE_INVALID.
  */
-int thread_create(Thread *t, ThreadFunction f, void *arg, const ThreadAttributes *a);
+int thread_state_unique(unsigned int id);
 
 /**
- * @brief Wait for a thread to finish and retrieve its exit code.
- * @param t Thread handle to join.
- * @param code Output pointer to store the exit code. Can be NULL.
- * @return 0 on success, or ThreadError on failure.
+ * @brief Gets the return code of the unique thread on the given thread ID.
+ * @param id The ID of the unique thread.
+ * @return The return code of the unique thread. If the unique thread is invalid or
+ * has not finished, this will return 0.
+ * @note This function should only be called from the main thread. Calling it from
+ * any other thread will return 0.
  */
-int thread_join(Thread t, int *code);
+int thread_code_unique(unsigned int id);
 
 /**
- * @brief Detach a thread.
+ * @brief Spawns a batch of worker threads.
  * 
- * Detached threads free their resources automatically when finished.
+ * Worker threads implement a single function concurrently across multiple
+ * threads. All worker threads invoke the same function and receive the same
+ * argument.
  * 
- * @param t Thread handle to detach.
- * @return 0 on success, or ThreadError on failure.
+ * Only one batch can be spawned and active at a time.
+ * 
+ * @param count The number of worker threads to spawn. Must not be greater than
+ * thread_worker_max().
+ * @param function The function invoked by the spawned threads. Must not be NULL.
+ * @param argument The argument passed to each thread function. Can be NULL if the
+ * function supports it.
+ * @return 0 on success, non-zero error code on failure.
+ * @note This function should only be called from the main thread. Calling it from
+ * any other thread will return DESCENT_ERROR_FORBIDDEN.
+ * @note If any worker thread fails to spawn, this function will return
+ * DESCENT_WARN_INCOMPLETE. Any threads that failed to spawn will have state
+ * THREAD_STATE_INCOMPLETE, and their code will be set to the relevant failure
+ * code.
  */
-int thread_detach(Thread t);
+rcode thread_spawn_worker(unsigned int count, int (*function)(void *), void *argument);
 
 /**
- * @brief Exit the current thread.
- * @param code Exit code of the thread.
+ * @brief Collects all worker threads.
+ * 
+ * Joins the worker threads. After collection, the codes and state will be reset
+ * and new worker threads can be spawned.
+ * 
+ * @return 0 on success, non-zero error code on failure.
+ * @note This function should only be called from the main thread. Calling it from
+ * any other thread will return DESCENT_ERROR_FORBIDDEN.
  */
-void thread_exit(int code);
+rcode thread_collect_worker(void);
 
 /**
- * @brief Get the handle of the current thread.
- * @return Current thread handle.
- * @note This is not the same as the platform's native thread handle.
+ * @brief Gets the state of the worker thread on the given thread ID.
+ * @param id The ID of the worker thread.
+ * @return The state of the worker thread.
+ * @note This function should only be called from the main thread. Calling it from
+ * any other thread will return THREAD_STATE_INVALID.
  */
-Thread thread_self(void);
+int thread_state_worker(unsigned int id);
 
 /**
- * @brief Compare two thread handles for equality.
- * 
- * @param t1 First thread handle.
- * @param t2 Second thread handle.
- * @return Non-zero if threads are equal, 0 otherwise.
+ * @brief Gets the return code of the worker thread on the given thread ID.
+ * @param id The ID of the worker thread.
+ * @return The return code of the worker thread. If the worker thread is invalid or
+ * has not finished, this will return 0.
+ * @note This function should only be called from the main thread. Calling it from
+ * any other thread will return 0.
  */
-int thread_equal(Thread t1, Thread t2);
-
-/**
- * @brief Get the name of the current thread.
- * @return Name of the current thread.
- * 
- * @note If this function is called on an unmanaged thread, the returned name will be a zero-length string.
- */
-ThreadName thread_get_name(void);
-
-/**
- * @brief Set the name of the current thread.
- * @param n The name to set the thread to.
- * @return 0 on success, or ThreadError on failure.
- * 
- * @note This function will only succeed on managed threads.
- */
-int thread_set_name(ThreadName n);
-
-/**
- * @brief Get the affinity of the current thread.
- * @return Affinity of the current thread as a bitmask.
- * 
- * @note If this function is called on an unmanaged thread, the returned affinity will be zero.
- * @note Not all platforms fully support thread affinity.
- */
-uint64_t thread_get_affinity(void);
-
-/**
- * @brief Set the affinity of the current thread.
- * @param affinity The affinity to set the thread to as a bitmask. If this parameter is zero, the thread affinity will be unchanged
- * @return 0 on success, or ThreadError on failure.
- * 
- * @note This function will only succeed on managed threads.
- * @note Not all platforms fully support thread affinity.
- */
-int thread_set_affinity(uint64_t affinity);
-
-/**
- * @brief Get the priority of the current thread.
- * @return The priority of the current thread 
- * 
- * @note If this function is called on an unmanaged thread, the returned priority will be DEFAULT.
- * @note Not all platforms fully support thread priority.
- */
-ThreadPriority thread_get_priority(void);
-
-/**
- * @brief Set the priority of the current thread.
- * 
- * @param p The priority to set the thread to.
- * @return 0 on success, or ThreadError on failure. 
- * 
- * @note This function will only succeed on managed threads.
- * @note Not all platforms fully support thread priority.
- */
-int thread_set_priority(ThreadPriority p);
-
-/**
- * @brief Yields to other threads ready to run on the current processor
- * @return 0 on success, nonzero on failure.
- * 
- * @note Provides no behavior guarantees on non-realtime threads.
- */
-int thread_yield(void);
-
-// Functions below are unorganized or unfinished
-
-long thread_sleep_granularity(void);
-
-//(multiple sleep modes?)
-int thread_sleep(uint64_t nanoseconds);
-
-// doesn't usually work / provide guarantees for non-realtime threads
-
-/*
-dynamic TLS
-Per-thread CPU usage sampling
-
-try join? timed join?
-
-Other files:
-timed waits for locks
-change spinlock implementation to native
-*/
-
-#ifdef __cplusplus
-}
-#endif
+int thread_code_worker(unsigned int id);
 
 #endif

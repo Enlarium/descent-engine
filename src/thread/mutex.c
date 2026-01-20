@@ -15,78 +15,152 @@
 
 #include <descent/thread/mutex.h>
 
-#include <stddef.h>
+#include <stdint.h>
+#include <stdbool.h>
 
-#include <descent/utilities/platform.h>
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-#include <pthread.h>
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-#include <windows.h>
-#endif
-
+#include <descent/rcode.h>
+#include <descent/thread/atomic.h>
 #include <descent/thread/condition.h>
-#include <descent/utilities/opaque.h>
+#include <descent/thread/futex.h>
+#include <descent/time.h>
+#include <descent/utilities/builtin.h>
+#include <intern/thread/tid.h>
 
-#include "implementation.h"
+// TODO: Implement eventual fairness
+// If a thread has consecutively held a lock for more than 1 ms, the next transition
+// must be fair
 
-_Static_assert(DESCENT_OPAQUE_SIZE_MUTEX >= sizeof(MutexImplementation), "Mutex opaque type is too small for its implementation!");
-_Static_assert(_Alignof(Mutex) >= _Alignof(MutexImplementation), "Mutex opaque type is under-aligned for its implementation!");
+enum {
+	MUTEX_UNLOCKED = 0,
+	MUTEX_LOCKED,
+	MUTEX_CONTENDED,
+};
 
-int mutex_init(Mutex *om) {
-	MutexImplementation *m = (MutexImplementation *)om;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_init(&m->_mutex, NULL);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	InitializeSRWLock(&m->_mutex);
+rcode mutex_lock(struct Mutex *m) {
+	if (!m) return DESCENT_ERROR_NULL;
+
+	// Check that the current thread has permission to call this function
+	if (builtin_expect(tid_is_self(TID_NONE), false)) return DESCENT_ERROR_FORBIDDEN;
+
+	// Fast path where lock isn't held
+	uint32_t expected = MUTEX_UNLOCKED;
+	if (atomic_compare_exchange_32(&m->_state, &expected, MUTEX_LOCKED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE)) {
+		atomic_store_64(&m->_owner, tid_self(), ATOMIC_RELEASE);
+		return 0;
+	}
+
+	// Detect re-entrant deadlocks
+	if (tid_is_self(atomic_load_64(&m->_owner, ATOMIC_ACQUIRE))) return THREAD_ERROR_DEADLOCK;
+
+	do {
+		expected = MUTEX_LOCKED;
+		bool exchange = atomic_compare_exchange_32(&m->_state, &expected, MUTEX_CONTENDED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE);
+
+		if (exchange || expected == MUTEX_CONTENDED) {
+			rcode result = futex_wait(&m->_state, MUTEX_CONTENDED);
+			if (result) return result;
+		}
+
+		expected = MUTEX_UNLOCKED;
+	} while (atomic_compare_exchange_32(&m->_state, &expected, MUTEX_CONTENDED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE));
+
+	atomic_store_64(&m->_owner, tid_self(), ATOMIC_RELEASE);
+
 	return 0;
-#endif
 }
 
-int mutex_destroy(Mutex *om) {
-	MutexImplementation *m = (MutexImplementation *)om;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_destroy(&m->_mutex);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	(void)m;
+rcode mutex_timedlock(struct Mutex *m, uint64_t nanoseconds) {
+	if (!m) return DESCENT_ERROR_NULL;
+
+	// Check that the current thread has permission to call this function
+	if (builtin_expect(tid_is_self(TID_NONE), false)) return DESCENT_ERROR_FORBIDDEN;
+
+	// Fast path where lock isn't held
+	uint32_t expected = MUTEX_UNLOCKED;
+	if (atomic_compare_exchange_32(&m->_state, &expected, MUTEX_LOCKED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE)) {
+		atomic_store_64(&m->_owner, tid_self(), ATOMIC_RELEASE);
+		return 0;
+	}
+
+	// Detect re-entrant deadlocks
+	if (tid_is_self(atomic_load_64(&m->_owner, ATOMIC_ACQUIRE))) return THREAD_ERROR_DEADLOCK;
+
+	uint64_t start = time_nanoseconds();
+	uint64_t remaining = nanoseconds;
+
+	do {
+		expected = MUTEX_LOCKED;
+		bool exchange = atomic_compare_exchange_32(&m->_state, &expected, MUTEX_CONTENDED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE);
+
+		if (exchange || expected == MUTEX_CONTENDED) {
+			// Wait with remaining timeout
+			rcode result = futex_timedwait(&m->_state, MUTEX_CONTENDED, remaining);
+			if (result) return result;
+
+			// Adjust remaining timeout
+			uint64_t now = time_nanoseconds();
+			if (now - start >= remaining) return THREAD_INFO_TIMEOUT;
+			remaining = nanoseconds - (now - start);
+		}
+
+		expected = MUTEX_UNLOCKED;
+	} while (!atomic_compare_exchange_32(&m->_state, &expected, MUTEX_CONTENDED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE));
+
+	atomic_store_64(&m->_owner, tid_self(), ATOMIC_RELEASE);
+
 	return 0;
-#endif
 }
 
-int mutex_lock(Mutex *om) {
-	MutexImplementation *m = (MutexImplementation *)om;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_lock(&m->_mutex);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	AcquireSRWLockExclusive(&m->_mutex);
-	return 0;
-#endif
+rcode mutex_trylock(struct Mutex *m) {
+	if (!m) return DESCENT_ERROR_NULL;
+
+	// Check that the current thread has permission to call this function
+	if (builtin_expect(tid_is_self(TID_NONE), false)) return DESCENT_ERROR_FORBIDDEN;
+	
+	uint32_t expected = MUTEX_UNLOCKED;
+	if (atomic_compare_exchange_32(&m->_state, &expected, MUTEX_LOCKED, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE)) {
+		atomic_store_64(&m->_owner, tid_self(), ATOMIC_RELEASE);
+		return 0;
+	}
+
+	return THREAD_INFO_BUSY;
 }
 
-int mutex_trylock(Mutex *om) {
-	MutexImplementation *m = (MutexImplementation *)om;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_trylock(&m->_mutex);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !TryAcquireSRWLockExclusive(&m->_mutex);
-#endif
+rcode mutex_unlock(struct Mutex *m) {
+	if (!m) return DESCENT_ERROR_NULL;
+
+	rcode result = 0;
+
+	// Check that the current thread has permission to call this function
+	// Only the owner is ever allowed to mutate the _owner field
+	thread_id self = tid_self();
+	if (!atomic_compare_exchange_64(&m->_owner, &self, TID_NONE, ATOMIC_ACQ_REL, ATOMIC_ACQUIRE)) {
+		return DESCENT_ERROR_FORBIDDEN;
+	}
+
+	uint32_t old_state = atomic_exchange_32(&m->_state, MUTEX_UNLOCKED, ATOMIC_RELEASE);
+	if (old_state == MUTEX_CONTENDED) result = futex_wake_next(&m->_state);
+
+	return result;
 }
 
-int mutex_unlock(Mutex *om) {
-	MutexImplementation *m = (MutexImplementation *)om;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_mutex_unlock(&m->_mutex);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	ReleaseSRWLockExclusive(&m->_mutex);
-	return 0;
-#endif
-}
+rcode mutex_wait(struct Mutex *m, struct Condition *c) {
+	if (!m || !c) return DESCENT_ERROR_NULL;
 
-int condition_wait(Condition *oc, Mutex *om) {
-	MutexImplementation *m = (MutexImplementation *)om;
-	ConditionImplementation *c = (ConditionImplementation *)oc;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_cond_wait(&c->_condition, &m->_mutex);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	return !SleepConditionVariableSRW(&c->_condition, &m->_mutex, INFINITE, 0);
-#endif
+	rcode result = 0;
+
+	// Check that the current thread has permission to call this function
+	if (builtin_expect(tid_is_self(TID_NONE), false)) return DESCENT_ERROR_FORBIDDEN;
+	
+	uint32_t expected = atomic_load_32(&c->_generation, ATOMIC_RELAXED);
+	
+	result = mutex_unlock(m);
+	if (result) return result;
+
+	rcode futex_result = futex_wait(&c->_generation, expected);
+
+	result = mutex_lock(m);
+	if (result) return result;
+
+	return futex_result;
 }

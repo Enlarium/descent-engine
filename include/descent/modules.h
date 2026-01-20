@@ -22,9 +22,10 @@
 
 typedef enum {
 	MODULE_CORE = 0,
-	MODULE_LOGGING,  // Logging related to the logging system itself. Should be rather more robust in case of general failure
-	MODULE_THREADING,
 	MODULE_ALLOCATOR,
+	MODULE_CLI,
+	MODULE_THREADING,
+	MODULE_LOGGING,  // Logging related to the logging system itself. Should be rather more robust in case of general failure
 	MODULE_FILESYSTEM,
 	MODULE_SCRIPTING,
 	MODULE_RENDERING,

@@ -4,6 +4,14 @@ add_library(${LIBRARY_NAME}
 	sysalloc.c
 )
 
+target_compile_definitions(${LIBRARY_NAME} PRIVATE
+	${DESCENT_DEFINITIONS}
+)
+
+target_compile_options(${LIBRARY_NAME} PRIVATE
+	${DESCENT_FLAGS}
+)
+
 target_include_directories(${LIBRARY_NAME} PRIVATE
 	${DESCENT_INCLUDE_DIRS}
 )

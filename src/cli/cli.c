@@ -16,12 +16,11 @@
 #include <descent/cli.h>
 
 #include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+#include <stdbool.h>
+#include <stddef.h>
 
 #include <descent/thread/tls.h>
-#include <descent/utilities/codes.h>
+#include <descent/rcode.h>
 
 #include "context.h"
 #include "prescan.h"
@@ -44,14 +43,14 @@ char cli_flagged_short(void) {
 	return flagged_short;
 }
 
-static inline int call_action(CLI_Action a, unsigned int argc, const char **argv, void *settings) {
-	int result = a(argc, argv, settings);
+static inline rcode call_action(CLI_Action a, unsigned int argc, const char **argv, void *settings) {
+	rcode result = a(argc, argv, settings);
 
 	if (!result) cli_clear_flagged();
 	return result;
 }
 
-static inline int call_option(CLI_ParseContext *c, CLI_Parameter *par) {
+static inline rcode call_option(CLI_ParseContext *c, CLI_Parameter *par) {
 	const char **option_arguments = NULL;
 
 	// If the option takes arguments:
@@ -73,7 +72,7 @@ static inline int call_option(CLI_ParseContext *c, CLI_Parameter *par) {
 	return call_action(par->action, par->argument_count, option_arguments, c->settings);
 }
 
-static inline int call_subcommand(CLI_ParseContext *c, CLI_Parameter *par) {
+static inline rcode call_subcommand(CLI_ParseContext *c, CLI_Parameter *par) {
 	unsigned int sub_argc = c->argument_count - c->argument_index;
 	const char **sub_argv = &c->arguments[c->argument_index];
 
@@ -81,13 +80,13 @@ static inline int call_subcommand(CLI_ParseContext *c, CLI_Parameter *par) {
 	c->argument_index = c->argument_count;
 
 	// Call the subcommand
-	int result = cli_parse(sub_argc, sub_argv, par->parameter_count, par->parameters, c->settings);
+	rcode result = cli_parse(sub_argc, sub_argv, par->parameter_count, par->parameters, c->settings);
 
 	if (!result) cli_clear_flagged();
 	return result;
 }
 
-static inline int call_positional(CLI_ParseContext *c, CLI_Parameter *par) {
+static inline rcode call_positional(CLI_ParseContext *c, CLI_Parameter *par) {
 	const char *argument = c->arguments[c->argument_index];
 
 	++c->positional_index;
@@ -96,19 +95,17 @@ static inline int call_positional(CLI_ParseContext *c, CLI_Parameter *par) {
 	return call_action(par->action, 1, &argument, c->settings);
 }
 
-static inline int call_catchall(CLI_ParseContext *c, CLI_Parameter *par) {
+static inline rcode call_catchall(CLI_ParseContext *c, CLI_Parameter *par) {
 	const char *argument = c->arguments[c->argument_index];
 
 	// Call the catchall's action
 	return call_action(par->action, 1, &argument, c->settings);
 }
 
-static inline int handle_long_option(CLI_ParseContext *c) {
+static inline rcode handle_long_option(CLI_ParseContext *c) {
 	const char *argument = c->arguments[c->argument_index];
 
 	const char *argument_long = argument + 2;
-
-	printf("Handling long option: %s\n", argument_long);
 
 	// Check if the option matches a registered long option
 	CLI_Parameter *par = cli_find_long(c, argument_long);
@@ -118,16 +115,12 @@ static inline int handle_long_option(CLI_ParseContext *c) {
 	return CLI_ERROR_NO_HANDLER;
 }
 
-static inline int handle_short_option(CLI_ParseContext *c) {
+static inline rcode handle_short_option(CLI_ParseContext *c) {
 	const char *argument = c->arguments[c->argument_index];
-
-	printf("Handling short options: %s\n", argument + 1);
 
 	// Iterate through all the short options in a series
 	for (int short_index = 1; argument[short_index]; ++short_index) {		
 		char argument_short = argument[short_index];
-
-		printf("Handling short option: %c\n", argument[short_index]);
 
 		// This will remain set until unset by a successful call.
 		flagged_short = argument_short;
@@ -135,7 +128,7 @@ static inline int handle_short_option(CLI_ParseContext *c) {
 		// Check if the option matches a registered short option
 		CLI_Parameter *par = cli_find_short(c, argument_short);
 		if (par) {
-			int result = call_option(c, par);
+			rcode result = call_option(c, par);
 			if (result) return result;
 		}
 
@@ -146,10 +139,8 @@ static inline int handle_short_option(CLI_ParseContext *c) {
 	return 0;
 }
 
-static inline int handle_option(CLI_ParseContext *c) {
+static inline rcode handle_option(CLI_ParseContext *c) {
 	const char *argument = c->arguments[c->argument_index];
-
-	printf("Handling option: %s\n", argument);
 
 	if (argument[1] == '-' && argument[2] != '\0') {
 		return handle_long_option(c);
@@ -158,10 +149,8 @@ static inline int handle_option(CLI_ParseContext *c) {
 	return handle_short_option(c);
 }
 
-static inline int handle_argument(CLI_ParseContext *c) {
+static inline rcode handle_argument(CLI_ParseContext *c) {
 	const char *argument = c->arguments[c->argument_index];
-
-	printf("Handling argument: %s\n", argument);
 
 	CLI_Parameter *par = NULL;
 
@@ -185,12 +174,10 @@ static inline int handle_argument(CLI_ParseContext *c) {
 	return CLI_ERROR_NO_HANDLER;
 }
 
-static inline int cli_parse_parameters(CLI_ParseContext *c) {
+static inline rcode cli_parse_parameters(CLI_ParseContext *c) {
 	for (c->argument_index = 1; c->argument_index < c->argument_count; ++c->argument_index) {
 		const char *argument = c->arguments[c->argument_index];
-		if (!argument) return DESCENT_ERROR_NULL_POINTER;
-
-		printf("Parsing argument: %s\n", argument);
+		if (!argument) return DESCENT_ERROR_NULL;
 
 		if (c->parse_named) {
 			// Stop handling options after "--"
@@ -200,22 +187,21 @@ static inline int cli_parse_parameters(CLI_ParseContext *c) {
 			}
 			
 			else if (argument[0] == '-' && argument[1] != '\0') {
-				int result = handle_option(c);
+				rcode result = handle_option(c);
 				if (result) return result;
 				continue;
 			}
 		}
 
-		int result = handle_argument(c);
+		rcode result = handle_argument(c);
 		if (result) return result;
 	}
 
 	return 0;
 }
 
-int cli_parse(int argc, const char **argv, int parc, CLI_Parameter *parv, void *settings) {
-	if (!argv || !parv) return DESCENT_ERROR_NULL_POINTER;
-	if (argc < 0 || parc < 0) return DESCENT_ERROR_INVALID_PARAMETER;
+rcode cli_parse(unsigned int argc, const char **argv, unsigned int parc, CLI_Parameter *parv, void *settings) {
+	if (!argv || !parv) return DESCENT_ERROR_NULL;
 	if (argc > DESCENT_CLI_MAX_ARGUMENTS) return DESCENT_ERROR_OVERFLOW;
 
 	CLI_ParseContext c = {
@@ -234,13 +220,13 @@ int cli_parse(int argc, const char **argv, int parc, CLI_Parameter *parv, void *
 		.first_long_option = parc
 	};
 
-	int result = cli_prescan(&c);
+	rcode result = cli_prescan(&c);
 	if (result) return result;
 
 	return cli_parse_parameters(&c);
 }
 
-int cli_is_valid_short_name(char c) {
+bool cli_is_valid_short_name(char c) {
 	if (c == '!') return 1;
 	if (c >= '#' && c <= '&') return 1;
 	if (c >= '0' && c <= '9') return 1;
@@ -250,7 +236,7 @@ int cli_is_valid_short_name(char c) {
 	return 0;
 }
 
-int cli_is_subcommand(const CLI_Parameter *p) {
+bool cli_is_subcommand(const CLI_Parameter *p) {
 	return (
 		p &&
 		p->action == NULL &&
@@ -261,7 +247,7 @@ int cli_is_subcommand(const CLI_Parameter *p) {
 	);
 }
 
-int cli_is_long_option(const CLI_Parameter *p) {
+bool cli_is_long_option(const CLI_Parameter *p) {
 	return (
 		p &&
 		p->action != NULL &&
@@ -271,7 +257,7 @@ int cli_is_long_option(const CLI_Parameter *p) {
 	);
 }
 
-int cli_is_short_option(const CLI_Parameter *p) {
+bool cli_is_short_option(const CLI_Parameter *p) {
 	return (
 		p &&
 		p->action != NULL &&
@@ -280,11 +266,11 @@ int cli_is_short_option(const CLI_Parameter *p) {
 	);
 }
 
-int cli_is_option(const CLI_Parameter *p) {
+bool cli_is_option(const CLI_Parameter *p) {
 	return cli_is_long_option(p) || cli_is_short_option(p);
 }
 
-int cli_is_positional(const CLI_Parameter *p) {
+bool cli_is_positional(const CLI_Parameter *p) {
 	return (
 		p &&
 		p->action != NULL &&
@@ -296,7 +282,7 @@ int cli_is_positional(const CLI_Parameter *p) {
 	);
 }
 
-int cli_is_catchall(const CLI_Parameter *p) {
+bool cli_is_catchall(const CLI_Parameter *p) {
 	return (
 		p &&
 		p->action != NULL &&

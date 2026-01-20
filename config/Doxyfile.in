@@ -1,0 +1,36 @@
+# Project information
+PROJECT_NAME          = "Descent Engine"
+PROJECT_NUMBER        = "@DESCENT_VERSION@"
+PROJECT_BRIEF         = "Descent Engine"
+OUTPUT_DIRECTORY      = docs/doxygen
+
+# Input
+INPUT                 = doxygen include intern # We are building with full internal documentation for now
+FILE_PATTERNS         = *.h *.dox
+RECURSIVE             = YES
+
+# Output
+OUTPUT_LANGUAGE       = English
+CREATE_SUBDIRS        = YES
+GENERATE_LATEX        = NO
+GENERATE_HTML         = YES
+HTML_OUTPUT           = html
+
+# Project Language
+OPTIMIZE_OUTPUT_FOR_C = YES
+MACRO_EXPANSION       = YES
+EXPAND_ONLY_PREDEF    = NO
+EXPAND_AS_DEFINED     = TYPE_MACRO
+
+# Entity Extraction
+EXTRACT_ALL           = YES
+EXTRACT_STATIC        = YES
+EXTRACT_PRIVATE       = YES
+SKIP_FUNCTION_MACROS  = NO
+
+# Excluded Symbols
+EXCLUDE_SYMBOLS       = _* X RCODES
+HIDE_UNDOC_MEMBERS    = YES
+
+# Formatting
+AUTOLINK_SUPPORT      = NO

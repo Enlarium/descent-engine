@@ -15,58 +15,30 @@
 
 #include <descent/thread/condition.h>
 
-#include <stddef.h>
+#include <descent/rcode.h>
+#include <descent/thread/atomic.h>
+#include <descent/thread/futex.h>
+#include <descent/utilities/builtin.h>
+#include <intern/thread/tid.h>
 
-#include <descent/utilities/platform.h>
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-#include <pthread.h>
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-#include <windows.h>
-#endif
+rcode condition_signal(struct Condition *c) {
+	if (!c) return DESCENT_ERROR_NULL;
 
-#include <descent/utilities/opaque.h>
+	// Check that the current thread has permission to call this function
+	if (builtin_expect(tid_is_self(TID_NONE), false)) return DESCENT_ERROR_FORBIDDEN;
+	
+	atomic_add_fetch_32(&c->_generation, 1, ATOMIC_RELAXED);
 
-#include "implementation.h"
-
-_Static_assert(DESCENT_OPAQUE_SIZE_CONDITION >= sizeof(ConditionImplementation), "Condition opaque type is too small for its implementation!");
-_Static_assert(_Alignof(Condition) >= _Alignof(ConditionImplementation), "Condition opaque type is under-aligned for its implementation!");
-
-int condition_init(Condition *oc) {
-	ConditionImplementation *c = (ConditionImplementation *)oc;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_cond_init(&c->_condition, NULL);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	InitializeConditionVariable(&c->_condition);
-	return 0;
-#endif
+	return futex_wake_next(&c->_generation);
 }
 
-int condition_destroy(Condition *oc) {
-	ConditionImplementation *c = (ConditionImplementation *)oc;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_cond_destroy(&c->_condition);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	(void)c;
-	return 0;
-#endif
-}
+rcode condition_broadcast(struct Condition *c) {
+	if (!c) return DESCENT_ERROR_NULL;
 
-int condition_signal(Condition *oc) {
-	ConditionImplementation *c = (ConditionImplementation *)oc;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_cond_signal(&c->_condition);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	WakeConditionVariable(&c->_condition);
-	return 0;
-#endif
-}
+	// Check that the current thread has permission to call this function
+	if (builtin_expect(tid_is_self(TID_NONE), false)) return DESCENT_ERROR_FORBIDDEN;
+	
+	atomic_add_fetch_32(&c->_generation, 1, ATOMIC_RELAXED);
 
-int condition_broadcast(Condition *oc) {
-	ConditionImplementation *c = (ConditionImplementation *)oc;
-#if defined(DESCENT_PLATFORM_TYPE_POSIX)
-	return !!pthread_cond_broadcast(&c->_condition);
-#elif defined(DESCENT_PLATFORM_TYPE_WINDOWS)
-	WakeAllConditionVariable(&c->_condition);
-	return 0;
-#endif
+	return futex_wake_all(&c->_generation);
 }

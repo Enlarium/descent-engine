@@ -1,72 +1,93 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.23)
 
 project(descent LANGUAGES C)
 
-set(CMAKE_C_STANDARD 17)
-set(CMAKE_C_STANDARD_REQUIRED True)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+# Unset global C flags - we use per-target flags
+set(CMAKE_C_FLAGS "")
 
 # Options
-option(DESCENT_BUILD_TESTS "Build Descent test programs" OFF)
-option(DESCENT_BUILD_EXAMPLES "Build Descent example programs" OFF)
-option(DESCENT_IWYU "Run include-what-you-use while compiling" OFF)
-
-# IWYU function
-function(target_enable_iwyu target)
-	if(DESCENT_IWYU)
-		if(IWYU_PATH)
-			get_target_property(is_imported ${target} IMPORTED)
-			if(NOT is_imported)
-				set_property(TARGET ${target} PROPERTY C_INCLUDE_WHAT_YOU_USE "${IWYU_PATH};${IWYU_OPTIONS}")
-				set_property(TARGET ${target} PROPERTY CXX_INCLUDE_WHAT_YOU_USE "${IWYU_PATH};${IWYU_OPTIONS}")
-			endif()
-		else()
-			message(WARNING "include-what-you-use not found")
-		endif()
-	endif()
-endfunction()
+option(DESCENT_BUILD_ARM      "Build for ARM instead of x86"             OFF)
+option(DESCENT_BUILD_32       "Build for 32 bit instead of 64 bit"       OFF)
+option(DESCENT_BUILD_TESTS    "Build Descent test programs"              OFF)
+option(DESCENT_BUILD_EXAMPLES "Build Descent example programs"           OFF)
+option(DESCENT_IWYU           "Run include-what-you-use while compiling" OFF)
 
 # Require out-of-source builds
-file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/CMakeLists.txt" LOC_PATH)
-if(EXISTS "${LOC_PATH}")
-message(FATAL_ERROR "You cannot build in a source directory (or any directory with a CMakeLists.txt file). Please make a build subdirectory. Feel free to remove CMakeCache.txt and CMakeFiles.")
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+	message(FATAL_ERROR "In-source build not allowed!")
 endif()
 
-# Export compile commands
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-# Include modules for finding external libraries
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
-
-# Find necessary programs
-find_program(IWYU_PATH NAMES include-what-you-use iwyu)
-
-# Find necessary packages
-find_package(Lua REQUIRED)
+# Find packages
 find_package(Vulkan REQUIRED)
+
+# Find programs
+if(DESCENT_IWYU)
+find_program(IWYU_PATH NAMES include-what-you-use iwyu)
+if(NOT IWYU_PATH)
+	message(FATAL_ERROR "include-what-you-use not found!")
+endif()
+endif()
+
+# Include modules
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+include(target_enable_iwyu)
 
 # Define directories
 set(DESCENT_INCLUDE_DIRS
 	${CMAKE_SOURCE_DIR}/include
-)
+	${CMAKE_SOURCE_DIR}/intern
+	${CMAKE_SOURCE_DIR}/extern/lua/include
+	${CMAKE_SOURCE_DIR}/extern/tomlc17/include
+	${CMAKE_SOURCE_DIR}/extern/yyjson/include
+	)
 
-# Global compile definitions
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-	add_compile_definitions(_GNU_SOURCE)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-	add_compile_definitions(_DARWIN_C_SOURCE)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
-	add_compile_definitions(_POSIX_C_SOURCE=200809L)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-if(MSVC)
-	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-		add_compile_definitions(_WIN64)
+# Get target architecture
+if(DESCENT_BUILD_ARM)
+	if(DESCENT_BUILD_32)
+		set(MARCH_FLAGS "-march=armv7-a -m32")
 	else()
-		add_compile_definitions(_WIN32)
+		set(MARCH_FLAGS "-march=armv8-a -m64")
+	endif()
+else()
+	if(DESCENT_BUILD_32)
+		set(MARCH_FLAGS "-march=i386 -m32")
+	else()
+		set(MARCH_FLAGS "-march=x86-64 -m64")
 	endif()
 endif()
+
+# Compilation definitions
+separate_arguments(BASE_DEFINITIONS)
+set(DESCENT_DEFINITIONS ${DEFINITIONS})
+
+# Compilation flags
+separate_arguments(MARCH_FLAGS)
+separate_arguments(BASE_FLAGS)
+separate_arguments(MODE_FLAGS)
+set(DESCENT_FLAGS ${MARCH_FLAGS} ${BASE_FLAGS} ${MODE_FLAGS})
+
+# Configure metadata
+set(DESCENT_VERSION_MAJOR "0")
+set(DESCENT_VERSION_MINOR "0")
+set(DESCENT_VERSION_PATCH "0")
+set(DESCENT_VERSION_VARIANT "dev")
+
+if(DESCENT_VERSION_VARIANT)
+	set(DESCENT_VERSION "${DESCENT_VERSION_MAJOR}.${DESCENT_VERSION_MINOR}.${DESCENT_VERSION_PATCH}-${DESCENT_VERSION_VARIANT}")
+else()
+	set(DESCENT_VERSION "${DESCENT_VERSION_MAJOR}.${DESCENT_VERSION_MINOR}.${DESCENT_VERSION_PATCH}")
 endif()
 
+message(STATUS "Descent version: ${DESCENT_VERSION}")
+
+configure_file(${CMAKE_SOURCE_DIR}/config/Doxyfile.in   ${CMAKE_SOURCE_DIR}/Doxyfile @ONLY)
+configure_file(${CMAKE_SOURCE_DIR}/config/metadata.h.in ${CMAKE_SOURCE_DIR}/include/descent/metadata.h @ONLY)
+
 # Subdirectories
+add_subdirectory(extern)
 add_subdirectory(src)
 
 # Examples
@@ -79,8 +100,3 @@ if(DESCENT_BUILD_TESTS)
 	enable_testing()
 	add_subdirectory(tests)
 endif()
-
-get_property(all_targets DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
-foreach(tgt IN LISTS all_targets)
-	target_enable_iwyu(${tgt})
-endforeach()
