@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -100,34 +100,29 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#ifndef DESCENT_THREAD_CONDITION_H</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#define DESCENT_THREAD_CONDITION_H</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;../utilities/opaque.h&quot;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../d6/d9f/structCondition.html">Condition</a>, DESCENT_OPAQUE_SIZE_CONDITION)</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="../../d7/d6c/condition_8h.html#a5dc604840a6b4fa7d0197d841f2f7be4">   41</a></span>int <a class="code hl_function" href="../../d7/d6c/condition_8h.html#a5dc604840a6b4fa7d0197d841f2f7be4">condition_init</a>(<a class="code hl_struct" href="../../d6/d9f/structCondition.html">Condition</a> *c);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="../../d7/d6c/condition_8h.html#a89994f6cd29c8080e28785f5b666d77b">   48</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d6c/condition_8h.html#a89994f6cd29c8080e28785f5b666d77b">condition_destroy</a>(<a class="code hl_struct" href="../../d6/d9f/structCondition.html">Condition</a> *c);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="../../d7/d6c/condition_8h.html#ac1da129e5279c29242428eb60fe9f1af">   55</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d6c/condition_8h.html#ac1da129e5279c29242428eb60fe9f1af">condition_signal</a>(<a class="code hl_struct" href="../../d6/d9f/structCondition.html">Condition</a> *c);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="../../d7/d6c/condition_8h.html#aeea441f0dc3a137fb4dcdb1f3a55ee34">   62</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d7/d6c/condition_8h.html#aeea441f0dc3a137fb4dcdb1f3a55ee34">condition_broadcast</a>(<a class="code hl_struct" href="../../d6/d9f/structCondition.html">Condition</a> *c);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>}</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="acondition_8h_html_a5dc604840a6b4fa7d0197d841f2f7be4"><div class="ttname"><a href="../../d7/d6c/condition_8h.html#a5dc604840a6b4fa7d0197d841f2f7be4">condition_init</a></div><div class="ttdeci">int condition_init(Condition *c)</div><div class="ttdoc">Initializes a condition variable.</div></div>
-<div class="ttc" id="acondition_8h_html_a89994f6cd29c8080e28785f5b666d77b"><div class="ttname"><a href="../../d7/d6c/condition_8h.html#a89994f6cd29c8080e28785f5b666d77b">condition_destroy</a></div><div class="ttdeci">int condition_destroy(Condition *c)</div><div class="ttdoc">Destroys a condition variable.</div></div>
-<div class="ttc" id="acondition_8h_html_ac1da129e5279c29242428eb60fe9f1af"><div class="ttname"><a href="../../d7/d6c/condition_8h.html#ac1da129e5279c29242428eb60fe9f1af">condition_signal</a></div><div class="ttdeci">int condition_signal(Condition *c)</div><div class="ttdoc">Signals one thread waiting on the condition.</div></div>
-<div class="ttc" id="acondition_8h_html_aeea441f0dc3a137fb4dcdb1f3a55ee34"><div class="ttname"><a href="../../d7/d6c/condition_8h.html#aeea441f0dc3a137fb4dcdb1f3a55ee34">condition_broadcast</a></div><div class="ttdeci">int condition_broadcast(Condition *c)</div><div class="ttdoc">Signals all threads waiting on the condition.</div></div>
-<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:37</div></div>
-<div class="ttc" id="astructCondition_html"><div class="ttname"><a href="../../d6/d9f/structCondition.html">Condition</a></div><div class="ttdoc">A condition variable.</div></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;<a class="code" href="../../d3/d61/rcode_8h.html">descent/rcode.h</a>&gt;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;<a class="code" href="../../d4/dcb/atomic__types_8h.html">descent/thread/atomic_types.h</a>&gt;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="../../da/d22/group__condition.html#gae749da9c829cc8814dc35d6e9c1f2ba3">   49</a></span><span class="preprocessor">#define CONDITION_INIT { ._generation = ATOMIC_INIT(0) }</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="foldopen" id="foldopen00063" data-start="{" data-end="};">
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="../../d6/d9f/structCondition.html">   63</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../d6/d9f/structCondition.html">Condition</a> {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_struct" href="../../dc/d44/structatomic__32.html">atomic_32</a> _generation;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>};</div>
+</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="../../da/d22/group__condition.html#ga7a531553b809c72911cdd17ef308198c">   79</a></span><a class="code hl_typedef" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a> <a class="code hl_function" href="../../da/d22/group__condition.html#ga7a531553b809c72911cdd17ef308198c">condition_signal</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../d6/d9f/structCondition.html">Condition</a> *c);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="../../da/d22/group__condition.html#ga38590b8b80f7a1be46e9b8327e983603">   93</a></span><a class="code hl_typedef" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a> <a class="code hl_function" href="../../da/d22/group__condition.html#ga38590b8b80f7a1be46e9b8327e983603">condition_broadcast</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../d6/d9f/structCondition.html">Condition</a> *c);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aatomic__types_8h_html"><div class="ttname"><a href="../../d4/dcb/atomic__types_8h.html">atomic_types.h</a></div></div>
+<div class="ttc" id="agroup__condition_html_ga38590b8b80f7a1be46e9b8327e983603"><div class="ttname"><a href="../../da/d22/group__condition.html#ga38590b8b80f7a1be46e9b8327e983603">condition_broadcast</a></div><div class="ttdeci">rcode condition_broadcast(struct Condition *c)</div><div class="ttdoc">Wakes all threads waiting on the condition variable.</div></div>
+<div class="ttc" id="agroup__condition_html_ga7a531553b809c72911cdd17ef308198c"><div class="ttname"><a href="../../da/d22/group__condition.html#ga7a531553b809c72911cdd17ef308198c">condition_signal</a></div><div class="ttdeci">rcode condition_signal(struct Condition *c)</div><div class="ttdoc">Wakes one thread waiting on the condition variable.</div></div>
+<div class="ttc" id="arcode_8h_html"><div class="ttname"><a href="../../d3/d61/rcode_8h.html">rcode.h</a></div></div>
+<div class="ttc" id="arcode_8h_html_adc40f35c534fe29a280095320e5b19ba"><div class="ttname"><a href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a></div><div class="ttdeci">int32_t rcode</div><div class="ttdef"><b>Definition</b> rcode.h:173</div></div>
+<div class="ttc" id="astructCondition_html"><div class="ttname"><a href="../../d6/d9f/structCondition.html">Condition</a></div><div class="ttdoc">A cross-platform condition variable.</div><div class="ttdef"><b>Definition</b> condition.h:63</div></div>
+<div class="ttc" id="astructatomic__32_html"><div class="ttname"><a href="../../dc/d44/structatomic__32.html">atomic_32</a></div><div class="ttdoc">Atomic 32-bit unsigned integer type.</div><div class="ttdef"><b>Definition</b> atomic_types.h:61</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

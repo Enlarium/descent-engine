@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -104,7 +104,13 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="../../de/d3c/macros_8h.html#a6df1d22fb5f09eccc23b9f399670cfd7">   38</a></span><span class="preprocessor">#define STRINGIFY(x) STRINGIFY_PURE(x)</span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="../../de/d3c/macros_8h.html#a83427f0cfb0f4628871e79cfd1ed4abc">   40</a></span><span class="preprocessor">#define POINTER_OFFSET(type, pointer, offset) ((type *)((char *)(pointer) + (size_t) (offset)))</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="../../de/d3c/macros_8h.html#af4ab327561178e20175ceb7cddb72719">   42</a></span><span class="preprocessor">#define POINTER_OFFSET_CONST(type, pointer, offset) ((const type *)((const char *)(pointer) + (size_t) (offset)))</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="../../de/d3c/macros_8h.html#ab191355f87f2efa9d4692725a6e7ab93">   44</a></span><span class="preprocessor">#define ALIGNED_SIZE(type, align) ((sizeof(type) + align - 1) &amp; ~(align - 1))</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

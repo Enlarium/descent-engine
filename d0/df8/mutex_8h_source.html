@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -100,47 +100,43 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#ifndef DESCENT_THREAD_MUTEX_H</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#define DESCENT_THREAD_MUTEX_H</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d17/opaque_8h.html">descent/utilities/opaque.h</a>&gt;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="../../d7/d6c/condition_8h.html">condition.h</a>&quot;</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#a10ba6c8c4a5e2bcf9f5f5fd41675e122">   23</a></span><span class="preprocessor">#define MUTEX_INITIALIZER {0} </span><span class="comment">// TODO: needs checks</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;<a class="code" href="../../d4/dcb/atomic__types_8h.html">descent/thread/atomic_types.h</a>&gt;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;<a class="code" href="../../d7/d6c/condition_8h.html">descent/thread/condition.h</a>&gt;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#a96be0bfc33e7e113099c7546798bec99">   27</a></span><span class="preprocessor">#define MUTEX_INIT {._owner = ATOMIC_INIT(0), ._state = ATOMIC_INIT(0)}</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a>, DESCENT_OPAQUE_SIZE_MUTEX)</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#ad4b7fe3d396753fcb7515c786b60f444">   45</a></span>int <a class="code hl_function" href="../../d0/df8/mutex_8h.html#ad4b7fe3d396753fcb7515c786b60f444">mutex_init</a>(<a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#ab0ecc8f75076f540f19fd2dbb7c444e7">   52</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d0/df8/mutex_8h.html#ab0ecc8f75076f540f19fd2dbb7c444e7">mutex_destroy</a>(<a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#ab0acbb3332a3106c889b5547ed34097e">   61</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d0/df8/mutex_8h.html#ab0acbb3332a3106c889b5547ed34097e">mutex_lock</a>(<a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#a643079f7aa89fc9c2369182f5a8ce99d">   68</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d0/df8/mutex_8h.html#a643079f7aa89fc9c2369182f5a8ce99d">mutex_trylock</a>(<a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#a36675786894eff422c0ab53d49de4ff9">   75</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d0/df8/mutex_8h.html#a36675786894eff422c0ab53d49de4ff9">mutex_unlock</a>(<a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m);</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#a15f54b5409bdac58f3d95aa222fa4c2b">   87</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d0/df8/mutex_8h.html#a15f54b5409bdac58f3d95aa222fa4c2b">condition_wait</a>(<a class="code hl_struct" href="../../d6/d9f/structCondition.html">Condition</a> *c, <a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m);</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>}</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#endif</span></div>
+<div class="foldopen" id="foldopen00039" data-start="{" data-end="};">
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="../../d2/da4/structMutex.html">   39</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <a class="code hl_struct" href="../../df/d8a/structatomic__64.html">atomic_64</a> _owner;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <a class="code hl_struct" href="../../dc/d44/structatomic__32.html">atomic_32</a> _state;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>};</div>
+</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#ac2a1cd298db91a6db550e38a064a6805">   58</a></span><a class="code hl_typedef" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a> <a class="code hl_function" href="../../d0/df8/mutex_8h.html#ac2a1cd298db91a6db550e38a064a6805">mutex_lock</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#ae4e1bc70fa6a6f5d0f3e5b976966b495">   78</a></span><a class="code hl_typedef" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a> <a class="code hl_function" href="../../d0/df8/mutex_8h.html#ae4e1bc70fa6a6f5d0f3e5b976966b495">mutex_timedlock</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m, uint64_t nanoseconds);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#ab18f01b473aed531524d7b0de7015210">   93</a></span><a class="code hl_typedef" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a> <a class="code hl_function" href="../../d0/df8/mutex_8h.html#ab18f01b473aed531524d7b0de7015210">mutex_trylock</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#ac481284a3f67dfa6ff677fc515c0df6c">  107</a></span><a class="code hl_typedef" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a> <a class="code hl_function" href="../../d0/df8/mutex_8h.html#ac481284a3f67dfa6ff677fc515c0df6c">mutex_unlock</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="../../d0/df8/mutex_8h.html#af01f3060a970948f3e4aa4880c964e56">  125</a></span><a class="code hl_typedef" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a> <a class="code hl_function" href="../../d0/df8/mutex_8h.html#af01f3060a970948f3e4aa4880c964e56">mutex_wait</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../d2/da4/structMutex.html">Mutex</a> *m, <span class="keyword">struct</span> <a class="code hl_struct" href="../../d6/d9f/structCondition.html">Condition</a> *c);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aatomic__types_8h_html"><div class="ttname"><a href="../../d4/dcb/atomic__types_8h.html">atomic_types.h</a></div></div>
 <div class="ttc" id="acondition_8h_html"><div class="ttname"><a href="../../d7/d6c/condition_8h.html">condition.h</a></div></div>
-<div class="ttc" id="amutex_8h_html_a15f54b5409bdac58f3d95aa222fa4c2b"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#a15f54b5409bdac58f3d95aa222fa4c2b">condition_wait</a></div><div class="ttdeci">int condition_wait(Condition *c, Mutex *m)</div><div class="ttdoc">Wait for a condition to be signaled.</div></div>
-<div class="ttc" id="amutex_8h_html_a36675786894eff422c0ab53d49de4ff9"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#a36675786894eff422c0ab53d49de4ff9">mutex_unlock</a></div><div class="ttdeci">int mutex_unlock(Mutex *m)</div><div class="ttdoc">Unlock a mutex.</div></div>
-<div class="ttc" id="amutex_8h_html_a643079f7aa89fc9c2369182f5a8ce99d"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#a643079f7aa89fc9c2369182f5a8ce99d">mutex_trylock</a></div><div class="ttdeci">int mutex_trylock(Mutex *m)</div><div class="ttdoc">Attempt to lock a mutex without blocking.</div></div>
-<div class="ttc" id="amutex_8h_html_ab0acbb3332a3106c889b5547ed34097e"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#ab0acbb3332a3106c889b5547ed34097e">mutex_lock</a></div><div class="ttdeci">int mutex_lock(Mutex *m)</div><div class="ttdoc">Lock a mutex.</div></div>
-<div class="ttc" id="amutex_8h_html_ab0ecc8f75076f540f19fd2dbb7c444e7"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#ab0ecc8f75076f540f19fd2dbb7c444e7">mutex_destroy</a></div><div class="ttdeci">int mutex_destroy(Mutex *m)</div><div class="ttdoc">Destroy a mutex.</div></div>
-<div class="ttc" id="amutex_8h_html_ad4b7fe3d396753fcb7515c786b60f444"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#ad4b7fe3d396753fcb7515c786b60f444">mutex_init</a></div><div class="ttdeci">int mutex_init(Mutex *m)</div><div class="ttdoc">Initialize a mutex.</div></div>
-<div class="ttc" id="aopaque_8h_html"><div class="ttname"><a href="../../dc/d17/opaque_8h.html">opaque.h</a></div></div>
-<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:37</div></div>
-<div class="ttc" id="astructCondition_html"><div class="ttname"><a href="../../d6/d9f/structCondition.html">Condition</a></div><div class="ttdoc">A condition variable.</div></div>
-<div class="ttc" id="astructMutex_html"><div class="ttname"><a href="../../d2/da4/structMutex.html">Mutex</a></div><div class="ttdoc">A non-recursive mutex.</div></div>
+<div class="ttc" id="amutex_8h_html_ab18f01b473aed531524d7b0de7015210"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#ab18f01b473aed531524d7b0de7015210">mutex_trylock</a></div><div class="ttdeci">rcode mutex_trylock(struct Mutex *m)</div><div class="ttdoc">Attempts to lock the mutex without blocking.</div></div>
+<div class="ttc" id="amutex_8h_html_ac2a1cd298db91a6db550e38a064a6805"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#ac2a1cd298db91a6db550e38a064a6805">mutex_lock</a></div><div class="ttdeci">rcode mutex_lock(struct Mutex *m)</div><div class="ttdoc">Locks the mutex, blocking the calling thread if necessary.</div></div>
+<div class="ttc" id="amutex_8h_html_ac481284a3f67dfa6ff677fc515c0df6c"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#ac481284a3f67dfa6ff677fc515c0df6c">mutex_unlock</a></div><div class="ttdeci">rcode mutex_unlock(struct Mutex *m)</div><div class="ttdoc">Unlocks a previously locked mutex.</div></div>
+<div class="ttc" id="amutex_8h_html_ae4e1bc70fa6a6f5d0f3e5b976966b495"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#ae4e1bc70fa6a6f5d0f3e5b976966b495">mutex_timedlock</a></div><div class="ttdeci">rcode mutex_timedlock(struct Mutex *m, uint64_t nanoseconds)</div><div class="ttdoc">Attempts to lock the mutex, blocking up to the specified timeout.</div></div>
+<div class="ttc" id="amutex_8h_html_af01f3060a970948f3e4aa4880c964e56"><div class="ttname"><a href="../../d0/df8/mutex_8h.html#af01f3060a970948f3e4aa4880c964e56">mutex_wait</a></div><div class="ttdeci">rcode mutex_wait(struct Mutex *m, struct Condition *c)</div><div class="ttdoc">Waits indefinitely on a condition variable while holding the mutex.</div></div>
+<div class="ttc" id="arcode_8h_html_adc40f35c534fe29a280095320e5b19ba"><div class="ttname"><a href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a></div><div class="ttdeci">int32_t rcode</div><div class="ttdef"><b>Definition</b> rcode.h:173</div></div>
+<div class="ttc" id="astructCondition_html"><div class="ttname"><a href="../../d6/d9f/structCondition.html">Condition</a></div><div class="ttdoc">A cross-platform condition variable.</div><div class="ttdef"><b>Definition</b> condition.h:63</div></div>
+<div class="ttc" id="astructMutex_html"><div class="ttname"><a href="../../d2/da4/structMutex.html">Mutex</a></div><div class="ttdoc">A non-recursive mutex.</div><div class="ttdef"><b>Definition</b> mutex.h:39</div></div>
+<div class="ttc" id="astructatomic__32_html"><div class="ttname"><a href="../../dc/d44/structatomic__32.html">atomic_32</a></div><div class="ttdoc">Atomic 32-bit unsigned integer type.</div><div class="ttdef"><b>Definition</b> atomic_types.h:61</div></div>
+<div class="ttc" id="astructatomic__64_html"><div class="ttname"><a href="../../df/d8a/structatomic__64.html">atomic_64</a></div><div class="ttdoc">Atomic 64-bit unsigned integer type.</div><div class="ttdef"><b>Definition</b> atomic_types.h:70</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

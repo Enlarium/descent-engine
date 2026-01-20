@@ -1,13 +1,10 @@
 <map id="include/descent/thread/semaphore.h" name="include/descent/thread/semaphore.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="7,5,178,45"/>
-<area shape="rect" id="Node000002" href="$dc/d17/opaque_8h.html" title=" " alt="" coords="19,93,166,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,46,95,79,90,79,90,46"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,76,192"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="86,121,59,157,55,154,82,117"/>
-<area shape="rect" id="Node000004" href="$de/d03/platform_8h.html" title=" " alt="" coords="101,167,191,192"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="104,117,131,154,127,157,99,121"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="47,240,135,265"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="139,194,111,231,106,228,135,191"/>
-<area shape="rect" id="Node000006" href="$de/d3c/macros_8h.html" title=" " alt="" coords="159,240,242,265"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="157,191,186,228,181,231,153,194"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,176,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="6,181,77,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,47,59,94,50,132,45,167,40,167,44,131,53,92,76,45"/>
+<area shape="rect" id="Node000003" href="$d4/dcb/atomic__types_8h.html" title=" " alt="" coords="68,93,236,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="106,44,133,81,128,84,102,47"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="127,136,70,175,67,171,124,131"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="111,181,193,207"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="155,134,155,167,149,167,149,134"/>
 </map>

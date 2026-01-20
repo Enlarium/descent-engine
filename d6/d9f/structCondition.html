@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -70,18 +70,18 @@ $(function() {
 
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">Condition Struct Reference</div></div>
+  <div class="headertitle"><div class="title">Condition Struct Reference<div class="ingroups"><a class="el" href="../../da/dd8/group__thread.html">Thread</a> &raquo; <a class="el" href="../../da/d22/group__condition.html">Condition Variables</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>A condition variable.  
+<p>A cross-platform condition variable.  
  <a href="../../d6/d9f/structCondition.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../d7/d6c/condition_8h_source.html">condition.h</a>&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A condition variable. </p>
-<p>Allows threads to wait for a condition to become true and supports signaling one or all waiting threads.</p>
-<dl class="section note"><dt>Note</dt><dd>This mechanism is intra-process only. It cannot be shared between processes. </dd></dl>
+<div class="textblock"><p>A cross-platform condition variable. </p>
+<p>Used in combination with a lock to allow threads to wait for specific conditions to be signaled. Condition variables allow a thread to sleep while temporarily releasing a lock, then reacquire it upon waking.</p>
+<p>Must be zero-initialized ({0} or CONDITION_INIT) for static instances, or explicitly zeroed before use for dynamic instances. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/descent/thread/<a class="el" href="../../d7/d6c/condition_8h_source.html">condition.h</a></li>
 </ul>

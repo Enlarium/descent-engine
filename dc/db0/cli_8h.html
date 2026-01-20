@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -82,15 +82,27 @@ $(function() {
   <div class="headertitle"><div class="title">cli.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="../../d3/d61/rcode_8h_source.html">descent/rcode.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for cli.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d4/d4f/cli_8h__incl.png" border="0" usemap="#ainclude_2descent_2cli_8h" alt=""/></div>
 <map name="ainclude_2descent_2cli_8h" id="ainclude_2descent_2cli_8h">
-<area shape="rect" title=" " alt="" coords="5,5,160,31"/>
-<area shape="rect" title=" " alt="" coords="45,79,120,104"/>
-<area shape="poly" title=" " alt="" coords="85,31,85,65,80,65,80,31"/>
+<area shape="rect" title=" " alt="" coords="67,5,221,31"/>
+<area shape="rect" title=" " alt="" coords="5,152,88,177"/>
+<area shape="poly" title=" " alt="" coords="138,33,64,142,60,139,134,30"/>
+<area shape="rect" href="../../d3/d61/rcode_8h.html" title=" " alt="" coords="132,79,257,104"/>
+<area shape="poly" title=" " alt="" coords="155,29,181,66,176,69,150,33"/>
+<area shape="poly" title=" " alt="" coords="172,106,84,148,82,144,170,102"/>
+<area shape="rect" title=" " alt="" coords="113,152,183,177"/>
+<area shape="poly" title=" " alt="" coords="189,106,165,142,161,139,185,103"/>
+<area shape="rect" title=" " alt="" coords="207,152,278,177"/>
+<area shape="poly" title=" " alt="" coords="205,103,230,139,225,142,200,106"/>
+<area shape="rect" href="../../de/d03/platform_8h.html" title=" " alt="" coords="302,152,501,177"/>
+<area shape="poly" title=" " alt="" coords="229,101,356,145,354,150,227,107"/>
+<area shape="rect" href="../../d3/d61/modules_8h.html" title=" " alt="" coords="525,152,670,177"/>
+<area shape="poly" title=" " alt="" coords="258,101,520,147,519,152,257,106"/>
 </map>
 </div>
 </div>
@@ -111,51 +123,51 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ab653847e30cb51bf32febd10b496d397" id="r_ab653847e30cb51bf32febd10b496d397"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#ab653847e30cb51bf32febd10b496d397">CLI_Action</a>) (unsigned int argument_count, const char **arguments, void *settings)</td></tr>
-<tr class="memdesc:ab653847e30cb51bf32febd10b496d397"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function type for CLI actions.  <br /></td></tr>
-<tr class="separator:ab653847e30cb51bf32febd10b496d397"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa49b4440e16d32f72bb4d32147d4f5e5" id="r_aa49b4440e16d32f72bb4d32147d4f5e5"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#aa49b4440e16d32f72bb4d32147d4f5e5">CLI_Action</a>) (unsigned int argument_count, const char **arguments, void *settings)</td></tr>
+<tr class="memdesc:aa49b4440e16d32f72bb4d32147d4f5e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function type for CLI actions.  <br /></td></tr>
+<tr class="separator:aa49b4440e16d32f72bb4d32147d4f5e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cc8cb618ce5ef1d77908d3ad824d900" id="r_a2cc8cb618ce5ef1d77908d3ad824d900"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a2cc8cb618ce5ef1d77908d3ad824d900">CLI_Parameter</a></td></tr>
 <tr class="memdesc:a2cc8cb618ce5ef1d77908d3ad824d900"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a CLI parameter.  <br /></td></tr>
 <tr class="separator:a2cc8cb618ce5ef1d77908d3ad824d900"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a46a74ab4163468f255b2a2e44f46dd77" id="r_a46a74ab4163468f255b2a2e44f46dd77"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a46a74ab4163468f255b2a2e44f46dd77">cli_is_valid_short_name</a> (char c)</td></tr>
-<tr class="memdesc:a46a74ab4163468f255b2a2e44f46dd77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a character is a valid short name.  <br /></td></tr>
-<tr class="separator:a46a74ab4163468f255b2a2e44f46dd77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c02b6a7de29216699471b24672f5003" id="r_a8c02b6a7de29216699471b24672f5003"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a8c02b6a7de29216699471b24672f5003">cli_is_subcommand</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
-<tr class="memdesc:a8c02b6a7de29216699471b24672f5003"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is a subcommand.  <br /></td></tr>
-<tr class="separator:a8c02b6a7de29216699471b24672f5003"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fbc8a205a43bcb61a645c95d4b33f6a" id="r_a6fbc8a205a43bcb61a645c95d4b33f6a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a6fbc8a205a43bcb61a645c95d4b33f6a">cli_is_long_option</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
-<tr class="memdesc:a6fbc8a205a43bcb61a645c95d4b33f6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is a long option.  <br /></td></tr>
-<tr class="separator:a6fbc8a205a43bcb61a645c95d4b33f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20eda81eb0109041057524ab9e81794f" id="r_a20eda81eb0109041057524ab9e81794f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a20eda81eb0109041057524ab9e81794f">cli_is_short_option</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
-<tr class="memdesc:a20eda81eb0109041057524ab9e81794f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is a short option.  <br /></td></tr>
-<tr class="separator:a20eda81eb0109041057524ab9e81794f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a4700b2014d3e4da775bda5f9036000" id="r_a6a4700b2014d3e4da775bda5f9036000"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a6a4700b2014d3e4da775bda5f9036000">cli_is_option</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
-<tr class="memdesc:a6a4700b2014d3e4da775bda5f9036000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is any type of option.  <br /></td></tr>
-<tr class="separator:a6a4700b2014d3e4da775bda5f9036000"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61f8ba4eda1e7b9abeb2e724b3bbd2ed" id="r_a61f8ba4eda1e7b9abeb2e724b3bbd2ed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a61f8ba4eda1e7b9abeb2e724b3bbd2ed">cli_is_positional</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
-<tr class="memdesc:a61f8ba4eda1e7b9abeb2e724b3bbd2ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is a positional argument.  <br /></td></tr>
-<tr class="separator:a61f8ba4eda1e7b9abeb2e724b3bbd2ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a977e334e30b7ae6ec5eb971cd816b718" id="r_a977e334e30b7ae6ec5eb971cd816b718"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a977e334e30b7ae6ec5eb971cd816b718">cli_is_catchall</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
-<tr class="memdesc:a977e334e30b7ae6ec5eb971cd816b718"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is a catch-all argument.  <br /></td></tr>
-<tr class="separator:a977e334e30b7ae6ec5eb971cd816b718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a366ae9362c0cf84cb446418de6f72e13" id="r_a366ae9362c0cf84cb446418de6f72e13"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a366ae9362c0cf84cb446418de6f72e13">cli_is_valid_short_name</a> (char c)</td></tr>
+<tr class="memdesc:a366ae9362c0cf84cb446418de6f72e13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a character is a valid short name.  <br /></td></tr>
+<tr class="separator:a366ae9362c0cf84cb446418de6f72e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45611ea142f154a10e82067ffea4e8ad" id="r_a45611ea142f154a10e82067ffea4e8ad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a45611ea142f154a10e82067ffea4e8ad">cli_is_subcommand</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
+<tr class="memdesc:a45611ea142f154a10e82067ffea4e8ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a CLI_Parameter is a subcommand.  <br /></td></tr>
+<tr class="separator:a45611ea142f154a10e82067ffea4e8ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a500e845534ee42abe5d76663c886ba11" id="r_a500e845534ee42abe5d76663c886ba11"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a500e845534ee42abe5d76663c886ba11">cli_is_long_option</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
+<tr class="memdesc:a500e845534ee42abe5d76663c886ba11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a CLI_Parameter is a long option.  <br /></td></tr>
+<tr class="separator:a500e845534ee42abe5d76663c886ba11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedcacae179467a5c0e428432df9aa9d7" id="r_aedcacae179467a5c0e428432df9aa9d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#aedcacae179467a5c0e428432df9aa9d7">cli_is_short_option</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
+<tr class="memdesc:aedcacae179467a5c0e428432df9aa9d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a CLI_Parameter is a short option.  <br /></td></tr>
+<tr class="separator:aedcacae179467a5c0e428432df9aa9d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a096fe39afcf48a096ee31435afa88d75" id="r_a096fe39afcf48a096ee31435afa88d75"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a096fe39afcf48a096ee31435afa88d75">cli_is_option</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
+<tr class="memdesc:a096fe39afcf48a096ee31435afa88d75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a CLI_Parameter is any type of option.  <br /></td></tr>
+<tr class="separator:a096fe39afcf48a096ee31435afa88d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a639495739413dfa5d5e732b9c142c232" id="r_a639495739413dfa5d5e732b9c142c232"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a639495739413dfa5d5e732b9c142c232">cli_is_positional</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
+<tr class="memdesc:a639495739413dfa5d5e732b9c142c232"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a CLI_Parameter is a positional argument.  <br /></td></tr>
+<tr class="separator:a639495739413dfa5d5e732b9c142c232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e153e519b0681ae8256481d80ce73d9" id="r_a4e153e519b0681ae8256481d80ce73d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a4e153e519b0681ae8256481d80ce73d9">cli_is_catchall</a> (const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *p)</td></tr>
+<tr class="memdesc:a4e153e519b0681ae8256481d80ce73d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a CLI_Parameter is a catch-all argument.  <br /></td></tr>
+<tr class="separator:a4e153e519b0681ae8256481d80ce73d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae73e633b4ca426c18b6d392398372c4e" id="r_ae73e633b4ca426c18b6d392398372c4e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#ae73e633b4ca426c18b6d392398372c4e">cli_create_subcommand</a> (const char *name, unsigned int parc, <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *parv)</td></tr>
 <tr class="memdesc:ae73e633b4ca426c18b6d392398372c4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a subcommand parameter.  <br /></td></tr>
 <tr class="separator:ae73e633b4ca426c18b6d392398372c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d0871fb2452c823cf3fd882c233044a" id="r_a1d0871fb2452c823cf3fd882c233044a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a1d0871fb2452c823cf3fd882c233044a">cli_create_option</a> (const char *name_long, char name_short, unsigned int argc, <a class="el" href="../../dc/db0/cli_8h.html#ab653847e30cb51bf32febd10b496d397">CLI_Action</a> a)</td></tr>
+<tr class="memitem:a1d0871fb2452c823cf3fd882c233044a" id="r_a1d0871fb2452c823cf3fd882c233044a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a1d0871fb2452c823cf3fd882c233044a">cli_create_option</a> (const char *name_long, char name_short, unsigned int argc, <a class="el" href="../../dc/db0/cli_8h.html#aa49b4440e16d32f72bb4d32147d4f5e5">CLI_Action</a> a)</td></tr>
 <tr class="memdesc:a1d0871fb2452c823cf3fd882c233044a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an option parameter.  <br /></td></tr>
 <tr class="separator:a1d0871fb2452c823cf3fd882c233044a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c590403b475c2a02f0a4db468a7fb7e" id="r_a8c590403b475c2a02f0a4db468a7fb7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a8c590403b475c2a02f0a4db468a7fb7e">cli_create_positional</a> (unsigned int position, <a class="el" href="../../dc/db0/cli_8h.html#ab653847e30cb51bf32febd10b496d397">CLI_Action</a> a)</td></tr>
+<tr class="memitem:a8c590403b475c2a02f0a4db468a7fb7e" id="r_a8c590403b475c2a02f0a4db468a7fb7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a8c590403b475c2a02f0a4db468a7fb7e">cli_create_positional</a> (unsigned int position, <a class="el" href="../../dc/db0/cli_8h.html#aa49b4440e16d32f72bb4d32147d4f5e5">CLI_Action</a> a)</td></tr>
 <tr class="memdesc:a8c590403b475c2a02f0a4db468a7fb7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a positional argument parameter.  <br /></td></tr>
 <tr class="separator:a8c590403b475c2a02f0a4db468a7fb7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ed59a165bdfbd86000abb243f255abf" id="r_a2ed59a165bdfbd86000abb243f255abf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a2ed59a165bdfbd86000abb243f255abf">cli_create_catchall</a> (<a class="el" href="../../dc/db0/cli_8h.html#ab653847e30cb51bf32febd10b496d397">CLI_Action</a> a)</td></tr>
+<tr class="memitem:a2ed59a165bdfbd86000abb243f255abf" id="r_a2ed59a165bdfbd86000abb243f255abf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a2ed59a165bdfbd86000abb243f255abf">cli_create_catchall</a> (<a class="el" href="../../dc/db0/cli_8h.html#aa49b4440e16d32f72bb4d32147d4f5e5">CLI_Action</a> a)</td></tr>
 <tr class="memdesc:a2ed59a165bdfbd86000abb243f255abf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a catch-all parameter.  <br /></td></tr>
 <tr class="separator:a2ed59a165bdfbd86000abb243f255abf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37cda643d9c13f593eebce7006b088d7" id="r_a37cda643d9c13f593eebce7006b088d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a37cda643d9c13f593eebce7006b088d7">cli_parse</a> (int argc, const char **argv, int parc, <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *parv, void *settings)</td></tr>
-<tr class="memdesc:a37cda643d9c13f593eebce7006b088d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse command-line arguments.  <br /></td></tr>
-<tr class="separator:a37cda643d9c13f593eebce7006b088d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab26221ab7b5b4101fda5676be977a0d9" id="r_ab26221ab7b5b4101fda5676be977a0d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#ab26221ab7b5b4101fda5676be977a0d9">cli_parse</a> (unsigned int argc, const char **argv, unsigned int parc, <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *parv, void *settings)</td></tr>
+<tr class="memdesc:ab26221ab7b5b4101fda5676be977a0d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse command-line arguments.  <br /></td></tr>
+<tr class="separator:ab26221ab7b5b4101fda5676be977a0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11b080db79df85bc4de9770ab1d6f6e9" id="r_a11b080db79df85bc4de9770ab1d6f6e9"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/db0/cli_8h.html#a11b080db79df85bc4de9770ab1d6f6e9">cli_flagged_argument</a> (void)</td></tr>
 <tr class="memdesc:a11b080db79df85bc4de9770ab1d6f6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last flagged argument that caused an error.  <br /></td></tr>
 <tr class="separator:a11b080db79df85bc4de9770ab1d6f6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,14 +205,14 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="ab653847e30cb51bf32febd10b496d397" name="ab653847e30cb51bf32febd10b496d397"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab653847e30cb51bf32febd10b496d397">&#9670;&#160;</a></span>CLI_Action</h2>
+<a id="aa49b4440e16d32f72bb4d32147d4f5e5" name="aa49b4440e16d32f72bb4d32147d4f5e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa49b4440e16d32f72bb4d32147d4f5e5">&#9670;&#160;</a></span>CLI_Action</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef int(* CLI_Action) (unsigned int argument_count, const char **arguments, void *settings)</td>
+          <td class="memname">typedef <a class="el" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a>(* CLI_Action) (unsigned int argument_count, const char **arguments, void *settings)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -246,7 +258,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> cli_create_catchall </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../dc/db0/cli_8h.html#ab653847e30cb51bf32febd10b496d397">CLI_Action</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dc/db0/cli_8h.html#aa49b4440e16d32f72bb4d32147d4f5e5">CLI_Action</a>&#160;</td>
           <td class="paramname"><em>a</em></td><td>)</td>
           <td></td>
         </tr>
@@ -261,7 +273,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Initialized <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> representing a catch-all argument. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Initialized CLI_Parameter representing a catch-all argument. </dd></dl>
 
 </div>
 </div>
@@ -292,7 +304,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/db0/cli_8h.html#ab653847e30cb51bf32febd10b496d397">CLI_Action</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dc/db0/cli_8h.html#aa49b4440e16d32f72bb4d32147d4f5e5">CLI_Action</a>&#160;</td>
           <td class="paramname"><em>a</em>&#160;</td>
         </tr>
         <tr>
@@ -313,7 +325,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Initialized <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> representing an option. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Initialized CLI_Parameter representing an option. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Either <code>name_long</code> or <code>name_short</code> must be set. </dd></dl>
 
 </div>
@@ -333,7 +345,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../dc/db0/cli_8h.html#ab653847e30cb51bf32febd10b496d397">CLI_Action</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dc/db0/cli_8h.html#aa49b4440e16d32f72bb4d32147d4f5e5">CLI_Action</a>&#160;</td>
           <td class="paramname"><em>a</em>&#160;</td>
         </tr>
         <tr>
@@ -352,7 +364,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Initialized <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> representing a positional argument. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Initialized CLI_Parameter representing a positional argument. </dd></dl>
 
 </div>
 </div>
@@ -397,7 +409,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Initialized <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> representing a subcommand. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Initialized CLI_Parameter representing a subcommand. </dd></dl>
 
 </div>
 </div>
@@ -419,7 +431,7 @@ Functions</h2></td></tr>
 
 <p>Get the last flagged argument that caused an error. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the last argument string that failed, or NULL if none. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Thread safe (per-thread). Reset every time <a class="el" href="../../dc/db0/cli_8h.html#a37cda643d9c13f593eebce7006b088d7" title="Parse command-line arguments.">cli_parse()</a> is called. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Thread safe (per-thread). Reset every time cli_parse() is called. </dd></dl>
 
 </div>
 </div>
@@ -441,18 +453,18 @@ Functions</h2></td></tr>
 
 <p>Get the last flagged short option character that caused an error. </p>
 <dl class="section return"><dt>Returns</dt><dd>Character of the last short option that failed, or '\0' if none. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Thread safe (per-thread). Reset every time <a class="el" href="../../dc/db0/cli_8h.html#a37cda643d9c13f593eebce7006b088d7" title="Parse command-line arguments.">cli_parse()</a> is called. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Thread safe (per-thread). Reset every time cli_parse() is called. </dd></dl>
 
 </div>
 </div>
-<a id="a977e334e30b7ae6ec5eb971cd816b718" name="a977e334e30b7ae6ec5eb971cd816b718"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a977e334e30b7ae6ec5eb971cd816b718">&#9670;&#160;</a></span>cli_is_catchall()</h2>
+<a id="a4e153e519b0681ae8256481d80ce73d9" name="a4e153e519b0681ae8256481d80ce73d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e153e519b0681ae8256481d80ce73d9">&#9670;&#160;</a></span>cli_is_catchall()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int cli_is_catchall </td>
+          <td class="memname">bool cli_is_catchall </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
@@ -461,7 +473,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is a catch-all argument. </p>
+<p>Check if a CLI_Parameter is a catch-all argument. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>Parameter to check. </td></tr>
@@ -472,14 +484,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6fbc8a205a43bcb61a645c95d4b33f6a" name="a6fbc8a205a43bcb61a645c95d4b33f6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fbc8a205a43bcb61a645c95d4b33f6a">&#9670;&#160;</a></span>cli_is_long_option()</h2>
+<a id="a500e845534ee42abe5d76663c886ba11" name="a500e845534ee42abe5d76663c886ba11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a500e845534ee42abe5d76663c886ba11">&#9670;&#160;</a></span>cli_is_long_option()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int cli_is_long_option </td>
+          <td class="memname">bool cli_is_long_option </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
@@ -488,7 +500,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is a long option. </p>
+<p>Check if a CLI_Parameter is a long option. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>Parameter to check. </td></tr>
@@ -499,14 +511,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6a4700b2014d3e4da775bda5f9036000" name="a6a4700b2014d3e4da775bda5f9036000"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a4700b2014d3e4da775bda5f9036000">&#9670;&#160;</a></span>cli_is_option()</h2>
+<a id="a096fe39afcf48a096ee31435afa88d75" name="a096fe39afcf48a096ee31435afa88d75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a096fe39afcf48a096ee31435afa88d75">&#9670;&#160;</a></span>cli_is_option()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int cli_is_option </td>
+          <td class="memname">bool cli_is_option </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
@@ -515,7 +527,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is any type of option. </p>
+<p>Check if a CLI_Parameter is any type of option. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>Parameter to check. </td></tr>
@@ -526,14 +538,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a61f8ba4eda1e7b9abeb2e724b3bbd2ed" name="a61f8ba4eda1e7b9abeb2e724b3bbd2ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61f8ba4eda1e7b9abeb2e724b3bbd2ed">&#9670;&#160;</a></span>cli_is_positional()</h2>
+<a id="a639495739413dfa5d5e732b9c142c232" name="a639495739413dfa5d5e732b9c142c232"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a639495739413dfa5d5e732b9c142c232">&#9670;&#160;</a></span>cli_is_positional()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int cli_is_positional </td>
+          <td class="memname">bool cli_is_positional </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
@@ -542,7 +554,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is a positional argument. </p>
+<p>Check if a CLI_Parameter is a positional argument. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>Parameter to check. </td></tr>
@@ -553,14 +565,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a20eda81eb0109041057524ab9e81794f" name="a20eda81eb0109041057524ab9e81794f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20eda81eb0109041057524ab9e81794f">&#9670;&#160;</a></span>cli_is_short_option()</h2>
+<a id="aedcacae179467a5c0e428432df9aa9d7" name="aedcacae179467a5c0e428432df9aa9d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedcacae179467a5c0e428432df9aa9d7">&#9670;&#160;</a></span>cli_is_short_option()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int cli_is_short_option </td>
+          <td class="memname">bool cli_is_short_option </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
@@ -569,7 +581,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is a short option. </p>
+<p>Check if a CLI_Parameter is a short option. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>Parameter to check. </td></tr>
@@ -580,14 +592,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8c02b6a7de29216699471b24672f5003" name="a8c02b6a7de29216699471b24672f5003"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c02b6a7de29216699471b24672f5003">&#9670;&#160;</a></span>cli_is_subcommand()</h2>
+<a id="a45611ea142f154a10e82067ffea4e8ad" name="a45611ea142f154a10e82067ffea4e8ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45611ea142f154a10e82067ffea4e8ad">&#9670;&#160;</a></span>cli_is_subcommand()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int cli_is_subcommand </td>
+          <td class="memname">bool cli_is_subcommand </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../d9/dd8/structCLI__Parameter.html">CLI_Parameter</a> *&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
@@ -596,7 +608,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Check if a <a class="el" href="../../d9/dd8/structCLI__Parameter.html" title="Represents a CLI parameter.">CLI_Parameter</a> is a subcommand. </p>
+<p>Check if a CLI_Parameter is a subcommand. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>Parameter to check. </td></tr>
@@ -607,14 +619,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a46a74ab4163468f255b2a2e44f46dd77" name="a46a74ab4163468f255b2a2e44f46dd77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46a74ab4163468f255b2a2e44f46dd77">&#9670;&#160;</a></span>cli_is_valid_short_name()</h2>
+<a id="a366ae9362c0cf84cb446418de6f72e13" name="a366ae9362c0cf84cb446418de6f72e13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a366ae9362c0cf84cb446418de6f72e13">&#9670;&#160;</a></span>cli_is_valid_short_name()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int cli_is_valid_short_name </td>
+          <td class="memname">bool cli_is_valid_short_name </td>
           <td>(</td>
           <td class="paramtype">char&#160;</td>
           <td class="paramname"><em>c</em></td><td>)</td>
@@ -635,16 +647,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a37cda643d9c13f593eebce7006b088d7" name="a37cda643d9c13f593eebce7006b088d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37cda643d9c13f593eebce7006b088d7">&#9670;&#160;</a></span>cli_parse()</h2>
+<a id="ab26221ab7b5b4101fda5676be977a0d9" name="ab26221ab7b5b4101fda5676be977a0d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab26221ab7b5b4101fda5676be977a0d9">&#9670;&#160;</a></span>cli_parse()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int cli_parse </td>
+          <td class="memname"><a class="el" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a> cli_parse </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>argc</em>, </td>
         </tr>
         <tr>
@@ -656,7 +668,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>parc</em>, </td>
         </tr>
         <tr>

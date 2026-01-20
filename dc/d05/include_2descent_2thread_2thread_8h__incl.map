@@ -1,0 +1,20 @@
+<map id="include/descent/thread/thread.h" name="include/descent/thread/thread.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="115,5,286,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,167,76,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,48,65,159,61,155,179,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="101,167,183,192"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,47,154,155,149,153,191,45"/>
+<area shape="rect" id="Node000004" href="$d3/d61/rcode_8h.html" title=" " alt="" coords="207,93,333,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="219,44,252,81,248,84,215,47"/>
+<area shape="rect" id="Node000008" href="$df/d79/tls_8h.html" title=" " alt="" coords="431,93,581,119"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="274,43,449,87,447,92,273,48"/>
+<area shape="poly" id="edge6_Node000004_Node000002" title=" " alt="" coords="234,121,90,165,89,160,232,116"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="251,121,176,162,174,157,248,116"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="377,167,448,192"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="294,116,378,158,376,163,292,121"/>
+<area shape="rect" id="Node000006" href="$de/d03/platform_8h.html" title=" " alt="" coords="472,167,671,192"/>
+<area shape="poly" id="edge7_Node000004_Node000006" title=" " alt="" coords="319,116,510,161,509,166,318,121"/>
+<area shape="rect" id="Node000007" href="$d3/d61/modules_8h.html" title=" " alt="" coords="208,167,353,192"/>
+<area shape="poly" id="edge8_Node000004_Node000007" title=" " alt="" coords="274,119,280,153,274,154,269,119"/>
+<area shape="poly" id="edge10_Node000008_Node000006" title=" " alt="" coords="519,117,553,155,550,158,515,121"/>
+</map>

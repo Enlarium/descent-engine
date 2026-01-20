@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -75,27 +75,36 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">condition.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="../../dc/d17/opaque_8h_source.html">../utilities/opaque.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="../../d3/d61/rcode_8h_source.html">descent/rcode.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="../../d4/dcb/atomic__types_8h_source.html">descent/thread/atomic_types.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for condition.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d93/condition_8h__incl.png" border="0" usemap="#ainclude_2descent_2thread_2condition_8h" alt=""/></div>
 <map name="ainclude_2descent_2thread_2condition_8h" id="ainclude_2descent_2thread_2condition_8h">
-<area shape="rect" title=" " alt="" coords="7,5,178,45"/>
-<area shape="rect" href="../../dc/d17/opaque_8h.html" title=" " alt="" coords="19,93,166,119"/>
-<area shape="poly" title=" " alt="" coords="95,46,95,79,90,79,90,46"/>
-<area shape="rect" title=" " alt="" coords="5,167,76,192"/>
-<area shape="poly" title=" " alt="" coords="86,121,59,157,55,154,82,117"/>
-<area shape="rect" href="../../de/d03/platform_8h.html" title=" " alt="" coords="101,167,191,192"/>
-<area shape="poly" title=" " alt="" coords="104,117,131,154,127,157,99,121"/>
-<area shape="rect" title=" " alt="" coords="47,240,135,265"/>
-<area shape="poly" title=" " alt="" coords="139,194,111,231,106,228,135,191"/>
-<area shape="rect" href="../../de/d3c/macros_8h.html" title=" " alt="" coords="159,240,242,265"/>
-<area shape="poly" title=" " alt="" coords="157,191,186,228,181,231,153,194"/>
+<area shape="rect" title=" " alt="" coords="89,5,260,45"/>
+<area shape="rect" href="../../d3/d61/rcode_8h.html" title=" " alt="" coords="197,101,323,126"/>
+<area shape="poly" title=" " alt="" coords="195,44,240,89,237,92,192,47"/>
+<area shape="rect" href="../../d4/dcb/atomic__types_8h.html" title=" " alt="" coords="5,93,173,133"/>
+<area shape="poly" title=" " alt="" coords="158,47,120,85,116,82,154,44"/>
+<area shape="rect" title=" " alt="" coords="225,181,295,207"/>
+<area shape="poly" title=" " alt="" coords="263,126,263,167,257,167,257,126"/>
+<area shape="rect" title=" " alt="" coords="117,181,200,207"/>
+<area shape="poly" title=" " alt="" coords="247,128,186,175,183,171,243,124"/>
+<area shape="rect" title=" " alt="" coords="22,181,93,207"/>
+<area shape="poly" title=" " alt="" coords="231,128,100,179,98,174,230,124"/>
+<area shape="rect" href="../../de/d03/platform_8h.html" title=" " alt="" coords="319,181,518,207"/>
+<area shape="poly" title=" " alt="" coords="284,124,385,173,382,178,282,128"/>
+<area shape="rect" href="../../d3/d61/modules_8h.html" title=" " alt="" coords="542,181,687,207"/>
+<area shape="poly" title=" " alt="" coords="312,123,550,176,549,181,311,129"/>
+<area shape="poly" title=" " alt="" coords="108,132,141,169,137,172,104,135"/>
+<area shape="poly" title=" " alt="" coords="84,135,70,170,65,168,79,133"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -103,141 +112,41 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d4/d31/condition_8h__dep__incl.png" border="0" usemap="#ainclude_2descent_2thread_2condition_8hdep" alt=""/></div>
 <map name="ainclude_2descent_2thread_2condition_8hdep" id="ainclude_2descent_2thread_2condition_8hdep">
-<area shape="rect" title=" " alt="" coords="11,5,182,45"/>
-<area shape="rect" href="../../db/dd5/thread_8h.html" title=" " alt="" coords="5,181,188,207"/>
-<area shape="poly" title=" " alt="" coords="79,58,63,94,60,113,63,133,75,159,89,180,85,183,70,161,58,134,55,113,58,93,74,56"/>
-<area shape="rect" href="../../d0/df8/mutex_8h.html" title=" " alt="" coords="73,93,243,133"/>
-<area shape="poly" title=" " alt="" coords="120,55,147,92,142,95,116,58"/>
-<area shape="poly" title=" " alt="" coords="137,146,108,183,104,179,133,143"/>
+<area shape="rect" title=" " alt="" coords="24,5,194,45"/>
+<area shape="rect" href="../../dd/dee/include_2descent_2thread_8h.html" title=" " alt="" coords="18,181,200,207"/>
+<area shape="poly" title=" " alt="" coords="54,55,31,72,14,95,8,113,14,132,26,148,41,160,75,179,72,184,38,165,22,151,9,135,3,113,9,92,28,68,51,50"/>
+<area shape="rect" href="../../d0/df8/mutex_8h.html" title=" " alt="" coords="24,93,194,133"/>
+<area shape="poly" title=" " alt="" coords="112,59,112,93,106,93,106,59"/>
+<area shape="rect" href="../../d3/d0e/qutex_8h.html" title=" " alt="" coords="218,93,389,133"/>
+<area shape="poly" title=" " alt="" coords="165,48,262,91,260,96,163,53"/>
+<area shape="poly" title=" " alt="" coords="112,147,112,181,106,181,106,147"/>
+<area shape="poly" title=" " alt="" coords="245,141,139,184,137,179,244,136"/>
 </map>
 </div>
 </div>
 <p><a href="../../d7/d6c/condition_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d9f/structCondition.html">Condition</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A cross-platform condition variable.  <a href="../../d6/d9f/structCondition.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gae749da9c829cc8814dc35d6e9c1f2ba3" id="r_gae749da9c829cc8814dc35d6e9c1f2ba3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d22/group__condition.html#gae749da9c829cc8814dc35d6e9c1f2ba3">CONDITION_INIT</a>&#160;&#160;&#160;{ ._generation = <a class="el" href="../../d3/de8/group__atomic.html#ga7b208150b120d2cc41ace2441560fb67">ATOMIC_INIT</a>(0) }</td></tr>
+<tr class="memdesc:gae749da9c829cc8814dc35d6e9c1f2ba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Condition variable initializer, equivalent to {0}.  <br /></td></tr>
+<tr class="separator:gae749da9c829cc8814dc35d6e9c1f2ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5dc604840a6b4fa7d0197d841f2f7be4" id="r_a5dc604840a6b4fa7d0197d841f2f7be4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d6c/condition_8h.html#a5dc604840a6b4fa7d0197d841f2f7be4">condition_init</a> (<a class="el" href="../../d6/d9f/structCondition.html">Condition</a> *c)</td></tr>
-<tr class="memdesc:a5dc604840a6b4fa7d0197d841f2f7be4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a condition variable.  <br /></td></tr>
-<tr class="separator:a5dc604840a6b4fa7d0197d841f2f7be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89994f6cd29c8080e28785f5b666d77b" id="r_a89994f6cd29c8080e28785f5b666d77b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d6c/condition_8h.html#a89994f6cd29c8080e28785f5b666d77b">condition_destroy</a> (<a class="el" href="../../d6/d9f/structCondition.html">Condition</a> *c)</td></tr>
-<tr class="memdesc:a89994f6cd29c8080e28785f5b666d77b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys a condition variable.  <br /></td></tr>
-<tr class="separator:a89994f6cd29c8080e28785f5b666d77b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1da129e5279c29242428eb60fe9f1af" id="r_ac1da129e5279c29242428eb60fe9f1af"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d6c/condition_8h.html#ac1da129e5279c29242428eb60fe9f1af">condition_signal</a> (<a class="el" href="../../d6/d9f/structCondition.html">Condition</a> *c)</td></tr>
-<tr class="memdesc:ac1da129e5279c29242428eb60fe9f1af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals one thread waiting on the condition.  <br /></td></tr>
-<tr class="separator:ac1da129e5279c29242428eb60fe9f1af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeea441f0dc3a137fb4dcdb1f3a55ee34" id="r_aeea441f0dc3a137fb4dcdb1f3a55ee34"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d6c/condition_8h.html#aeea441f0dc3a137fb4dcdb1f3a55ee34">condition_broadcast</a> (<a class="el" href="../../d6/d9f/structCondition.html">Condition</a> *c)</td></tr>
-<tr class="memdesc:aeea441f0dc3a137fb4dcdb1f3a55ee34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals all threads waiting on the condition.  <br /></td></tr>
-<tr class="separator:aeea441f0dc3a137fb4dcdb1f3a55ee34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a531553b809c72911cdd17ef308198c" id="r_ga7a531553b809c72911cdd17ef308198c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d22/group__condition.html#ga7a531553b809c72911cdd17ef308198c">condition_signal</a> (struct <a class="el" href="../../d6/d9f/structCondition.html">Condition</a> *c)</td></tr>
+<tr class="memdesc:ga7a531553b809c72911cdd17ef308198c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wakes one thread waiting on the condition variable.  <br /></td></tr>
+<tr class="separator:ga7a531553b809c72911cdd17ef308198c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38590b8b80f7a1be46e9b8327e983603" id="r_ga38590b8b80f7a1be46e9b8327e983603"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d22/group__condition.html#ga38590b8b80f7a1be46e9b8327e983603">condition_broadcast</a> (struct <a class="el" href="../../d6/d9f/structCondition.html">Condition</a> *c)</td></tr>
+<tr class="memdesc:ga38590b8b80f7a1be46e9b8327e983603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wakes all threads waiting on the condition variable.  <br /></td></tr>
+<tr class="separator:ga38590b8b80f7a1be46e9b8327e983603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="aeea441f0dc3a137fb4dcdb1f3a55ee34" name="aeea441f0dc3a137fb4dcdb1f3a55ee34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeea441f0dc3a137fb4dcdb1f3a55ee34">&#9670;&#160;</a></span>condition_broadcast()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int condition_broadcast </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d6/d9f/structCondition.html">Condition</a> *&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Signals all threads waiting on the condition. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">c</td><td>Pointer to the <a class="el" href="../../d6/d9f/structCondition.html" title="A condition variable.">Condition</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, non-zero on failure. </dd></dl>
-
-</div>
-</div>
-<a id="a89994f6cd29c8080e28785f5b666d77b" name="a89994f6cd29c8080e28785f5b666d77b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89994f6cd29c8080e28785f5b666d77b">&#9670;&#160;</a></span>condition_destroy()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int condition_destroy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d6/d9f/structCondition.html">Condition</a> *&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Destroys a condition variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">c</td><td>Pointer to the <a class="el" href="../../d6/d9f/structCondition.html" title="A condition variable.">Condition</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, non-zero on failure. </dd></dl>
-
-</div>
-</div>
-<a id="a5dc604840a6b4fa7d0197d841f2f7be4" name="a5dc604840a6b4fa7d0197d841f2f7be4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5dc604840a6b4fa7d0197d841f2f7be4">&#9670;&#160;</a></span>condition_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int condition_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d6/d9f/structCondition.html">Condition</a> *&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initializes a condition variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">c</td><td>Pointer to the <a class="el" href="../../d6/d9f/structCondition.html" title="A condition variable.">Condition</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, non-zero on failure. </dd></dl>
-
-</div>
-</div>
-<a id="ac1da129e5279c29242428eb60fe9f1af" name="ac1da129e5279c29242428eb60fe9f1af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1da129e5279c29242428eb60fe9f1af">&#9670;&#160;</a></span>condition_signal()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int condition_signal </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d6/d9f/structCondition.html">Condition</a> *&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Signals one thread waiting on the condition. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">c</td><td>Pointer to the <a class="el" href="../../d6/d9f/structCondition.html" title="A condition variable.">Condition</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, non-zero on failure. </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

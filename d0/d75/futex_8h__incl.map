@@ -1,0 +1,25 @@
+<map id="include/descent/thread/futex.h" name="include/descent/thread/futex.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="217,5,388,45"/>
+<area shape="rect" id="Node000002" href="$dd/d02/atomic_8h.html" title=" " alt="" coords="149,93,329,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="289,47,259,84,255,81,285,44"/>
+<area shape="rect" id="Node000007" href="$d3/d61/rcode_8h.html" title=" " alt="" coords="397,174,523,199"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="323,44,441,162,437,166,319,47"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="308,255,391,280"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="272,116,307,135,323,149,337,165,346,184,351,204,354,241,349,241,346,204,341,185,332,168,319,153,304,140,269,121"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,174,80,199"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="211,121,85,171,83,166,209,116"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="203,255,274,280"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="205,121,172,140,157,152,145,168,139,187,145,205,166,230,193,247,191,251,163,234,140,208,134,187,140,165,153,149,169,135,203,116"/>
+<area shape="rect" id="Node000006" href="$d4/dcb/atomic__types_8h.html" title=" " alt="" coords="155,167,323,207"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="241,119,241,153,236,153,236,119"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="267,205,323,244,320,249,264,209"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="241,207,241,241,236,241,236,207"/>
+<area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="445,202,379,249,376,244,442,197"/>
+<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="429,202,285,253,283,248,427,197"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="415,255,486,280"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="461,200,456,241,451,241,456,199"/>
+<area shape="rect" id="Node000009" href="$de/d03/platform_8h.html" title=" " alt="" coords="510,255,709,280"/>
+<area shape="poly" id="edge12_Node000007_Node000009" title=" " alt="" coords="483,197,577,246,574,251,481,202"/>
+<area shape="rect" id="Node000010" href="$d3/d61/modules_8h.html" title=" " alt="" coords="733,255,878,280"/>
+<area shape="poly" id="edge13_Node000007_Node000010" title=" " alt="" coords="511,197,742,249,741,254,510,202"/>
+</map>

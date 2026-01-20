@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -75,26 +75,32 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">atomic.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="../../de/d03/platform_8h_source.html">../utilities/platform.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="../../d4/dcb/atomic__types_8h_source.html">descent/thread/atomic_types.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for atomic.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d3/d32/atomic_8h__incl.png" border="0" usemap="#ainclude_2descent_2thread_2atomic_8h" alt=""/></div>
 <map name="ainclude_2descent_2thread_2atomic_8h" id="ainclude_2descent_2thread_2atomic_8h">
-<area shape="rect" title=" " alt="" coords="23,5,194,45"/>
-<area shape="rect" title=" " alt="" coords="5,93,76,119"/>
-<area shape="poly" title=" " alt="" coords="94,47,62,84,58,81,90,44"/>
-<area shape="rect" href="../../de/d03/platform_8h.html" title=" " alt="" coords="101,93,255,119"/>
-<area shape="poly" title=" " alt="" coords="127,44,160,81,156,84,123,47"/>
-<area shape="rect" title=" " alt="" coords="79,167,167,192"/>
-<area shape="poly" title=" " alt="" coords="171,121,143,157,138,154,167,117"/>
-<area shape="rect" href="../../de/d3c/macros_8h.html" title=" " alt="" coords="191,167,274,192"/>
-<area shape="poly" title=" " alt="" coords="189,117,218,154,213,157,185,121"/>
+<area shape="rect" title=" " alt="" coords="48,5,219,45"/>
+<area shape="rect" title=" " alt="" coords="65,181,148,207"/>
+<area shape="poly" title=" " alt="" coords="73,48,40,67,26,80,14,95,8,113,14,132,35,156,62,173,59,178,31,160,10,135,3,113,10,92,22,76,37,63,70,43"/>
+<area shape="rect" title=" " alt="" coords="24,101,99,126"/>
+<area shape="poly" title=" " alt="" coords="119,47,82,91,78,88,115,44"/>
+<area shape="rect" title=" " alt="" coords="231,181,302,207"/>
+<area shape="poly" title=" " alt="" coords="220,37,267,57,288,72,305,92,312,112,309,134,300,154,288,172,284,169,295,151,304,132,306,113,300,95,284,76,264,62,218,42"/>
+<area shape="rect" href="../../d4/dcb/atomic__types_8h.html" title=" " alt="" coords="123,93,291,133"/>
+<area shape="poly" title=" " alt="" coords="152,44,184,81,180,85,148,47"/>
+<area shape="poly" title=" " alt="" coords="184,136,134,175,131,170,181,131"/>
+<area shape="poly" title=" " alt="" coords="223,132,252,169,247,172,219,135"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -102,1476 +108,225 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d6/d08/atomic_8h__dep__incl.png" border="0" usemap="#ainclude_2descent_2thread_2atomic_8hdep" alt=""/></div>
 <map name="ainclude_2descent_2thread_2atomic_8hdep" id="ainclude_2descent_2thread_2atomic_8hdep">
-<area shape="rect" title=" " alt="" coords="24,5,194,45"/>
-<area shape="rect" href="../../db/dd5/thread_8h.html" title=" " alt="" coords="18,181,200,207"/>
-<area shape="poly" title=" " alt="" coords="54,55,31,72,14,95,8,113,14,132,26,148,41,160,75,179,72,184,38,165,22,151,9,135,3,113,9,92,28,68,51,50"/>
-<area shape="rect" href="../../df/d63/spinlock_8h.html" title=" " alt="" coords="24,93,194,133"/>
-<area shape="poly" title=" " alt="" coords="112,59,112,93,106,93,106,59"/>
-<area shape="rect" href="../../dd/d60/ticket__lock_8h.html" title=" " alt="" coords="218,93,389,133"/>
-<area shape="poly" title=" " alt="" coords="165,48,262,91,260,96,163,53"/>
-<area shape="poly" title=" " alt="" coords="112,147,112,181,106,181,106,147"/>
-<area shape="poly" title=" " alt="" coords="245,141,139,184,137,179,244,136"/>
+<area shape="rect" title=" " alt="" coords="73,5,243,45"/>
+<area shape="rect" href="../../dd/dee/include_2descent_2thread_8h.html" title=" " alt="" coords="5,181,188,207"/>
+<area shape="poly" title=" " alt="" coords="103,55,80,72,63,94,58,117,64,141,76,162,89,180,84,183,71,165,59,142,53,117,58,92,76,68,100,50"/>
+<area shape="rect" href="../../d0/d77/futex_8h.html" title=" " alt="" coords="73,93,243,133"/>
+<area shape="poly" title=" " alt="" coords="161,59,161,93,155,93,155,59"/>
+<area shape="rect" href="../../db/db8/intern_2intern_2time_8h.html" title=" " alt="" coords="268,101,416,126"/>
+<area shape="poly" title=" " alt="" coords="212,49,319,98,316,103,210,54"/>
+<area shape="poly" title=" " alt="" coords="137,146,108,183,104,179,133,143"/>
 </map>
 </div>
 </div>
 <p><a href="../../dd/d02/atomic_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga4469771b4363d1d81287967e30453e44" id="r_ga4469771b4363d1d81287967e30453e44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga4469771b4363d1d81287967e30453e44">atomic_always_lock_free</a>(ptr)&#160;&#160;&#160;__atomic_always_lock_free(sizeof(*(ptr)), ptr)</td></tr>
+<tr class="memdesc:ga4469771b4363d1d81287967e30453e44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether atomic operations on the given type are always lock-free.  <br /></td></tr>
+<tr class="separator:ga4469771b4363d1d81287967e30453e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa2ad8d7ede74b9c5860cd4628cc2b355" id="r_gaa2ad8d7ede74b9c5860cd4628cc2b355"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaa2ad8d7ede74b9c5860cd4628cc2b355">atomic_is_lock_free</a>(ptr)&#160;&#160;&#160;__atomic_is_lock_free(sizeof(*(ptr)), ptr)</td></tr>
+<tr class="memdesc:gaa2ad8d7ede74b9c5860cd4628cc2b355"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether atomic operations on the given object are lock-free.  <br /></td></tr>
+<tr class="separator:gaa2ad8d7ede74b9c5860cd4628cc2b355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga0411cd49bb5b71852cecd93bcbf0ca2d" id="r_ga0411cd49bb5b71852cecd93bcbf0ca2d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br />
+&#160;&#160;<a class="el" href="../../d3/de8/group__atomic.html#gga0411cd49bb5b71852cecd93bcbf0ca2daa5df71bfeb8f16c508776c55e613ca86">ATOMIC_RELAXED</a> = __ATOMIC_RELAXED
+, <a class="el" href="../../d3/de8/group__atomic.html#gga0411cd49bb5b71852cecd93bcbf0ca2da3c9cb31f4d7c87eb9cefc73f6170587c">ATOMIC_ACQUIRE</a> = __ATOMIC_ACQUIRE
+, <a class="el" href="../../d3/de8/group__atomic.html#gga0411cd49bb5b71852cecd93bcbf0ca2da2b107cf2c6dce64b5e987cd0d4b4f8d3">ATOMIC_RELEASE</a> = __ATOMIC_RELEASE
+, <a class="el" href="../../d3/de8/group__atomic.html#gga0411cd49bb5b71852cecd93bcbf0ca2da64012698a77715fca7ec6e2724d7bf5e">ATOMIC_ACQ_REL</a> = __ATOMIC_ACQ_REL
+, <br />
+&#160;&#160;<a class="el" href="../../d3/de8/group__atomic.html#gga0411cd49bb5b71852cecd93bcbf0ca2da388308897863e62b26231a119b5020bc">ATOMIC_SEQ_CST</a> = __ATOMIC_SEQ_CST
+<br />
+ }</td></tr>
+<tr class="memdesc:ga0411cd49bb5b71852cecd93bcbf0ca2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory ordering constraints for atomic operations.  <a href="../../d3/de8/group__atomic.html#ga0411cd49bb5b71852cecd93bcbf0ca2d">More...</a><br /></td></tr>
+<tr class="separator:ga0411cd49bb5b71852cecd93bcbf0ca2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5a1d7ce0c5eaa6f20a6c575d3e36f213" id="r_a5a1d7ce0c5eaa6f20a6c575d3e36f213"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a5a1d7ce0c5eaa6f20a6c575d3e36f213">atomic_compare_exchange_32</a> (atomic_32 *object, uint32_t *expected, uint32_t desired)</td></tr>
-<tr class="memdesc:a5a1d7ce0c5eaa6f20a6c575d3e36f213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically compare and exchange a 32-bit value.  <br /></td></tr>
-<tr class="separator:a5a1d7ce0c5eaa6f20a6c575d3e36f213"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a933444729e5fa1b6260c55da59160e7a" id="r_a933444729e5fa1b6260c55da59160e7a"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a933444729e5fa1b6260c55da59160e7a">atomic_compare_exchange_64</a> (atomic_64 *object, uint64_t *expected, uint64_t desired)</td></tr>
-<tr class="memdesc:a933444729e5fa1b6260c55da59160e7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically compare and exchange a 64-bit value.  <br /></td></tr>
-<tr class="separator:a933444729e5fa1b6260c55da59160e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a545aea4da66d2d57d9f110f55b8daad3" id="r_a545aea4da66d2d57d9f110f55b8daad3"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a545aea4da66d2d57d9f110f55b8daad3">atomic_compare_exchange_ptr</a> (atomic_ptr *object, uintptr_t *expected, uintptr_t desired)</td></tr>
-<tr class="memdesc:a545aea4da66d2d57d9f110f55b8daad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically compare and exchange a pointer value.  <br /></td></tr>
-<tr class="separator:a545aea4da66d2d57d9f110f55b8daad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc2e6e42633a54e74317045376bf26f8" id="r_acc2e6e42633a54e74317045376bf26f8"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#acc2e6e42633a54e74317045376bf26f8">atomic_exchange_32</a> (atomic_32 *object, uint32_t desired)</td></tr>
-<tr class="memdesc:acc2e6e42633a54e74317045376bf26f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically exchanges a 32-bit value.  <br /></td></tr>
-<tr class="separator:acc2e6e42633a54e74317045376bf26f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a045f0078041ba474277d195f14ddb0c7" id="r_a045f0078041ba474277d195f14ddb0c7"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a045f0078041ba474277d195f14ddb0c7">atomic_exchange_64</a> (atomic_64 *object, uint64_t desired)</td></tr>
-<tr class="memdesc:a045f0078041ba474277d195f14ddb0c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically exchanges a 64-bit value.  <br /></td></tr>
-<tr class="separator:a045f0078041ba474277d195f14ddb0c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a416e8485dee08c4d891fdb41a2a4b768" id="r_a416e8485dee08c4d891fdb41a2a4b768"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a416e8485dee08c4d891fdb41a2a4b768">atomic_exchange_ptr</a> (atomic_ptr *object, uintptr_t desired)</td></tr>
-<tr class="memdesc:a416e8485dee08c4d891fdb41a2a4b768"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically exchanges a pointer value.  <br /></td></tr>
-<tr class="separator:a416e8485dee08c4d891fdb41a2a4b768"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9c45dedd29e7a6b8e370a49b04dda8c" id="r_af9c45dedd29e7a6b8e370a49b04dda8c"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#af9c45dedd29e7a6b8e370a49b04dda8c">atomic_fetch_add_32</a> (atomic_32 *object, uint32_t operand)</td></tr>
-<tr class="memdesc:af9c45dedd29e7a6b8e370a49b04dda8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically adds a value to a 32-bit atomic variable.  <br /></td></tr>
-<tr class="separator:af9c45dedd29e7a6b8e370a49b04dda8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab342a8c51f9e3ac1164939fee62c71f1" id="r_ab342a8c51f9e3ac1164939fee62c71f1"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#ab342a8c51f9e3ac1164939fee62c71f1">atomic_fetch_add_64</a> (atomic_64 *object, uint64_t operand)</td></tr>
-<tr class="memdesc:ab342a8c51f9e3ac1164939fee62c71f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically adds a value to a 64-bit atomic variable.  <br /></td></tr>
-<tr class="separator:ab342a8c51f9e3ac1164939fee62c71f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08ac01ef243248685ace6894695868f7" id="r_a08ac01ef243248685ace6894695868f7"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a08ac01ef243248685ace6894695868f7">atomic_fetch_add_ptr</a> (atomic_ptr *object, uintptr_t operand)</td></tr>
-<tr class="memdesc:a08ac01ef243248685ace6894695868f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically adds a value to a pointer-sized atomic variable.  <br /></td></tr>
-<tr class="separator:a08ac01ef243248685ace6894695868f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1167828cc6297f0eb4df9391486b2d84" id="r_a1167828cc6297f0eb4df9391486b2d84"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a1167828cc6297f0eb4df9391486b2d84">atomic_fetch_sub_32</a> (atomic_32 *object, uint32_t operand)</td></tr>
-<tr class="memdesc:a1167828cc6297f0eb4df9391486b2d84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically subtracts a value from a 32-bit atomic variable.  <br /></td></tr>
-<tr class="separator:a1167828cc6297f0eb4df9391486b2d84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e022ef8661f7fb32613b081b911e553" id="r_a2e022ef8661f7fb32613b081b911e553"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a2e022ef8661f7fb32613b081b911e553">atomic_fetch_sub_64</a> (atomic_64 *object, uint64_t operand)</td></tr>
-<tr class="memdesc:a2e022ef8661f7fb32613b081b911e553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically subtracts a value from a 64-bit atomic variable.  <br /></td></tr>
-<tr class="separator:a2e022ef8661f7fb32613b081b911e553"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdfb685ceda9ff0032fc6720a43e33c4" id="r_acdfb685ceda9ff0032fc6720a43e33c4"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#acdfb685ceda9ff0032fc6720a43e33c4">atomic_fetch_sub_ptr</a> (atomic_ptr *object, uintptr_t operand)</td></tr>
-<tr class="memdesc:acdfb685ceda9ff0032fc6720a43e33c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically subtracts a value from a pointer-sized atomic variable.  <br /></td></tr>
-<tr class="separator:acdfb685ceda9ff0032fc6720a43e33c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b8af5c71b46ed7462375a267455b1c1" id="r_a3b8af5c71b46ed7462375a267455b1c1"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a3b8af5c71b46ed7462375a267455b1c1">atomic_fetch_and_32</a> (atomic_32 *object, uint32_t operand)</td></tr>
-<tr class="memdesc:a3b8af5c71b46ed7462375a267455b1c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs bitwise AND on a 32-bit atomic variable.  <br /></td></tr>
-<tr class="separator:a3b8af5c71b46ed7462375a267455b1c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dae1e9f048e52d37677f433e4939839" id="r_a8dae1e9f048e52d37677f433e4939839"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a8dae1e9f048e52d37677f433e4939839">atomic_fetch_and_64</a> (atomic_64 *object, uint64_t operand)</td></tr>
-<tr class="memdesc:a8dae1e9f048e52d37677f433e4939839"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs bitwise AND on a 64-bit atomic variable.  <br /></td></tr>
-<tr class="separator:a8dae1e9f048e52d37677f433e4939839"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65050690c637448d0008514533fc641a" id="r_a65050690c637448d0008514533fc641a"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a65050690c637448d0008514533fc641a">atomic_fetch_and_ptr</a> (atomic_ptr *object, uintptr_t operand)</td></tr>
-<tr class="memdesc:a65050690c637448d0008514533fc641a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs bitwise AND on a pointer-sized atomic variable.  <br /></td></tr>
-<tr class="separator:a65050690c637448d0008514533fc641a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9993a912eb988651fe7efa5f599eeef5" id="r_a9993a912eb988651fe7efa5f599eeef5"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a9993a912eb988651fe7efa5f599eeef5">atomic_fetch_or_32</a> (atomic_32 *object, uint32_t operand)</td></tr>
-<tr class="memdesc:a9993a912eb988651fe7efa5f599eeef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs bitwise OR on a 32-bit atomic variable.  <br /></td></tr>
-<tr class="separator:a9993a912eb988651fe7efa5f599eeef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cc6b6bb2df2041a00e336675cedd653" id="r_a9cc6b6bb2df2041a00e336675cedd653"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a9cc6b6bb2df2041a00e336675cedd653">atomic_fetch_or_64</a> (atomic_64 *object, uint64_t operand)</td></tr>
-<tr class="memdesc:a9cc6b6bb2df2041a00e336675cedd653"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs bitwise OR on a 64-bit atomic variable.  <br /></td></tr>
-<tr class="separator:a9cc6b6bb2df2041a00e336675cedd653"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfd45516b23b40a507173cd7f1c37bd0" id="r_acfd45516b23b40a507173cd7f1c37bd0"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#acfd45516b23b40a507173cd7f1c37bd0">atomic_fetch_or_ptr</a> (atomic_ptr *object, uintptr_t operand)</td></tr>
-<tr class="memdesc:acfd45516b23b40a507173cd7f1c37bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs bitwise OR on a pointer-sized atomic variable.  <br /></td></tr>
-<tr class="separator:acfd45516b23b40a507173cd7f1c37bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bd96fd2393900b18b8bf82fbbf62467" id="r_a6bd96fd2393900b18b8bf82fbbf62467"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a6bd96fd2393900b18b8bf82fbbf62467">atomic_fetch_xor_32</a> (atomic_32 *object, uint32_t operand)</td></tr>
-<tr class="memdesc:a6bd96fd2393900b18b8bf82fbbf62467"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs bitwise XOR on a 32-bit atomic variable.  <br /></td></tr>
-<tr class="separator:a6bd96fd2393900b18b8bf82fbbf62467"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac6fd054929498ffbf5abf4ea97d8873" id="r_aac6fd054929498ffbf5abf4ea97d8873"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#aac6fd054929498ffbf5abf4ea97d8873">atomic_fetch_xor_64</a> (atomic_64 *object, uint64_t operand)</td></tr>
-<tr class="memdesc:aac6fd054929498ffbf5abf4ea97d8873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs bitwise XOR on a 64-bit atomic variable.  <br /></td></tr>
-<tr class="separator:aac6fd054929498ffbf5abf4ea97d8873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c7809118f60b15bee3b3dea8492b6b7" id="r_a5c7809118f60b15bee3b3dea8492b6b7"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a5c7809118f60b15bee3b3dea8492b6b7">atomic_fetch_xor_ptr</a> (atomic_ptr *object, uintptr_t operand)</td></tr>
-<tr class="memdesc:a5c7809118f60b15bee3b3dea8492b6b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs bitwise XOR on a pointer-sized atomic variable.  <br /></td></tr>
-<tr class="separator:a5c7809118f60b15bee3b3dea8492b6b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9b15a106acfc35c8467a188329eaed3" id="r_ad9b15a106acfc35c8467a188329eaed3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#ad9b15a106acfc35c8467a188329eaed3">atomic_init_32</a> (atomic_32 *object, uint32_t desired)</td></tr>
-<tr class="memdesc:ad9b15a106acfc35c8467a188329eaed3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a 32-bit atomic variable.  <br /></td></tr>
-<tr class="separator:ad9b15a106acfc35c8467a188329eaed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefa7efdb996428a89fdf4efb089ccfd6" id="r_aefa7efdb996428a89fdf4efb089ccfd6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#aefa7efdb996428a89fdf4efb089ccfd6">atomic_init_64</a> (atomic_64 *object, uint64_t desired)</td></tr>
-<tr class="memdesc:aefa7efdb996428a89fdf4efb089ccfd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a 64-bit atomic variable.  <br /></td></tr>
-<tr class="separator:aefa7efdb996428a89fdf4efb089ccfd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fc9868f73b4affe800d61a21a5045f1" id="r_a1fc9868f73b4affe800d61a21a5045f1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a1fc9868f73b4affe800d61a21a5045f1">atomic_init_ptr</a> (atomic_ptr *object, uintptr_t desired)</td></tr>
-<tr class="memdesc:a1fc9868f73b4affe800d61a21a5045f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a pointer-sized atomic variable.  <br /></td></tr>
-<tr class="separator:a1fc9868f73b4affe800d61a21a5045f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5a71906ff0a4ec3382d2102165e6b9f" id="r_ac5a71906ff0a4ec3382d2102165e6b9f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#ac5a71906ff0a4ec3382d2102165e6b9f">atomic_load_32</a> (const atomic_32 *object)</td></tr>
-<tr class="memdesc:ac5a71906ff0a4ec3382d2102165e6b9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a 32-bit atomic variable.  <br /></td></tr>
-<tr class="separator:ac5a71906ff0a4ec3382d2102165e6b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af39b252138377cb27b6ad225b6a6c115" id="r_af39b252138377cb27b6ad225b6a6c115"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#af39b252138377cb27b6ad225b6a6c115">atomic_load_64</a> (const atomic_64 *object)</td></tr>
-<tr class="memdesc:af39b252138377cb27b6ad225b6a6c115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a 64-bit atomic variable.  <br /></td></tr>
-<tr class="separator:af39b252138377cb27b6ad225b6a6c115"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab675d663338a7456323fbb66f2aa7bf8" id="r_ab675d663338a7456323fbb66f2aa7bf8"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#ab675d663338a7456323fbb66f2aa7bf8">atomic_load_ptr</a> (const atomic_ptr *object)</td></tr>
-<tr class="memdesc:ab675d663338a7456323fbb66f2aa7bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a pointer-sized atomic variable.  <br /></td></tr>
-<tr class="separator:ab675d663338a7456323fbb66f2aa7bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc5d5c22148d7c953eeb6d5da161fd1e" id="r_adc5d5c22148d7c953eeb6d5da161fd1e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#adc5d5c22148d7c953eeb6d5da161fd1e">atomic_store_32</a> (atomic_32 *object, uint32_t desired)</td></tr>
-<tr class="memdesc:adc5d5c22148d7c953eeb6d5da161fd1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores a value to a 32-bit atomic variable.  <br /></td></tr>
-<tr class="separator:adc5d5c22148d7c953eeb6d5da161fd1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb471a8a1cd65f2777e0e5c7f90b654e" id="r_afb471a8a1cd65f2777e0e5c7f90b654e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#afb471a8a1cd65f2777e0e5c7f90b654e">atomic_store_64</a> (atomic_64 *object, uint64_t desired)</td></tr>
-<tr class="memdesc:afb471a8a1cd65f2777e0e5c7f90b654e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores a value to a 64-bit atomic variable.  <br /></td></tr>
-<tr class="separator:afb471a8a1cd65f2777e0e5c7f90b654e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46b8a3df9b75e7bd64d95103787d78e5" id="r_a46b8a3df9b75e7bd64d95103787d78e5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d02/atomic_8h.html#a46b8a3df9b75e7bd64d95103787d78e5">atomic_store_ptr</a> (atomic_ptr *object, uintptr_t desired)</td></tr>
-<tr class="memdesc:a46b8a3df9b75e7bd64d95103787d78e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores a value to a pointer-sized atomic variable.  <br /></td></tr>
-<tr class="separator:a46b8a3df9b75e7bd64d95103787d78e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84eb183e153040448c91365eff70e33a" id="r_ga84eb183e153040448c91365eff70e33a"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga84eb183e153040448c91365eff70e33a">atomic_load_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int order)</td></tr>
+<tr class="memdesc:ga84eb183e153040448c91365eff70e33a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically loads the value of an atomic integer and returns it.  <br /></td></tr>
+<tr class="separator:ga84eb183e153040448c91365eff70e33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafcfd70fabfbb2246d86b9ecbb45fd17" id="r_gaafcfd70fabfbb2246d86b9ecbb45fd17"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaafcfd70fabfbb2246d86b9ecbb45fd17">atomic_store_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:gaafcfd70fabfbb2246d86b9ecbb45fd17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically stores a value into an atomic integer.  <br /></td></tr>
+<tr class="separator:gaafcfd70fabfbb2246d86b9ecbb45fd17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54d4e5749dce93db16225efe211b964a" id="r_ga54d4e5749dce93db16225efe211b964a"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga54d4e5749dce93db16225efe211b964a">atomic_exchange_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:ga54d4e5749dce93db16225efe211b964a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically stores a value into an atomic integer and returns the old value.  <br /></td></tr>
+<tr class="separator:ga54d4e5749dce93db16225efe211b964a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga431b27ed78f204d45a9f565c801e8151" id="r_ga431b27ed78f204d45a9f565c801e8151"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga431b27ed78f204d45a9f565c801e8151">atomic_compare_exchange_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int *expected, int desired, int success_order, int failure_order)</td></tr>
+<tr class="memdesc:ga431b27ed78f204d45a9f565c801e8151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically compares the value of an atomic integer with an expected value and, if they are equal, replaces it with a desired value.  <br /></td></tr>
+<tr class="separator:ga431b27ed78f204d45a9f565c801e8151"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01b53f8e08eb42b75d044826a2923fe8" id="r_ga01b53f8e08eb42b75d044826a2923fe8"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga01b53f8e08eb42b75d044826a2923fe8">atomic_add_fetch_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:ga01b53f8e08eb42b75d044826a2923fe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically adds a value to an atomic integer and returns the new value.  <br /></td></tr>
+<tr class="separator:ga01b53f8e08eb42b75d044826a2923fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e217ddededa9cc15a6c4d1db7c75179" id="r_ga9e217ddededa9cc15a6c4d1db7c75179"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga9e217ddededa9cc15a6c4d1db7c75179">atomic_sub_fetch_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:ga9e217ddededa9cc15a6c4d1db7c75179"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically subtracts a value from an atomic integer and returns the new value.  <br /></td></tr>
+<tr class="separator:ga9e217ddededa9cc15a6c4d1db7c75179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01f12416cf4caf8524ce89a55f0f25c9" id="r_ga01f12416cf4caf8524ce89a55f0f25c9"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga01f12416cf4caf8524ce89a55f0f25c9">atomic_and_fetch_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:ga01f12416cf4caf8524ce89a55f0f25c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise AND between an atomic integer and a value, storing the result into the atomic integer and returning it.  <br /></td></tr>
+<tr class="separator:ga01f12416cf4caf8524ce89a55f0f25c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaddeba6725c63db1f1e70659270aa1ab4" id="r_gaddeba6725c63db1f1e70659270aa1ab4"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaddeba6725c63db1f1e70659270aa1ab4">atomic_xor_fetch_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:gaddeba6725c63db1f1e70659270aa1ab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise XOR between an atomic integer and a value, storing the result into the atomic integer and returning it.  <br /></td></tr>
+<tr class="separator:gaddeba6725c63db1f1e70659270aa1ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a3bea073c0fbbce302e1168b9afb02a" id="r_ga9a3bea073c0fbbce302e1168b9afb02a"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga9a3bea073c0fbbce302e1168b9afb02a">atomic_or_fetch_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:ga9a3bea073c0fbbce302e1168b9afb02a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise OR between an atomic integer and a value, storing the result into the atomic integer and returning it.  <br /></td></tr>
+<tr class="separator:ga9a3bea073c0fbbce302e1168b9afb02a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e44f7d96ed6f6e037ffd6b81f2f43f5" id="r_ga0e44f7d96ed6f6e037ffd6b81f2f43f5"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga0e44f7d96ed6f6e037ffd6b81f2f43f5">atomic_nand_fetch_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:ga0e44f7d96ed6f6e037ffd6b81f2f43f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise NAND between an atomic integer and a value, storing the result into the atomic integer and returning it.  <br /></td></tr>
+<tr class="separator:ga0e44f7d96ed6f6e037ffd6b81f2f43f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff0de9ccfd4c10e7230e5ae0acb0f3f3" id="r_gaff0de9ccfd4c10e7230e5ae0acb0f3f3"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaff0de9ccfd4c10e7230e5ae0acb0f3f3">atomic_fetch_add_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:gaff0de9ccfd4c10e7230e5ae0acb0f3f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically adds a value to an atomic integer and returns the old value.  <br /></td></tr>
+<tr class="separator:gaff0de9ccfd4c10e7230e5ae0acb0f3f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ba417c1216dae3d9fb2baedaa066344" id="r_ga7ba417c1216dae3d9fb2baedaa066344"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga7ba417c1216dae3d9fb2baedaa066344">atomic_fetch_sub_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:ga7ba417c1216dae3d9fb2baedaa066344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically subtracts a value from an atomic integer and returns the old value.  <br /></td></tr>
+<tr class="separator:ga7ba417c1216dae3d9fb2baedaa066344"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fe797f4715a91f026c9ccf20bcad80e" id="r_ga0fe797f4715a91f026c9ccf20bcad80e"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga0fe797f4715a91f026c9ccf20bcad80e">atomic_fetch_and_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:ga0fe797f4715a91f026c9ccf20bcad80e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise AND between an atomic integer and a value, storing the result into the atomic integer and returning the old value.  <br /></td></tr>
+<tr class="separator:ga0fe797f4715a91f026c9ccf20bcad80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd38601cc45a12c59d59599488314aae" id="r_gadd38601cc45a12c59d59599488314aae"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gadd38601cc45a12c59d59599488314aae">atomic_fetch_xor_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:gadd38601cc45a12c59d59599488314aae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise XOR between an atomic integer and a value, storing the result into the atomic integer and returning the old value.  <br /></td></tr>
+<tr class="separator:gadd38601cc45a12c59d59599488314aae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf86cdfabf01f6b6cf2f78b3f46371d18" id="r_gaf86cdfabf01f6b6cf2f78b3f46371d18"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaf86cdfabf01f6b6cf2f78b3f46371d18">atomic_fetch_or_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:gaf86cdfabf01f6b6cf2f78b3f46371d18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise OR between an atomic integer and a value, storing the result into the atomic integer and returning the old value.  <br /></td></tr>
+<tr class="separator:gaf86cdfabf01f6b6cf2f78b3f46371d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1fffc6bd0faf219c0eebaae86c511665" id="r_ga1fffc6bd0faf219c0eebaae86c511665"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga1fffc6bd0faf219c0eebaae86c511665">atomic_fetch_nand_int</a> (<a class="el" href="../../db/d09/structatomic__int.html">atomic_int</a> *ptr, int val, int order)</td></tr>
+<tr class="memdesc:ga1fffc6bd0faf219c0eebaae86c511665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise NAND between an atomic integer and a value, storing the result into the atomic integer and returning the old value.  <br /></td></tr>
+<tr class="separator:ga1fffc6bd0faf219c0eebaae86c511665"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6283d393417c6be988d8e3e0fa80840e" id="r_ga6283d393417c6be988d8e3e0fa80840e"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga6283d393417c6be988d8e3e0fa80840e">atomic_load_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, int order)</td></tr>
+<tr class="memdesc:ga6283d393417c6be988d8e3e0fa80840e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically loads the value of an atomic uint32_t and returns it.  <br /></td></tr>
+<tr class="separator:ga6283d393417c6be988d8e3e0fa80840e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa3e6ed3cffc530d86f0fcd3bb55d85c5" id="r_gaa3e6ed3cffc530d86f0fcd3bb55d85c5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaa3e6ed3cffc530d86f0fcd3bb55d85c5">atomic_store_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:gaa3e6ed3cffc530d86f0fcd3bb55d85c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically stores a value into an atomic uint32_t.  <br /></td></tr>
+<tr class="separator:gaa3e6ed3cffc530d86f0fcd3bb55d85c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0b172c9df42030baeb6f7b81ba8249a" id="r_gaf0b172c9df42030baeb6f7b81ba8249a"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaf0b172c9df42030baeb6f7b81ba8249a">atomic_exchange_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:gaf0b172c9df42030baeb6f7b81ba8249a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically stores a value into an atomic uint32_t and returns the old value.  <br /></td></tr>
+<tr class="separator:gaf0b172c9df42030baeb6f7b81ba8249a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c3434dce8a4b5abf22ca26374ddfba6" id="r_ga6c3434dce8a4b5abf22ca26374ddfba6"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga6c3434dce8a4b5abf22ca26374ddfba6">atomic_compare_exchange_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t *expected, uint32_t desired, int success_order, int failure_order)</td></tr>
+<tr class="memdesc:ga6c3434dce8a4b5abf22ca26374ddfba6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically compares the value of an atomic uint32_t with an expected value and, if they are equal, replaces it with a desired value.  <br /></td></tr>
+<tr class="separator:ga6c3434dce8a4b5abf22ca26374ddfba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38b33b65d5a85491bbbd97f555db9649" id="r_ga38b33b65d5a85491bbbd97f555db9649"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga38b33b65d5a85491bbbd97f555db9649">atomic_add_fetch_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga38b33b65d5a85491bbbd97f555db9649"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically adds a value to an atomic uint32_t and returns the new value.  <br /></td></tr>
+<tr class="separator:ga38b33b65d5a85491bbbd97f555db9649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga912bb344c291acd613c709eaab7be976" id="r_ga912bb344c291acd613c709eaab7be976"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga912bb344c291acd613c709eaab7be976">atomic_sub_fetch_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga912bb344c291acd613c709eaab7be976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically subtracts a value from an atomic uint32_t and returns the new value.  <br /></td></tr>
+<tr class="separator:ga912bb344c291acd613c709eaab7be976"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4dfeede756859ad30ac13f5848c454ce" id="r_ga4dfeede756859ad30ac13f5848c454ce"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga4dfeede756859ad30ac13f5848c454ce">atomic_and_fetch_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga4dfeede756859ad30ac13f5848c454ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise AND between an atomic uint32_t and a value, storing the result into the atomic uint32_t and returning it.  <br /></td></tr>
+<tr class="separator:ga4dfeede756859ad30ac13f5848c454ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62235210f5186281d0a45f5f7d9b51e0" id="r_ga62235210f5186281d0a45f5f7d9b51e0"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga62235210f5186281d0a45f5f7d9b51e0">atomic_xor_fetch_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga62235210f5186281d0a45f5f7d9b51e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise XOR between an atomic uint32_t and a value, storing the result into the atomic uint32_t and returning it.  <br /></td></tr>
+<tr class="separator:ga62235210f5186281d0a45f5f7d9b51e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78e5c7c54ffb6c6f9babada13127838e" id="r_ga78e5c7c54ffb6c6f9babada13127838e"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga78e5c7c54ffb6c6f9babada13127838e">atomic_or_fetch_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga78e5c7c54ffb6c6f9babada13127838e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise OR between an atomic uint32_t and a value, storing the result into the atomic uint32_t and returning it.  <br /></td></tr>
+<tr class="separator:ga78e5c7c54ffb6c6f9babada13127838e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf1370191221205c583a8b475059d2d7" id="r_gadf1370191221205c583a8b475059d2d7"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gadf1370191221205c583a8b475059d2d7">atomic_nand_fetch_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:gadf1370191221205c583a8b475059d2d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise NAND between an atomic uint32_t and a value, storing the result into the atomic uint32_t and returning it.  <br /></td></tr>
+<tr class="separator:gadf1370191221205c583a8b475059d2d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga187929c3a34e71e3f9d2befdacf2cc49" id="r_ga187929c3a34e71e3f9d2befdacf2cc49"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga187929c3a34e71e3f9d2befdacf2cc49">atomic_fetch_add_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga187929c3a34e71e3f9d2befdacf2cc49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically adds a value to an atomic uint32_t and returns the old value.  <br /></td></tr>
+<tr class="separator:ga187929c3a34e71e3f9d2befdacf2cc49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bb107a26f061f724190df6fbe706e5c" id="r_ga8bb107a26f061f724190df6fbe706e5c"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga8bb107a26f061f724190df6fbe706e5c">atomic_fetch_sub_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga8bb107a26f061f724190df6fbe706e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically subtracts a value from an atomic uint32_t and returns the old value.  <br /></td></tr>
+<tr class="separator:ga8bb107a26f061f724190df6fbe706e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e14080babc394daa3070ea86360657a" id="r_ga5e14080babc394daa3070ea86360657a"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga5e14080babc394daa3070ea86360657a">atomic_fetch_and_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga5e14080babc394daa3070ea86360657a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise AND between an atomic uint32_t and a value, storing the result into the atomic uint32_t and returning the old value.  <br /></td></tr>
+<tr class="separator:ga5e14080babc394daa3070ea86360657a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49f8a8c9ce9c486fdc43f145446a0fbc" id="r_ga49f8a8c9ce9c486fdc43f145446a0fbc"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga49f8a8c9ce9c486fdc43f145446a0fbc">atomic_fetch_xor_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga49f8a8c9ce9c486fdc43f145446a0fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise XOR between an atomic uint32_t and a value, storing the result into the atomic uint32_t and returning the old value.  <br /></td></tr>
+<tr class="separator:ga49f8a8c9ce9c486fdc43f145446a0fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga648b3777d353f9b55093978c38964612" id="r_ga648b3777d353f9b55093978c38964612"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga648b3777d353f9b55093978c38964612">atomic_fetch_or_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga648b3777d353f9b55093978c38964612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise OR between an atomic uint32_t and a value, storing the result into the atomic uint32_t and returning the old value.  <br /></td></tr>
+<tr class="separator:ga648b3777d353f9b55093978c38964612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23238a31680d46978f6e16497c49a831" id="r_ga23238a31680d46978f6e16497c49a831"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga23238a31680d46978f6e16497c49a831">atomic_fetch_nand_32</a> (<a class="el" href="../../dc/d44/structatomic__32.html">atomic_32</a> *ptr, uint32_t val, int order)</td></tr>
+<tr class="memdesc:ga23238a31680d46978f6e16497c49a831"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise NAND between an atomic uint32_t and a value, storing the result into the atomic uint32_t and returning the old value.  <br /></td></tr>
+<tr class="separator:ga23238a31680d46978f6e16497c49a831"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaaf0a1963bfa6d28bc8a01c0d7bcb6ed" id="r_gaaaf0a1963bfa6d28bc8a01c0d7bcb6ed"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaaaf0a1963bfa6d28bc8a01c0d7bcb6ed">atomic_load_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, int order)</td></tr>
+<tr class="memdesc:gaaaf0a1963bfa6d28bc8a01c0d7bcb6ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically loads the value of an atomic uint64_t and returns it.  <br /></td></tr>
+<tr class="separator:gaaaf0a1963bfa6d28bc8a01c0d7bcb6ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3c4ec522918b3bd9da1cf7f91f1d4d5" id="r_gab3c4ec522918b3bd9da1cf7f91f1d4d5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gab3c4ec522918b3bd9da1cf7f91f1d4d5">atomic_store_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:gab3c4ec522918b3bd9da1cf7f91f1d4d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically stores a value into an atomic uint64_t.  <br /></td></tr>
+<tr class="separator:gab3c4ec522918b3bd9da1cf7f91f1d4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga261933ebaa9e4515aa6d160458115129" id="r_ga261933ebaa9e4515aa6d160458115129"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga261933ebaa9e4515aa6d160458115129">atomic_exchange_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:ga261933ebaa9e4515aa6d160458115129"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically stores a value into an atomic uint64_t and returns the old value.  <br /></td></tr>
+<tr class="separator:ga261933ebaa9e4515aa6d160458115129"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50163a1d7c1891feb8902c332c37304b" id="r_ga50163a1d7c1891feb8902c332c37304b"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga50163a1d7c1891feb8902c332c37304b">atomic_compare_exchange_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t *expected, uint64_t desired, int success_order, int failure_order)</td></tr>
+<tr class="memdesc:ga50163a1d7c1891feb8902c332c37304b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically compares the value of an atomic uint64_t with an expected value and, if they are equal, replaces it with a desired value.  <br /></td></tr>
+<tr class="separator:ga50163a1d7c1891feb8902c332c37304b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae792ada5ceb73c7b77a02642675fcf1e" id="r_gae792ada5ceb73c7b77a02642675fcf1e"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gae792ada5ceb73c7b77a02642675fcf1e">atomic_add_fetch_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:gae792ada5ceb73c7b77a02642675fcf1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically adds a value to an atomic uint64_t and returns the new value.  <br /></td></tr>
+<tr class="separator:gae792ada5ceb73c7b77a02642675fcf1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7366eeb0afebd87dd96739cd5dd0666e" id="r_ga7366eeb0afebd87dd96739cd5dd0666e"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga7366eeb0afebd87dd96739cd5dd0666e">atomic_sub_fetch_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:ga7366eeb0afebd87dd96739cd5dd0666e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically subtracts a value from an atomic uint64_t and returns the new value.  <br /></td></tr>
+<tr class="separator:ga7366eeb0afebd87dd96739cd5dd0666e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa11a79c0b15a2d72da0be0083311cee7" id="r_gaa11a79c0b15a2d72da0be0083311cee7"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaa11a79c0b15a2d72da0be0083311cee7">atomic_and_fetch_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:gaa11a79c0b15a2d72da0be0083311cee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise AND between an atomic uint64_t and a value, storing the result into the atomic uint64_t and returning it.  <br /></td></tr>
+<tr class="separator:gaa11a79c0b15a2d72da0be0083311cee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeae84496d9d07234d55260e583710e6a" id="r_gaeae84496d9d07234d55260e583710e6a"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaeae84496d9d07234d55260e583710e6a">atomic_xor_fetch_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:gaeae84496d9d07234d55260e583710e6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise XOR between an atomic uint64_t and a value, storing the result into the atomic uint64_t and returning it.  <br /></td></tr>
+<tr class="separator:gaeae84496d9d07234d55260e583710e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51e82db2349a422d1841a175fe0bfca6" id="r_ga51e82db2349a422d1841a175fe0bfca6"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga51e82db2349a422d1841a175fe0bfca6">atomic_or_fetch_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:ga51e82db2349a422d1841a175fe0bfca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise OR between an atomic uint64_t and a value, storing the result into the atomic uint64_t and returning it.  <br /></td></tr>
+<tr class="separator:ga51e82db2349a422d1841a175fe0bfca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec7a37c031d8ef2b7124164d13db1efd" id="r_gaec7a37c031d8ef2b7124164d13db1efd"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaec7a37c031d8ef2b7124164d13db1efd">atomic_nand_fetch_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:gaec7a37c031d8ef2b7124164d13db1efd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise NAND between an atomic uint64_t and a value, storing the result into the atomic uint64_t and returning it.  <br /></td></tr>
+<tr class="separator:gaec7a37c031d8ef2b7124164d13db1efd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55d72381175d559619ace69704671e3e" id="r_ga55d72381175d559619ace69704671e3e"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga55d72381175d559619ace69704671e3e">atomic_fetch_add_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:ga55d72381175d559619ace69704671e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically adds a value to an atomic uint64_t and returns the old value.  <br /></td></tr>
+<tr class="separator:ga55d72381175d559619ace69704671e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d594a57773416b5a9c91d46fb52f904" id="r_ga3d594a57773416b5a9c91d46fb52f904"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga3d594a57773416b5a9c91d46fb52f904">atomic_fetch_sub_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:ga3d594a57773416b5a9c91d46fb52f904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically subtracts a value from an atomic uint64_t and returns the old value.  <br /></td></tr>
+<tr class="separator:ga3d594a57773416b5a9c91d46fb52f904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga454b693117a89f152f2ad12ba3466d6f" id="r_ga454b693117a89f152f2ad12ba3466d6f"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga454b693117a89f152f2ad12ba3466d6f">atomic_fetch_and_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:ga454b693117a89f152f2ad12ba3466d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise AND between an atomic uint64_t and a value, storing the result into the atomic uint64_t and returning the old value.  <br /></td></tr>
+<tr class="separator:ga454b693117a89f152f2ad12ba3466d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91f35e7df2ebf8a342acb3719b54842e" id="r_ga91f35e7df2ebf8a342acb3719b54842e"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga91f35e7df2ebf8a342acb3719b54842e">atomic_fetch_xor_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:ga91f35e7df2ebf8a342acb3719b54842e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise XOR between an atomic uint64_t and a value, storing the result into the atomic uint64_t and returning the old value.  <br /></td></tr>
+<tr class="separator:ga91f35e7df2ebf8a342acb3719b54842e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c4e81e122f6913006de82718cb8c8cc" id="r_ga0c4e81e122f6913006de82718cb8c8cc"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga0c4e81e122f6913006de82718cb8c8cc">atomic_fetch_or_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:ga0c4e81e122f6913006de82718cb8c8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise OR between an atomic uint64_t and a value, storing the result into the atomic uint64_t and returning the old value.  <br /></td></tr>
+<tr class="separator:ga0c4e81e122f6913006de82718cb8c8cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e4cd643d916deba8d925dbb06819f39" id="r_ga5e4cd643d916deba8d925dbb06819f39"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga5e4cd643d916deba8d925dbb06819f39">atomic_fetch_nand_64</a> (<a class="el" href="../../df/d8a/structatomic__64.html">atomic_64</a> *ptr, uint64_t val, int order)</td></tr>
+<tr class="memdesc:ga5e4cd643d916deba8d925dbb06819f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically performs a bitwise NAND between an atomic uint64_t and a value, storing the result into the atomic uint64_t and returning the old value.  <br /></td></tr>
+<tr class="separator:ga5e4cd643d916deba8d925dbb06819f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga877a9877f96b2346d065e91eb0370848" id="r_ga877a9877f96b2346d065e91eb0370848"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga877a9877f96b2346d065e91eb0370848">atomic_load_ptr</a> (<a class="el" href="../../dc/d3d/structatomic__ptr.html">atomic_ptr</a> *ptr, int order)</td></tr>
+<tr class="memdesc:ga877a9877f96b2346d065e91eb0370848"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically loads the value of an atomic pointer and returns it.  <br /></td></tr>
+<tr class="separator:ga877a9877f96b2346d065e91eb0370848"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeed40339978572d732a2aacfed0bf998" id="r_gaeed40339978572d732a2aacfed0bf998"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaeed40339978572d732a2aacfed0bf998">atomic_store_ptr</a> (<a class="el" href="../../dc/d3d/structatomic__ptr.html">atomic_ptr</a> *ptr, uintptr_t val, int order)</td></tr>
+<tr class="memdesc:gaeed40339978572d732a2aacfed0bf998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically stores a value into an atomic pointer.  <br /></td></tr>
+<tr class="separator:gaeed40339978572d732a2aacfed0bf998"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae803d2ca1d7801e0ecb0ea4c0f1ad708" id="r_gae803d2ca1d7801e0ecb0ea4c0f1ad708"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gae803d2ca1d7801e0ecb0ea4c0f1ad708">atomic_exchange_ptr</a> (<a class="el" href="../../dc/d3d/structatomic__ptr.html">atomic_ptr</a> *ptr, uintptr_t val, int order)</td></tr>
+<tr class="memdesc:gae803d2ca1d7801e0ecb0ea4c0f1ad708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically stores a value into an atomic pointer and returns the old value.  <br /></td></tr>
+<tr class="separator:gae803d2ca1d7801e0ecb0ea4c0f1ad708"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9398160c00ff5c2085d19f477f4de6c" id="r_gaf9398160c00ff5c2085d19f477f4de6c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaf9398160c00ff5c2085d19f477f4de6c">atomic_compare_exchange_ptr</a> (<a class="el" href="../../dc/d3d/structatomic__ptr.html">atomic_ptr</a> *ptr, uintptr_t *expected, uintptr_t desired, int success_order, int failure_order)</td></tr>
+<tr class="memdesc:gaf9398160c00ff5c2085d19f477f4de6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically compares the value of an atomic pointer with an expected value and, if they are equal, replaces it with a desired value.  <br /></td></tr>
+<tr class="separator:gaf9398160c00ff5c2085d19f477f4de6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d246b45782f13f2ba9a6700cd0d379b" id="r_ga6d246b45782f13f2ba9a6700cd0d379b"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga6d246b45782f13f2ba9a6700cd0d379b">atomic_load_bool</a> (<a class="el" href="../../db/d98/structatomic__bool.html">atomic_bool</a> *ptr, int order)</td></tr>
+<tr class="memdesc:ga6d246b45782f13f2ba9a6700cd0d379b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically loads the value of an atomic boolean and returns it.  <br /></td></tr>
+<tr class="separator:ga6d246b45782f13f2ba9a6700cd0d379b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga83d1a2e05a01e6692f1269fc3cc675a2" id="r_ga83d1a2e05a01e6692f1269fc3cc675a2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga83d1a2e05a01e6692f1269fc3cc675a2">atomic_store_bool</a> (<a class="el" href="../../db/d98/structatomic__bool.html">atomic_bool</a> *ptr, bool val, int order)</td></tr>
+<tr class="memdesc:ga83d1a2e05a01e6692f1269fc3cc675a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically stores a value into an atomic boolean.  <br /></td></tr>
+<tr class="separator:ga83d1a2e05a01e6692f1269fc3cc675a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07ddc247925246c92d5c4f771aee17be" id="r_ga07ddc247925246c92d5c4f771aee17be"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga07ddc247925246c92d5c4f771aee17be">atomic_exchange_bool</a> (<a class="el" href="../../db/d98/structatomic__bool.html">atomic_bool</a> *ptr, bool val, int order)</td></tr>
+<tr class="memdesc:ga07ddc247925246c92d5c4f771aee17be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically stores a value into an atomic boolean and returns the old value.  <br /></td></tr>
+<tr class="separator:ga07ddc247925246c92d5c4f771aee17be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5c07f97a9bd32b59bebbb532eedd0d02" id="r_ga5c07f97a9bd32b59bebbb532eedd0d02"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga5c07f97a9bd32b59bebbb532eedd0d02">atomic_compare_exchange_bool</a> (<a class="el" href="../../db/d98/structatomic__bool.html">atomic_bool</a> *ptr, bool *expected, bool desired, int success_order, int failure_order)</td></tr>
+<tr class="memdesc:ga5c07f97a9bd32b59bebbb532eedd0d02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically compares the value of an atomic bool with an expected value and, if they are equal, replaces it with a desired value.  <br /></td></tr>
+<tr class="separator:ga5c07f97a9bd32b59bebbb532eedd0d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84897bb8477b0f4e9996071896be47ce" id="r_ga84897bb8477b0f4e9996071896be47ce"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga84897bb8477b0f4e9996071896be47ce">atomic_test_and_set</a> (<a class="el" href="../../db/d98/structatomic__bool.html">atomic_bool</a> *ptr, int order)</td></tr>
+<tr class="memdesc:ga84897bb8477b0f4e9996071896be47ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically sets an atomic boolean and returns the old value.  <br /></td></tr>
+<tr class="separator:ga84897bb8477b0f4e9996071896be47ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f413d53386d6134c94ec483aa4bf5c7" id="r_ga6f413d53386d6134c94ec483aa4bf5c7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#ga6f413d53386d6134c94ec483aa4bf5c7">atomic_clear</a> (<a class="el" href="../../db/d98/structatomic__bool.html">atomic_bool</a> *ptr, int order)</td></tr>
+<tr class="memdesc:ga6f413d53386d6134c94ec483aa4bf5c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically clears an atomic boolean.  <br /></td></tr>
+<tr class="separator:ga6f413d53386d6134c94ec483aa4bf5c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9cc7332f27e6373097d1b8093be299f" id="r_gaf9cc7332f27e6373097d1b8093be299f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gaf9cc7332f27e6373097d1b8093be299f">atomic_thread_fence</a> (int order)</td></tr>
+<tr class="memdesc:gaf9cc7332f27e6373097d1b8093be299f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes a memory fence between threads.  <br /></td></tr>
+<tr class="separator:gaf9cc7332f27e6373097d1b8093be299f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd6a0c0f5e25ec58e184c78bf6077530" id="r_gafd6a0c0f5e25ec58e184c78bf6077530"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de8/group__atomic.html#gafd6a0c0f5e25ec58e184c78bf6077530">atomic_signal_fence</a> (int order)</td></tr>
+<tr class="memdesc:gafd6a0c0f5e25ec58e184c78bf6077530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes a memory fence with respect to signal handlers.  <br /></td></tr>
+<tr class="separator:gafd6a0c0f5e25ec58e184c78bf6077530"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a5a1d7ce0c5eaa6f20a6c575d3e36f213" name="a5a1d7ce0c5eaa6f20a6c575d3e36f213"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a1d7ce0c5eaa6f20a6c575d3e36f213">&#9670;&#160;</a></span>atomic_compare_exchange_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int atomic_compare_exchange_32 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_32 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>expected</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically compare and exchange a 32-bit value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_32 variable. </td></tr>
-    <tr><td class="paramname">expected</td><td>Pointer to the expected value. Updated to <code>object</code> if exchange fails. </td></tr>
-    <tr><td class="paramname">desired</td><td>Value to store if <code>object</code> equals <code>expected</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if successful, 0 otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="a933444729e5fa1b6260c55da59160e7a" name="a933444729e5fa1b6260c55da59160e7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a933444729e5fa1b6260c55da59160e7a">&#9670;&#160;</a></span>atomic_compare_exchange_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int atomic_compare_exchange_64 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_64 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t *&#160;</td>
-          <td class="paramname"><em>expected</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically compare and exchange a 64-bit value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_64 variable. </td></tr>
-    <tr><td class="paramname">expected</td><td>Pointer to the expected value. Updated to <code>object</code> if exchange fails. </td></tr>
-    <tr><td class="paramname">desired</td><td>Value to store if <code>object</code> equals <code>expected</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if successful, 0 otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="a545aea4da66d2d57d9f110f55b8daad3" name="a545aea4da66d2d57d9f110f55b8daad3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a545aea4da66d2d57d9f110f55b8daad3">&#9670;&#160;</a></span>atomic_compare_exchange_ptr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int atomic_compare_exchange_ptr </td>
-          <td>(</td>
-          <td class="paramtype">atomic_ptr *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t *&#160;</td>
-          <td class="paramname"><em>expected</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically compare and exchange a pointer value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_ptr variable. </td></tr>
-    <tr><td class="paramname">expected</td><td>Pointer to the expected value. Updated to <code>object</code> if exchange fails. </td></tr>
-    <tr><td class="paramname">desired</td><td>Value to store if <code>object</code> equals <code>expected</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if successful, 0 otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="acc2e6e42633a54e74317045376bf26f8" name="acc2e6e42633a54e74317045376bf26f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc2e6e42633a54e74317045376bf26f8">&#9670;&#160;</a></span>atomic_exchange_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t atomic_exchange_32 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_32 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically exchanges a 32-bit value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_32 variable. </td></tr>
-    <tr><td class="paramname">desired</td><td>New value to set. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The previous value of the atomic variable. </dd></dl>
-
-</div>
-</div>
-<a id="a045f0078041ba474277d195f14ddb0c7" name="a045f0078041ba474277d195f14ddb0c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a045f0078041ba474277d195f14ddb0c7">&#9670;&#160;</a></span>atomic_exchange_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint64_t atomic_exchange_64 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_64 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically exchanges a 64-bit value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_64 variable. </td></tr>
-    <tr><td class="paramname">desired</td><td>New value to set. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The previous value of the atomic variable. </dd></dl>
-
-</div>
-</div>
-<a id="a416e8485dee08c4d891fdb41a2a4b768" name="a416e8485dee08c4d891fdb41a2a4b768"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a416e8485dee08c4d891fdb41a2a4b768">&#9670;&#160;</a></span>atomic_exchange_ptr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uintptr_t atomic_exchange_ptr </td>
-          <td>(</td>
-          <td class="paramtype">atomic_ptr *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically exchanges a pointer value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_ptr variable. </td></tr>
-    <tr><td class="paramname">desired</td><td>New pointer value to set. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The previous pointer value. </dd></dl>
-
-</div>
-</div>
-<a id="af9c45dedd29e7a6b8e370a49b04dda8c" name="af9c45dedd29e7a6b8e370a49b04dda8c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9c45dedd29e7a6b8e370a49b04dda8c">&#9670;&#160;</a></span>atomic_fetch_add_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t atomic_fetch_add_32 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_32 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically adds a value to a 32-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_32 variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Value to add. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the addition. </dd></dl>
-
-</div>
-</div>
-<a id="ab342a8c51f9e3ac1164939fee62c71f1" name="ab342a8c51f9e3ac1164939fee62c71f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab342a8c51f9e3ac1164939fee62c71f1">&#9670;&#160;</a></span>atomic_fetch_add_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint64_t atomic_fetch_add_64 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_64 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically adds a value to a 64-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_64 variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Value to add. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the addition. </dd></dl>
-
-</div>
-</div>
-<a id="a08ac01ef243248685ace6894695868f7" name="a08ac01ef243248685ace6894695868f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08ac01ef243248685ace6894695868f7">&#9670;&#160;</a></span>atomic_fetch_add_ptr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uintptr_t atomic_fetch_add_ptr </td>
-          <td>(</td>
-          <td class="paramtype">atomic_ptr *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically adds a value to a pointer-sized atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_ptr variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Value to add. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the addition. </dd></dl>
-
-</div>
-</div>
-<a id="a3b8af5c71b46ed7462375a267455b1c1" name="a3b8af5c71b46ed7462375a267455b1c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b8af5c71b46ed7462375a267455b1c1">&#9670;&#160;</a></span>atomic_fetch_and_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t atomic_fetch_and_32 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_32 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically performs bitwise AND on a 32-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_32 variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Operand for AND operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the operation. </dd></dl>
-
-</div>
-</div>
-<a id="a8dae1e9f048e52d37677f433e4939839" name="a8dae1e9f048e52d37677f433e4939839"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8dae1e9f048e52d37677f433e4939839">&#9670;&#160;</a></span>atomic_fetch_and_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint64_t atomic_fetch_and_64 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_64 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically performs bitwise AND on a 64-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_64 variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Operand for AND operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the operation. </dd></dl>
-
-</div>
-</div>
-<a id="a65050690c637448d0008514533fc641a" name="a65050690c637448d0008514533fc641a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65050690c637448d0008514533fc641a">&#9670;&#160;</a></span>atomic_fetch_and_ptr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uintptr_t atomic_fetch_and_ptr </td>
-          <td>(</td>
-          <td class="paramtype">atomic_ptr *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically performs bitwise AND on a pointer-sized atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_ptr variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Operand for AND operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the operation. </dd></dl>
-
-</div>
-</div>
-<a id="a9993a912eb988651fe7efa5f599eeef5" name="a9993a912eb988651fe7efa5f599eeef5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9993a912eb988651fe7efa5f599eeef5">&#9670;&#160;</a></span>atomic_fetch_or_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t atomic_fetch_or_32 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_32 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically performs bitwise OR on a 32-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_32 variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Operand for OR operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the operation. </dd></dl>
-
-</div>
-</div>
-<a id="a9cc6b6bb2df2041a00e336675cedd653" name="a9cc6b6bb2df2041a00e336675cedd653"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9cc6b6bb2df2041a00e336675cedd653">&#9670;&#160;</a></span>atomic_fetch_or_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint64_t atomic_fetch_or_64 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_64 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically performs bitwise OR on a 64-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_64 variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Operand for OR operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the operation. </dd></dl>
-
-</div>
-</div>
-<a id="acfd45516b23b40a507173cd7f1c37bd0" name="acfd45516b23b40a507173cd7f1c37bd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acfd45516b23b40a507173cd7f1c37bd0">&#9670;&#160;</a></span>atomic_fetch_or_ptr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uintptr_t atomic_fetch_or_ptr </td>
-          <td>(</td>
-          <td class="paramtype">atomic_ptr *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically performs bitwise OR on a pointer-sized atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_ptr variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Operand for OR operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the operation. </dd></dl>
-
-</div>
-</div>
-<a id="a1167828cc6297f0eb4df9391486b2d84" name="a1167828cc6297f0eb4df9391486b2d84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1167828cc6297f0eb4df9391486b2d84">&#9670;&#160;</a></span>atomic_fetch_sub_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t atomic_fetch_sub_32 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_32 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically subtracts a value from a 32-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_32 variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Value to subtract. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the subtraction. </dd></dl>
-
-</div>
-</div>
-<a id="a2e022ef8661f7fb32613b081b911e553" name="a2e022ef8661f7fb32613b081b911e553"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e022ef8661f7fb32613b081b911e553">&#9670;&#160;</a></span>atomic_fetch_sub_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint64_t atomic_fetch_sub_64 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_64 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically subtracts a value from a 64-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_64 variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Value to subtract. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the subtraction. </dd></dl>
-
-</div>
-</div>
-<a id="acdfb685ceda9ff0032fc6720a43e33c4" name="acdfb685ceda9ff0032fc6720a43e33c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acdfb685ceda9ff0032fc6720a43e33c4">&#9670;&#160;</a></span>atomic_fetch_sub_ptr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uintptr_t atomic_fetch_sub_ptr </td>
-          <td>(</td>
-          <td class="paramtype">atomic_ptr *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically subtracts a value from a pointer-sized atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_ptr variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Value to subtract. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the subtraction. </dd></dl>
-
-</div>
-</div>
-<a id="a6bd96fd2393900b18b8bf82fbbf62467" name="a6bd96fd2393900b18b8bf82fbbf62467"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bd96fd2393900b18b8bf82fbbf62467">&#9670;&#160;</a></span>atomic_fetch_xor_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t atomic_fetch_xor_32 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_32 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically performs bitwise XOR on a 32-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_32 variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Operand for XOR operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the operation. </dd></dl>
-
-</div>
-</div>
-<a id="aac6fd054929498ffbf5abf4ea97d8873" name="aac6fd054929498ffbf5abf4ea97d8873"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac6fd054929498ffbf5abf4ea97d8873">&#9670;&#160;</a></span>atomic_fetch_xor_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint64_t atomic_fetch_xor_64 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_64 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically performs bitwise XOR on a 64-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_64 variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Operand for XOR operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the operation. </dd></dl>
-
-</div>
-</div>
-<a id="a5c7809118f60b15bee3b3dea8492b6b7" name="a5c7809118f60b15bee3b3dea8492b6b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c7809118f60b15bee3b3dea8492b6b7">&#9670;&#160;</a></span>atomic_fetch_xor_ptr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uintptr_t atomic_fetch_xor_ptr </td>
-          <td>(</td>
-          <td class="paramtype">atomic_ptr *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>operand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Atomically performs bitwise XOR on a pointer-sized atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_ptr variable. </td></tr>
-    <tr><td class="paramname">operand</td><td>Operand for XOR operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value before the operation. </dd></dl>
-
-</div>
-</div>
-<a id="ad9b15a106acfc35c8467a188329eaed3" name="ad9b15a106acfc35c8467a188329eaed3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9b15a106acfc35c8467a188329eaed3">&#9670;&#160;</a></span>atomic_init_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void atomic_init_32 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_32 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Initializes a 32-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_32 variable. </td></tr>
-    <tr><td class="paramname">desired</td><td>Initial value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aefa7efdb996428a89fdf4efb089ccfd6" name="aefa7efdb996428a89fdf4efb089ccfd6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefa7efdb996428a89fdf4efb089ccfd6">&#9670;&#160;</a></span>atomic_init_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void atomic_init_64 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_64 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Initializes a 64-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_64 variable. </td></tr>
-    <tr><td class="paramname">desired</td><td>Initial value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a1fc9868f73b4affe800d61a21a5045f1" name="a1fc9868f73b4affe800d61a21a5045f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fc9868f73b4affe800d61a21a5045f1">&#9670;&#160;</a></span>atomic_init_ptr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void atomic_init_ptr </td>
-          <td>(</td>
-          <td class="paramtype">atomic_ptr *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Initializes a pointer-sized atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_ptr variable. </td></tr>
-    <tr><td class="paramname">desired</td><td>Initial pointer value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ac5a71906ff0a4ec3382d2102165e6b9f" name="ac5a71906ff0a4ec3382d2102165e6b9f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5a71906ff0a4ec3382d2102165e6b9f">&#9670;&#160;</a></span>atomic_load_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t atomic_load_32 </td>
-          <td>(</td>
-          <td class="paramtype">const atomic_32 *&#160;</td>
-          <td class="paramname"><em>object</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Loads a 32-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_32 variable. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The current value. </dd></dl>
-
-</div>
-</div>
-<a id="af39b252138377cb27b6ad225b6a6c115" name="af39b252138377cb27b6ad225b6a6c115"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af39b252138377cb27b6ad225b6a6c115">&#9670;&#160;</a></span>atomic_load_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint64_t atomic_load_64 </td>
-          <td>(</td>
-          <td class="paramtype">const atomic_64 *&#160;</td>
-          <td class="paramname"><em>object</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Loads a 64-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_64 variable. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The current value. </dd></dl>
-
-</div>
-</div>
-<a id="ab675d663338a7456323fbb66f2aa7bf8" name="ab675d663338a7456323fbb66f2aa7bf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab675d663338a7456323fbb66f2aa7bf8">&#9670;&#160;</a></span>atomic_load_ptr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uintptr_t atomic_load_ptr </td>
-          <td>(</td>
-          <td class="paramtype">const atomic_ptr *&#160;</td>
-          <td class="paramname"><em>object</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Loads a pointer-sized atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_ptr variable. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The current pointer value. </dd></dl>
-
-</div>
-</div>
-<a id="adc5d5c22148d7c953eeb6d5da161fd1e" name="adc5d5c22148d7c953eeb6d5da161fd1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc5d5c22148d7c953eeb6d5da161fd1e">&#9670;&#160;</a></span>atomic_store_32()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void atomic_store_32 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_32 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Stores a value to a 32-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_32 variable. </td></tr>
-    <tr><td class="paramname">desired</td><td>Value to store. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="afb471a8a1cd65f2777e0e5c7f90b654e" name="afb471a8a1cd65f2777e0e5c7f90b654e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb471a8a1cd65f2777e0e5c7f90b654e">&#9670;&#160;</a></span>atomic_store_64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void atomic_store_64 </td>
-          <td>(</td>
-          <td class="paramtype">atomic_64 *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Stores a value to a 64-bit atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_64 variable. </td></tr>
-    <tr><td class="paramname">desired</td><td>Value to store. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a46b8a3df9b75e7bd64d95103787d78e5" name="a46b8a3df9b75e7bd64d95103787d78e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46b8a3df9b75e7bd64d95103787d78e5">&#9670;&#160;</a></span>atomic_store_ptr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void atomic_store_ptr </td>
-          <td>(</td>
-          <td class="paramtype">atomic_ptr *&#160;</td>
-          <td class="paramname"><em>object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>desired</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Stores a value to a pointer-sized atomic variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">object</td><td>Pointer to the atomic_ptr variable. </td></tr>
-    <tr><td class="paramname">desired</td><td>Pointer value to store. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

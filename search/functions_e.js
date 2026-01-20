@@ -1,6 +1,20 @@
 var searchData=
 [
-  ['version_5fcompare_0',['version_compare',['../df/dfc/version_8h.html#acdd759c53c29036a499a9c300496883e',1,'version.h']]],
-  ['version_5ffrom_5fvk_5fapi_1',['version_from_vk_api',['../df/dfc/version_8h.html#afc6274c5b5d305592887bc6ca5cacf60',1,'version.h']]],
-  ['version_5fto_5fvk_5fapi_2',['version_to_vk_api',['../df/dfc/version_8h.html#a0992e725a4e815ed481e216b462dba24',1,'version.h']]]
+  ['semaphore_5fsignal_0',['semaphore_signal',['../d6/dc6/semaphore_8h.html#a757a0c0fcce2468967f8934c19a60742',1,'semaphore.h']]],
+  ['semaphore_5ftrywait_1',['semaphore_trywait',['../d6/dc6/semaphore_8h.html#a7d54d9b06382f8b0a8717d331862556f',1,'semaphore.h']]],
+  ['semaphore_5fwait_2',['semaphore_wait',['../d6/dc6/semaphore_8h.html#afcf412ab1c71c10aee678c655e6ac09f',1,'semaphore.h']]],
+  ['sign_5f16_3',['sign_16',['../d2/d35/arithmetic_8h.html#a0a2a9406abf6b4e0d183f7b0b921605d',1,'arithmetic.h']]],
+  ['sign_5f32_4',['sign_32',['../d2/d35/arithmetic_8h.html#a95ad481d341185146113384df70ef8da',1,'arithmetic.h']]],
+  ['sign_5f64_5',['sign_64',['../d2/d35/arithmetic_8h.html#ae677cede8f71d746d46f5e926cd62780',1,'arithmetic.h']]],
+  ['sign_5f8_6',['sign_8',['../d2/d35/arithmetic_8h.html#a40667b4af7adb56845849b9c54c93650',1,'arithmetic.h']]],
+  ['sub_5fexflow_5f16_7',['sub_exflow_16',['../d2/d35/arithmetic_8h.html#a105e4cad1f41b6720c3d54e4a4b89bd6',1,'arithmetic.h']]],
+  ['sub_5fexflow_5f32_8',['sub_exflow_32',['../d2/d35/arithmetic_8h.html#a2b8a9a7bad079876bee7d9b254595322',1,'arithmetic.h']]],
+  ['sub_5fexflow_5f64_9',['sub_exflow_64',['../d2/d35/arithmetic_8h.html#ae84108cd361086c9b943da7a7a4cfe35',1,'arithmetic.h']]],
+  ['sub_5fexflow_5f8_10',['sub_exflow_8',['../d2/d35/arithmetic_8h.html#ac0a526cfa4a0e64d1746191e64071ec5',1,'arithmetic.h']]],
+  ['sysalloc_11',['sysalloc',['../d1/da1/sysalloc_8h.html#a216f5f5693f85ff7c8d41d040de59e0c',1,'sysalloc.h']]],
+  ['sysalloc_5fcommit_12',['sysalloc_commit',['../d1/da1/sysalloc_8h.html#a1519fa9bb34f610631f36e37577c7613',1,'sysalloc.h']]],
+  ['sysalloc_5fdecommit_13',['sysalloc_decommit',['../d1/da1/sysalloc_8h.html#a579cbcb077e3ee89b5d1e4b354726b8b',1,'sysalloc.h']]],
+  ['sysalloc_5fgranularity_14',['sysalloc_granularity',['../d1/da1/sysalloc_8h.html#a5d107b712a2e5bf5f8422576c27ec028',1,'sysalloc.h']]],
+  ['sysalloc_5freserve_15',['sysalloc_reserve',['../d1/da1/sysalloc_8h.html#ad0299b36d957254d213f3056d61db65f',1,'sysalloc.h']]],
+  ['sysfree_16',['sysfree',['../d1/da1/sysalloc_8h.html#a1ca65d4c1c44b54299bda149b181cba2',1,'sysalloc.h']]]
 ];

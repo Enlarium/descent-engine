@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -100,31 +100,30 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#ifndef DESCENT_THREAD_CALL_ONCE_H</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#define DESCENT_THREAD_CALL_ONCE_H</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;../utilities/opaque.h&quot;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../dd/d93/structCallOnce.html">CallOnce</a>, DESCENT_OPAQUE_SIZE_CALL_ONCE)</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="../../de/dd8/call__once_8h.html#ad7a28a622f60a9edb7aeb5df08a673da">   39</a></span>typedef <span class="keywordtype">void</span> (*<a class="code hl_typedef" href="../../de/dd8/call__once_8h.html#ad7a28a622f60a9edb7aeb5df08a673da">CallOnceFunction</a>)(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="../../de/dd8/call__once_8h.html#a6a99acec1addeb009a0ad8d9db9f16e4">   47</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../de/dd8/call__once_8h.html#a6a99acec1addeb009a0ad8d9db9f16e4">call_once_init</a>(<a class="code hl_struct" href="../../dd/d93/structCallOnce.html">CallOnce</a> *c);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="../../de/dd8/call__once_8h.html#a1a6e4439e22ca8e4efdbf58c5e85e49d">   56</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../de/dd8/call__once_8h.html#a1a6e4439e22ca8e4efdbf58c5e85e49d">call_once</a>(<a class="code hl_struct" href="../../dd/d93/structCallOnce.html">CallOnce</a> *c, <a class="code hl_typedef" href="../../de/dd8/call__once_8h.html#ad7a28a622f60a9edb7aeb5df08a673da">CallOnceFunction</a> f);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="acall__once_8h_html_a1a6e4439e22ca8e4efdbf58c5e85e49d"><div class="ttname"><a href="../../de/dd8/call__once_8h.html#a1a6e4439e22ca8e4efdbf58c5e85e49d">call_once</a></div><div class="ttdeci">void call_once(CallOnce *c, CallOnceFunction f)</div><div class="ttdoc">Executes a function exactly once across all threads.</div></div>
-<div class="ttc" id="acall__once_8h_html_a6a99acec1addeb009a0ad8d9db9f16e4"><div class="ttname"><a href="../../de/dd8/call__once_8h.html#a6a99acec1addeb009a0ad8d9db9f16e4">call_once_init</a></div><div class="ttdeci">void call_once_init(CallOnce *c)</div><div class="ttdoc">Initialize a call-once.</div></div>
-<div class="ttc" id="acall__once_8h_html_ad7a28a622f60a9edb7aeb5df08a673da"><div class="ttname"><a href="../../de/dd8/call__once_8h.html#ad7a28a622f60a9edb7aeb5df08a673da">CallOnceFunction</a></div><div class="ttdeci">void(* CallOnceFunction)(void)</div><div class="ttdoc">Function type to call-once.</div><div class="ttdef"><b>Definition</b> call_once.h:39</div></div>
-<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:37</div></div>
-<div class="ttc" id="astructCallOnce_html"><div class="ttname"><a href="../../dd/d93/structCallOnce.html">CallOnce</a></div><div class="ttdoc">Ensures a function is executed only once across all threads.</div></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;<a class="code" href="../../d3/d61/rcode_8h.html">descent/rcode.h</a>&gt;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;<a class="code" href="../../d4/dcb/atomic__types_8h.html">descent/thread/atomic_types.h</a>&gt;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="../../d8/d62/group__call-once.html#ga5d52adfc98d192c39e90e4648cb7ca54">   45</a></span><span class="preprocessor">#define CALL_ONCE_INIT { ._function = ATOMIC_INIT(0), ._owner = ATOMIC_INIT(0), ._state = ATOMIC_INIT(0) }</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="foldopen" id="foldopen00062" data-start="{" data-end="};">
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="../../dd/d93/structCallOnce.html">   62</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../dd/d93/structCallOnce.html">CallOnce</a> {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <a class="code hl_struct" href="../../dc/d3d/structatomic__ptr.html">atomic_ptr</a> _function;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_struct" href="../../df/d8a/structatomic__64.html">atomic_64</a>  _owner;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <a class="code hl_struct" href="../../dc/d44/structatomic__32.html">atomic_32</a>  _state;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>};</div>
+</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="../../d8/d62/group__call-once.html#ga2ebd258da8e6ff628432a5df6c0049d3">   92</a></span><a class="code hl_typedef" href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a> <a class="code hl_function" href="../../d8/d62/group__call-once.html#ga2ebd258da8e6ff628432a5df6c0049d3">call_once</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../dd/d93/structCallOnce.html">CallOnce</a> *c, <span class="keywordtype">void</span> (*f)(<span class="keywordtype">void</span>));</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aatomic__types_8h_html"><div class="ttname"><a href="../../d4/dcb/atomic__types_8h.html">atomic_types.h</a></div></div>
+<div class="ttc" id="agroup__call-once_html_ga2ebd258da8e6ff628432a5df6c0049d3"><div class="ttname"><a href="../../d8/d62/group__call-once.html#ga2ebd258da8e6ff628432a5df6c0049d3">call_once</a></div><div class="ttdeci">rcode call_once(struct CallOnce *c, void(*f)(void))</div><div class="ttdoc">Executes a function exactly once, using the specified call-once.</div></div>
+<div class="ttc" id="arcode_8h_html"><div class="ttname"><a href="../../d3/d61/rcode_8h.html">rcode.h</a></div></div>
+<div class="ttc" id="arcode_8h_html_adc40f35c534fe29a280095320e5b19ba"><div class="ttname"><a href="../../d3/d61/rcode_8h.html#adc40f35c534fe29a280095320e5b19ba">rcode</a></div><div class="ttdeci">int32_t rcode</div><div class="ttdef"><b>Definition</b> rcode.h:173</div></div>
+<div class="ttc" id="astructCallOnce_html"><div class="ttname"><a href="../../dd/d93/structCallOnce.html">CallOnce</a></div><div class="ttdoc">A one-time initialization primitive.</div><div class="ttdef"><b>Definition</b> call_once.h:62</div></div>
+<div class="ttc" id="astructatomic__32_html"><div class="ttname"><a href="../../dc/d44/structatomic__32.html">atomic_32</a></div><div class="ttdoc">Atomic 32-bit unsigned integer type.</div><div class="ttdef"><b>Definition</b> atomic_types.h:61</div></div>
+<div class="ttc" id="astructatomic__64_html"><div class="ttname"><a href="../../df/d8a/structatomic__64.html">atomic_64</a></div><div class="ttdoc">Atomic 64-bit unsigned integer type.</div><div class="ttdef"><b>Definition</b> atomic_types.h:70</div></div>
+<div class="ttc" id="astructatomic__ptr_html"><div class="ttname"><a href="../../dc/d3d/structatomic__ptr.html">atomic_ptr</a></div><div class="ttdoc">Atomic pointer type.</div><div class="ttdef"><b>Definition</b> atomic_types.h:79</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['action_0',['action',['../d9/dd8/structCLI__Parameter.html#a174dd491be2ca5edadb6f137cb9a3848',1,'CLI_Parameter']]],
-  ['alloc_1',['alloc',['../d2/d05/structAlloc.html#a5670b455122bafce40a2a962dd9f9146',1,'Alloc']]],
-  ['argument_5fcount_2',['argument_count',['../d9/dd8/structCLI__Parameter.html#a68dd6270dd9cd3c87c764be1dac8b329',1,'CLI_Parameter']]]
+  ['base_0',['base',['../d7/d16/structSysalloc.html#a3e97af82c5b80d7351d5b12db239f9ca',1,'Sysalloc']]],
+  ['buffer_5fsize_1',['buffer_size',['../de/ddb/structFileOpenOptions.html#a3f0415bcd2f6d751ea976ce394d7d490',1,'FileOpenOptions']]]
 ];

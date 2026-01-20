@@ -1,30 +1,5 @@
 var searchData=
 [
-  ['descent_5fbuiltin_5fapi_0',['DESCENT_BUILTIN_API',['../dc/d65/api_8h.html#a79242acfc45ce2ed42926c29041a5403',1,'api.h']]],
-  ['descent_5fbuiltin_5fconst_1',['DESCENT_BUILTIN_CONST',['../dc/d65/api_8h.html#a35b7b157eff61e1526ff6ccaa3f868db',1,'api.h']]],
-  ['descent_5fbuiltin_5ffallback_2',['DESCENT_BUILTIN_FALLBACK',['../dc/d65/api_8h.html#ad730d023bef083e64e858b4c25da2af9',1,'api.h']]],
-  ['descent_5fcli_5fmax_5farguments_3',['DESCENT_CLI_MAX_ARGUMENTS',['../dc/db0/cli_8h.html#afaea74d69673c5412c41267d00b3b63c',1,'cli.h']]],
-  ['descent_5fcli_5fmax_5fpositionals_4',['DESCENT_CLI_MAX_POSITIONALS',['../dc/db0/cli_8h.html#aa942050b49c1b538f4e500231fc4fde1',1,'cli.h']]],
-  ['descent_5ferror_5fforbidden_5',['DESCENT_ERROR_FORBIDDEN',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a125a9b5204aa34ee7f8382feb647eb84',1,'codes.h']]],
-  ['descent_5ferror_5fgeneric_6',['DESCENT_ERROR_GENERIC',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430aad04c4d31fb8c20241a56a968da85a37',1,'codes.h']]],
-  ['descent_5ferror_5finvalid_5fmodule_7',['DESCENT_ERROR_INVALID_MODULE',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a91f5795552d2a1b592e7c5ecab033438',1,'codes.h']]],
-  ['descent_5ferror_5finvalid_5fparameter_8',['DESCENT_ERROR_INVALID_PARAMETER',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430aa1b442ddac79b883157c9852338af9b5',1,'codes.h']]],
-  ['descent_5ferror_5finvalid_5fstate_9',['DESCENT_ERROR_INVALID_STATE',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a1a7298a45cc89f77d842d3e107d88b74',1,'codes.h']]],
-  ['descent_5ferror_5flong_5fstring_10',['DESCENT_ERROR_LONG_STRING',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a6e2e274fde0ae9140070745832b113ba',1,'codes.h']]],
-  ['descent_5ferror_5fnot_5fimplemented_11',['DESCENT_ERROR_NOT_IMPLEMENTED',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430adcf6ab217feb51d86a4750f6983de9fa',1,'codes.h']]],
-  ['descent_5ferror_5fnull_5fpointer_12',['DESCENT_ERROR_NULL_POINTER',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430af5b4bfaf30990af06af3d9b6021c3aeb',1,'codes.h']]],
-  ['descent_5ferror_5fout_5fof_5fmemory_13',['DESCENT_ERROR_OUT_OF_MEMORY',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a413f582fdf3225a107ee6d55f257ac7b',1,'codes.h']]],
-  ['descent_5ferror_5foverflow_14',['DESCENT_ERROR_OVERFLOW',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a8123302411f87e0c1d77f767362cccd5',1,'codes.h']]],
-  ['descent_5ferror_5funknown_15',['DESCENT_ERROR_UNKNOWN',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a8d2e07d2b563658a701f52d0d7d806ad',1,'codes.h']]],
-  ['descent_5ferror_5funsupported_16',['DESCENT_ERROR_UNSUPPORTED',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430ab4ac2b4565732b81a2c05a62d70b67d5',1,'codes.h']]],
-  ['descent_5fhas_5fattribute_17',['DESCENT_HAS_ATTRIBUTE',['../dc/d65/api_8h.html#a2bdc76b13375a357eda56271ecff18f4',1,'api.h']]],
-  ['descent_5fhas_5fbuiltin_18',['DESCENT_HAS_BUILTIN',['../dc/d65/api_8h.html#ae3b25191ec3b12d2faf11f7b962e565a',1,'api.h']]],
-  ['descent_5fhas_5ffeature_19',['DESCENT_HAS_FEATURE',['../dc/d65/api_8h.html#ae7390ad85acf12d2003dc46f6f2d1ec4',1,'api.h']]],
-  ['descent_5fopaque_5fdefine_20',['DESCENT_OPAQUE_DEFINE',['../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf',1,'opaque.h']]],
-  ['descent_5fplatform_5fnegative_5ftwos_5fcomplement_21',['DESCENT_PLATFORM_NEGATIVE_TWOS_COMPLEMENT',['../de/d03/platform_8h.html#a2609246b5986d4430bc1673a8dacda3a',1,'platform.h']]],
-  ['descent_5fsuccess_22',['DESCENT_SUCCESS',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a16c2e8abcfeffc86a13667ad579c400b',1,'codes.h']]],
-  ['descent_5fwarning_5fgeneric_23',['DESCENT_WARNING_GENERIC',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a685c846b5247555ddd7a70ee39eb8086',1,'codes.h']]],
-  ['descent_5fwarning_5ftruncation_24',['DESCENT_WARNING_TRUNCATION',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430ad7f94bc03970767bda92d500084ea558',1,'codes.h']]],
-  ['descentcode_25',['DescentCode',['../d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430',1,'codes.h']]],
-  ['descentmodule_26',['DescentModule',['../d3/d61/modules_8h.html#ac89bb2b73dfff47a5b5912a43d4dbfe6',1,'modules.h']]]
+  ['endian_2eh_0',['endian.h',['../d1/d84/endian_8h.html',1,'']]],
+  ['engine_20documentation_1',['Descent Engine Documentation',['../index.html',1,'']]]
 ];

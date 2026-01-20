@@ -1,0 +1,13 @@
+<map id="include/descent/rcode.h" name="include/descent/rcode.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="155,5,331,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,76,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,33,87,77,85,72,210,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="101,79,183,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="229,33,171,73,168,68,226,28"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="208,79,279,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="246,31,246,65,241,65,241,31"/>
+<area shape="rect" id="Node000005" href="$de/d03/platform_8h.html" title=" " alt="" coords="303,79,501,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="270,28,365,71,363,75,268,33"/>
+<area shape="rect" id="Node000006" href="$d3/d61/modules_8h.html" title=" " alt="" coords="525,79,671,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="301,28,528,73,527,79,300,33"/>
+</map>

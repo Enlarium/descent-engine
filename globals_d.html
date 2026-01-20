@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -78,28 +78,46 @@ $(function() {
 <li>DESCENT_BUILTIN_FALLBACK&#160;:&#160;<a class="el" href="dc/d65/api_8h.html#ad730d023bef083e64e858b4c25da2af9">api.h</a></li>
 <li>DESCENT_CLI_MAX_ARGUMENTS&#160;:&#160;<a class="el" href="dc/db0/cli_8h.html#afaea74d69673c5412c41267d00b3b63c">cli.h</a></li>
 <li>DESCENT_CLI_MAX_POSITIONALS&#160;:&#160;<a class="el" href="dc/db0/cli_8h.html#aa942050b49c1b538f4e500231fc4fde1">cli.h</a></li>
-<li>DESCENT_ERROR_FORBIDDEN&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a125a9b5204aa34ee7f8382feb647eb84">codes.h</a></li>
-<li>DESCENT_ERROR_GENERIC&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430aad04c4d31fb8c20241a56a968da85a37">codes.h</a></li>
-<li>DESCENT_ERROR_INVALID_MODULE&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a91f5795552d2a1b592e7c5ecab033438">codes.h</a></li>
-<li>DESCENT_ERROR_INVALID_PARAMETER&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430aa1b442ddac79b883157c9852338af9b5">codes.h</a></li>
-<li>DESCENT_ERROR_INVALID_STATE&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a1a7298a45cc89f77d842d3e107d88b74">codes.h</a></li>
-<li>DESCENT_ERROR_LONG_STRING&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a6e2e274fde0ae9140070745832b113ba">codes.h</a></li>
-<li>DESCENT_ERROR_NOT_IMPLEMENTED&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430adcf6ab217feb51d86a4750f6983de9fa">codes.h</a></li>
-<li>DESCENT_ERROR_NULL_POINTER&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430af5b4bfaf30990af06af3d9b6021c3aeb">codes.h</a></li>
-<li>DESCENT_ERROR_OUT_OF_MEMORY&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a413f582fdf3225a107ee6d55f257ac7b">codes.h</a></li>
-<li>DESCENT_ERROR_OVERFLOW&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a8123302411f87e0c1d77f767362cccd5">codes.h</a></li>
-<li>DESCENT_ERROR_UNKNOWN&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a8d2e07d2b563658a701f52d0d7d806ad">codes.h</a></li>
-<li>DESCENT_ERROR_UNSUPPORTED&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430ab4ac2b4565732b81a2c05a62d70b67d5">codes.h</a></li>
+<li>DESCENT_ERROR_BUSY&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635ae54b87a13e55922d77a3e69da1e499f3">rcode.h</a></li>
+<li>DESCENT_ERROR_FORBIDDEN&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a125a9b5204aa34ee7f8382feb647eb84">rcode.h</a></li>
+<li>DESCENT_ERROR_GENERIC&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635aad04c4d31fb8c20241a56a968da85a37">rcode.h</a></li>
+<li>DESCENT_ERROR_INIT&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635ad6378ef2095e4548526c2a1fff64fd0b">rcode.h</a></li>
+<li>DESCENT_ERROR_INVALID&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a56d4917cc05f4abb1174e5bca9b209e4">rcode.h</a></li>
+<li>DESCENT_ERROR_MEMORY&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635aeda3d0b9e3347ed2a9e75acc16f3f46c">rcode.h</a></li>
+<li>DESCENT_ERROR_MODULE&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a916c6b263cced705b7163c3e94396119">rcode.h</a></li>
+<li>DESCENT_ERROR_NULL&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a6e2e1e066625a3c1895df9c19273a637">rcode.h</a></li>
+<li>DESCENT_ERROR_OS&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a519cd6550eb7f88154ed7dbc2667d2a8">rcode.h</a></li>
+<li>DESCENT_ERROR_OVERFLOW&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a8123302411f87e0c1d77f767362cccd5">rcode.h</a></li>
+<li>DESCENT_ERROR_STATE&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635ae860763f4d11dd8737ee601fab74d58e">rcode.h</a></li>
+<li>DESCENT_ERROR_UNIMPLEMENTED&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a1ad593953d13b14dbe9f952ada02a749">rcode.h</a></li>
+<li>DESCENT_ERROR_UNKNOWN&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a8d2e07d2b563658a701f52d0d7d806ad">rcode.h</a></li>
+<li>DESCENT_ERROR_UNSUPPORTED&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635ab4ac2b4565732b81a2c05a62d70b67d5">rcode.h</a></li>
+<li>DESCENT_FATAL_GENERIC&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a4d4500e43277dccb2418ee8be3d348ae">rcode.h</a></li>
+<li>DESCENT_FATAL_TIMER&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635ae727d62fdd4cfa9ff69f6f32a5a2ec70">rcode.h</a></li>
+<li>DESCENT_FATAL_UNKNOWN&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635ab38047a3aa3002c0c8bbe4f64d612482">rcode.h</a></li>
 <li>DESCENT_HAS_ATTRIBUTE&#160;:&#160;<a class="el" href="dc/d65/api_8h.html#a2bdc76b13375a357eda56271ecff18f4">api.h</a></li>
 <li>DESCENT_HAS_BUILTIN&#160;:&#160;<a class="el" href="dc/d65/api_8h.html#ae3b25191ec3b12d2faf11f7b962e565a">api.h</a></li>
 <li>DESCENT_HAS_FEATURE&#160;:&#160;<a class="el" href="dc/d65/api_8h.html#ae7390ad85acf12d2003dc46f6f2d1ec4">api.h</a></li>
-<li>DESCENT_OPAQUE_DEFINE&#160;:&#160;<a class="el" href="dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">opaque.h</a></li>
-<li>DESCENT_PLATFORM_NEGATIVE_TWOS_COMPLEMENT&#160;:&#160;<a class="el" href="de/d03/platform_8h.html#a2609246b5986d4430bc1673a8dacda3a">platform.h</a></li>
-<li>DESCENT_SUCCESS&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a16c2e8abcfeffc86a13667ad579c400b">codes.h</a></li>
-<li>DESCENT_WARNING_GENERIC&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430a685c846b5247555ddd7a70ee39eb8086">codes.h</a></li>
-<li>DESCENT_WARNING_TRUNCATION&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430ad7f94bc03970767bda92d500084ea558">codes.h</a></li>
-<li>DescentCode&#160;:&#160;<a class="el" href="d2/d11/codes_8h.html#a2e9fd60532b6b45aeb17ace20d7f6430">codes.h</a></li>
+<li>DESCENT_INFO_BUSY&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a065e190c9550bfe98412bb3ed1c81b4c">rcode.h</a></li>
+<li>DESCENT_INFO_TRUNCATION&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a093abf855d9adced8a46687c6077d877">rcode.h</a></li>
+<li>descent_init()&#160;:&#160;<a class="el" href="d5/dc4/core_8h.html#a324d90ac0d3caf927b97c553639772d6">core.h</a></li>
+<li>DESCENT_MAX_ALLOC&#160;:&#160;<a class="el" href="d1/da1/sysalloc_8h.html#a49a1f9bb38e29aa15bde13d28233771e">sysalloc.h</a></li>
+<li>DESCENT_MAXIMUM_TIMEOUT&#160;:&#160;<a class="el" href="db/db8/intern_2intern_2time_8h.html#a353fa4ed9c5db0f27c50f622d49d72d7">time.h</a></li>
+<li>DESCENT_SUCCESS&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a16c2e8abcfeffc86a13667ad579c400b">rcode.h</a></li>
+<li>DESCENT_THREAD_NAME_SIZE&#160;:&#160;<a class="el" href="d0/d76/intern_2intern_2thread_2thread_8h.html#a09d00a52c64cf6cf1790096f2c076482">thread.h</a></li>
+<li>DESCENT_UNIQUE_THREAD_COUNT_MAX&#160;:&#160;<a class="el" href="d0/d76/intern_2intern_2thread_2thread_8h.html#ad78ad40cda4ad77f442a71d660f0283b">thread.h</a></li>
+<li>DESCENT_WARN_BUSY&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a95c44868732a561085387da5f2a604a1">rcode.h</a></li>
+<li>DESCENT_WARN_INCOMPLETE&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635ad078b83663bd160348900f767ae2fe65">rcode.h</a></li>
+<li>DESCENT_WARN_TRUNCATION&#160;:&#160;<a class="el" href="d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a3e6eadc9cf41f2d0dde60dfe99ffb9e4">rcode.h</a></li>
+<li>DESCENT_WORKER_THREAD_COUNT_MAX&#160;:&#160;<a class="el" href="d0/d76/intern_2intern_2thread_2thread_8h.html#adb641353a56763c3825fddc805f2f04b">thread.h</a></li>
 <li>DescentModule&#160;:&#160;<a class="el" href="d3/d61/modules_8h.html#ac89bb2b73dfff47a5b5912a43d4dbfe6">modules.h</a></li>
+<li>dir_create()&#160;:&#160;<a class="el" href="d2/d4d/file_8h.html#abb4ae5e1ee6bbd93b9c6a42da5af1a52">file.h</a></li>
+<li>dir_create_recursive()&#160;:&#160;<a class="el" href="d2/d4d/file_8h.html#ab398933a4ecb79020fcfd0366975e9c1">file.h</a></li>
+<li>dir_delete()&#160;:&#160;<a class="el" href="d2/d4d/file_8h.html#aefe6dc772f9e111505b2d0a64aa4017c">file.h</a></li>
+<li>dir_ensure()&#160;:&#160;<a class="el" href="d2/d4d/file_8h.html#a6971e50a5fd88b333a1ae0baab7ef08d">file.h</a></li>
+<li>dir_exists()&#160;:&#160;<a class="el" href="d2/d4d/file_8h.html#a06f338ac32c91f2eb9d23b6236f5d959">file.h</a></li>
+<li>dir_remove()&#160;:&#160;<a class="el" href="d2/d4d/file_8h.html#a9280f063c4036a9772dc18d1650369ad">file.h</a></li>
+<li>dir_remove_recursive()&#160;:&#160;<a class="el" href="d2/d4d/file_8h.html#ae99e35cfdfd896c7ff92d759557aaa99">file.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

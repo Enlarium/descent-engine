@@ -1,0 +1,26 @@
+<map id="intern/intern/time.h" name="intern/intern/time.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="591,5,739,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="720,240,791,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="694,28,732,48,769,77,797,110,813,151,817,172,812,193,800,215,783,233,779,229,796,212,808,191,811,172,807,153,793,113,765,81,729,53,692,33"/>
+<area shape="rect" id="Node000003" href="$d3/d61/rcode_8h.html" title=" " alt="" coords="310,159,435,185"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="644,33,408,155,406,151,641,28"/>
+<area shape="rect" id="Node000008" href="$dd/d02/atomic_8h.html" title=" " alt="" coords="575,79,755,104"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="667,31,667,65,662,65,662,31"/>
+<area shape="poly" id="edge5_Node000003_Node000002" title=" " alt="" coords="429,182,707,239,706,244,428,187"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="397,240,468,265"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="384,183,417,227,413,230,379,186"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="493,240,575,265"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="397,182,500,232,497,237,395,187"/>
+<area shape="rect" id="Node000006" href="$de/d03/platform_8h.html" title=" " alt="" coords="5,240,204,265"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="334,187,158,239,156,234,333,182"/>
+<area shape="rect" id="Node000007" href="$d3/d61/modules_8h.html" title=" " alt="" coords="228,240,373,265"/>
+<area shape="poly" id="edge7_Node000003_Node000007" title=" " alt="" coords="364,187,323,231,319,228,360,183"/>
+<area shape="poly" id="edge11_Node000008_Node000002" title=" " alt="" coords="719,102,759,120,777,133,791,151,797,171,795,192,776,230,771,227,790,191,792,171,786,153,773,137,756,124,717,107"/>
+<area shape="poly" id="edge9_Node000008_Node000005" title=" " alt="" coords="576,106,533,124,515,137,500,153,494,171,497,191,506,210,517,228,513,231,501,213,492,192,489,171,496,151,512,133,531,119,574,101"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="702,159,777,185"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="678,102,721,148,717,151,674,106"/>
+<area shape="rect" id="Node000010" href="$d4/dcb/atomic__types_8h.html" title=" " alt="" coords="510,152,678,192"/>
+<area shape="poly" id="edge12_Node000008_Node000010" title=" " alt="" coords="656,106,622,144,618,140,652,102"/>
+<area shape="poly" id="edge13_Node000010_Node000002" title=" " alt="" coords="634,190,720,232,718,236,631,194"/>
+<area shape="poly" id="edge14_Node000010_Node000005" title=" " alt="" coords="582,194,553,231,549,227,577,191"/>
+</map>

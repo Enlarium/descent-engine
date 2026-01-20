@@ -1,5 +1,16 @@
 <map id="include/descent/cli.h" name="include/descent/cli.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,160,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="45,79,120,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,31,85,65,80,65,80,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="67,5,221,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,152,88,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="138,33,64,142,60,139,134,30"/>
+<area shape="rect" id="Node000003" href="$d3/d61/rcode_8h.html" title=" " alt="" coords="132,79,257,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="155,29,181,66,176,69,150,33"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="172,106,84,148,82,144,170,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="113,152,183,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="189,106,165,142,161,139,185,103"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="207,152,278,177"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="205,103,230,139,225,142,200,106"/>
+<area shape="rect" id="Node000006" href="$de/d03/platform_8h.html" title=" " alt="" coords="302,152,501,177"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="229,101,356,145,354,150,227,107"/>
+<area shape="rect" id="Node000007" href="$d3/d61/modules_8h.html" title=" " alt="" coords="525,152,670,177"/>
+<area shape="poly" id="edge7_Node000003_Node000007" title=" " alt="" coords="258,101,520,147,519,152,257,106"/>
 </map>

@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -80,8 +80,13 @@ $(function() {
 <p><code>#include &lt;<a class="el" href="../../d6/dc6/semaphore_8h_source.html">semaphore.h</a>&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A counting semaphore. </p>
-<p>Represents a counting semaphore that can be used to control access to a finite number of shared resources.</p>
-<dl class="section note"><dt>Note</dt><dd>This mechanism is intra-process only. It cannot be shared between processes. </dd></dl>
+<p>A semaphore maintains a non-negative count representing the number of available resources. Threads may decrement the count by waiting on the semaphore, or increment the count by signaling it.</p>
+<p>Semaphores do not have ownership semantics:</p><ul>
+<li>Any thread may signal a semaphore.</li>
+<li>The thread that signals need not be the one that previously waited.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>This semaphore is intra-process only and cannot be shared between processes. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Semaphores do not provide mutual exclusion guarantees. Using a semaphore as a mutex is discouraged; use a lock like <a class="el" href="../../d2/da4/structMutex.html">Mutex</a>, <a class="el" href="../../dc/de0/structQutex.html">Qutex</a>, or RWLock instead. </dd></dl>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/descent/thread/<a class="el" href="../../d6/dc6/semaphore_8h_source.html">semaphore.h</a></li>
 </ul>

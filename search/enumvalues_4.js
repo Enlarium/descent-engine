@@ -1,6 +1,26 @@
 var searchData=
 [
-  ['script_5ferror_5fallocation_5ffailure_0',['SCRIPT_ERROR_ALLOCATION_FAILURE',['../de/d7f/script_8h.html#a0f2321200e488e720b702560688fc1c2af01b1f6b02c332a40b490804688cf94c',1,'script.h']]],
-  ['script_5ferror_5funknown_1',['SCRIPT_ERROR_UNKNOWN',['../de/d7f/script_8h.html#a0f2321200e488e720b702560688fc1c2a844b190d16a8013f09e9bd33cba928eb',1,'script.h']]],
-  ['script_5fsuccess_2',['SCRIPT_SUCCESS',['../de/d7f/script_8h.html#a0f2321200e488e720b702560688fc1c2ac1ef23ab6bf03ab9116f418c49f8da79',1,'script.h']]]
+  ['log_5ferror_5fformat_5fmessage_0',['LOG_ERROR_FORMAT_MESSAGE',['../d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635aa5e7609d51b28c03fa62740bb0f0acd6',1,'rcode.h']]],
+  ['log_5ferror_5finvalid_5fformat_1',['LOG_ERROR_INVALID_FORMAT',['../d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635af0559830d5e32ef4ea37e4dac8b0e4df',1,'rcode.h']]],
+  ['log_5ferror_5finvalid_5fhandle_2',['LOG_ERROR_INVALID_HANDLE',['../d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a8b6b8efeeb8cb786df81fad1440eae4b',1,'rcode.h']]],
+  ['log_5ferror_5finvalid_5flevel_3',['LOG_ERROR_INVALID_LEVEL',['../d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a2d47d61ececaa59a390716559ce0ad23',1,'rcode.h']]],
+  ['log_5ferror_5finvalid_5fpath_4',['LOG_ERROR_INVALID_PATH',['../d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635aad40eda170a17fc333b700eae4ceb351',1,'rcode.h']]],
+  ['log_5ferror_5finvalid_5fpresent_5',['LOG_ERROR_INVALID_PRESENT',['../d3/d61/rcode_8h.html#a726ca809ffd3d67ab4b8476646f26635a7417dcfba473bbe83bfb2947c2ab8a4b',1,'rcode.h']]],
+  ['log_5fformat_5ffull_6',['LOG_FORMAT_FULL',['../d7/d7f/log_8h.html#a043aa97de3c71ad015852f46ec4cc6adac4e43474929d3db89d834c1b11cb118b',1,'log.h']]],
+  ['log_5fformat_5fminimal_7',['LOG_FORMAT_MINIMAL',['../d7/d7f/log_8h.html#a043aa97de3c71ad015852f46ec4cc6ada714e9db12a795e5d9ac78dddc798a827',1,'log.h']]],
+  ['log_5fformat_5fmodule_8',['LOG_FORMAT_MODULE',['../d7/d7f/log_8h.html#a043aa97de3c71ad015852f46ec4cc6adaa4a1c3cca8b138c75e3d6fbebf3336bf',1,'log.h']]],
+  ['log_5fformat_5ftimestamp_9',['LOG_FORMAT_TIMESTAMP',['../d7/d7f/log_8h.html#a043aa97de3c71ad015852f46ec4cc6adab871e8b7b2ad5100587e1787f7ad61a3',1,'log.h']]],
+  ['log_5flevel_5fall_10',['LOG_LEVEL_ALL',['../d7/d7f/log_8h.html#aca1fd1d8935433e6ba2e3918214e07f9a4a73a8f95715b255f7e4cfadd11d8dd1',1,'log.h']]],
+  ['log_5flevel_5fdebug_11',['LOG_LEVEL_DEBUG',['../d7/d7f/log_8h.html#aca1fd1d8935433e6ba2e3918214e07f9a538b2b6e011479d408ecd2be0f6d6177',1,'log.h']]],
+  ['log_5flevel_5fdefault_12',['LOG_LEVEL_DEFAULT',['../d7/d7f/log_8h.html#aca1fd1d8935433e6ba2e3918214e07f9af1f42877b921c1d39eb831e0766d921c',1,'log.h']]],
+  ['log_5flevel_5ferror_13',['LOG_LEVEL_ERROR',['../d7/d7f/log_8h.html#aca1fd1d8935433e6ba2e3918214e07f9a5b40f003febbc3b535649d63f4b8a44f',1,'log.h']]],
+  ['log_5flevel_5ffatal_14',['LOG_LEVEL_FATAL',['../d7/d7f/log_8h.html#aca1fd1d8935433e6ba2e3918214e07f9a779dc8dd26898fb0f88cd5f6e02ba1e5',1,'log.h']]],
+  ['log_5flevel_5finfo_15',['LOG_LEVEL_INFO',['../d7/d7f/log_8h.html#aca1fd1d8935433e6ba2e3918214e07f9aedee1e3159bfe7d918b6e29873c5aee4',1,'log.h']]],
+  ['log_5flevel_5ftrace_16',['LOG_LEVEL_TRACE',['../d7/d7f/log_8h.html#aca1fd1d8935433e6ba2e3918214e07f9a8fa9f12103da446ab4f3d3dc2fcf7f5d',1,'log.h']]],
+  ['log_5flevel_5fwarn_17',['LOG_LEVEL_WARN',['../d7/d7f/log_8h.html#aca1fd1d8935433e6ba2e3918214e07f9a99c1e5c8e6d557f3993b9ab54a0107f4',1,'log.h']]],
+  ['log_5fpresent_5fauto_18',['LOG_PRESENT_AUTO',['../d7/d7f/log_8h.html#a815d499e39a59b00b336ea1b931191d7a35d1ee317966c41d3c490ebc9905d21a',1,'log.h']]],
+  ['log_5fpresent_5fplain_19',['LOG_PRESENT_PLAIN',['../d7/d7f/log_8h.html#a815d499e39a59b00b336ea1b931191d7ad786983f36e86577e8c634599b9e6bef',1,'log.h']]],
+  ['log_5fpresent_5fstyled_20',['LOG_PRESENT_STYLED',['../d7/d7f/log_8h.html#a815d499e39a59b00b336ea1b931191d7a47aee8eb8715702c41a12674046deb47',1,'log.h']]],
+  ['log_5fsink_5fappend_21',['LOG_SINK_APPEND',['../d7/d7f/log_8h.html#a19ea1bc8fe571a4fb9d29244de25c9cca7876d3dabec1f2d2d71808966a97a5e3',1,'log.h']]],
+  ['log_5fsink_5fwrite_22',['LOG_SINK_WRITE',['../d7/d7f/log_8h.html#a19ea1bc8fe571a4fb9d29244de25c9ccab762933a9857f8f7e6a4bc1c357d9e84',1,'log.h']]]
 ];

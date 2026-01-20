@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -100,37 +100,32 @@ $(document).ready(function() { init_codefold(1); });
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#ifndef DESCENT_THREAD_SEMAPHORE_H</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#define DESCENT_THREAD_SEMAPHORE_H</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;../utilities/opaque.h&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><a class="code hl_define" href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a>, DESCENT_OPAQUE_SIZE_SEMAPHORE)</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">   43</a></span>int <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">semaphore_init</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> initial_count);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">   51</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">semaphore_destroy</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;<a class="code" href="../../d4/dcb/atomic__types_8h.html">descent/thread/atomic_types.h</a>&gt;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a11694b18a00f7071af8f2725b9f27691">   28</a></span><span class="preprocessor">#define SEMAPHORE_INIT(maximum, initial) {._maximum = (maximum), ._count = ATOMIC_INIT(initial)}</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="foldopen" id="foldopen00048" data-start="{" data-end="};">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="../../d7/dee/structSemaphore.html">   48</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    uint32_t _maximum;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <a class="code hl_struct" href="../../dc/d44/structatomic__32.html">atomic_32</a> _count;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>};</div>
+</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">   62</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">semaphore_wait</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">   72</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">semaphore_trywait</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">   82</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">semaphore_post</a>(<a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#afcf412ab1c71c10aee678c655e6ac09f">   67</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#afcf412ab1c71c10aee678c655e6ac09f">semaphore_wait</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a7d54d9b06382f8b0a8717d331862556f">   82</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a7d54d9b06382f8b0a8717d331862556f">semaphore_trywait</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>}</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aopaque_8h_html_a5adab28e92a50a485bf902b18713b6cf"><div class="ttname"><a href="../../dc/d17/opaque_8h.html#a5adab28e92a50a485bf902b18713b6cf">DESCENT_OPAQUE_DEFINE</a></div><div class="ttdeci">#define DESCENT_OPAQUE_DEFINE(name, size)</div><div class="ttdoc">Define an opaque type.</div><div class="ttdef"><b>Definition</b> opaque.h:37</div></div>
-<div class="ttc" id="asemaphore_8h_html_a07287bd97e9a8ff58cca28be78c12574"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">semaphore_trywait</a></div><div class="ttdeci">int semaphore_trywait(Semaphore *s)</div><div class="ttdoc">Try to wait (non-blocking) on a semaphore.</div></div>
-<div class="ttc" id="asemaphore_8h_html_a3be15d37293a67059e227cbb2cf89d46"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">semaphore_post</a></div><div class="ttdeci">int semaphore_post(Semaphore *s)</div><div class="ttdoc">Post (increment) a semaphore.</div></div>
-<div class="ttc" id="asemaphore_8h_html_a5d062bad60a9a7c0e9d72927f0e47f13"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">semaphore_wait</a></div><div class="ttdeci">int semaphore_wait(Semaphore *s)</div><div class="ttdoc">Lock a semaphore.</div></div>
-<div class="ttc" id="asemaphore_8h_html_aabb6d7a8035bbecb88d8dea83010cddd"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">semaphore_destroy</a></div><div class="ttdeci">int semaphore_destroy(Semaphore *s)</div><div class="ttdoc">Destroy a semaphore.</div></div>
-<div class="ttc" id="asemaphore_8h_html_acdec61669af08ade8f22b7883a674b5a"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">semaphore_init</a></div><div class="ttdeci">int semaphore_init(Semaphore *s, unsigned int initial_count)</div><div class="ttdoc">Initialize a semaphore.</div></div>
-<div class="ttc" id="astructSemaphore_html"><div class="ttname"><a href="../../d7/dee/structSemaphore.html">Semaphore</a></div><div class="ttdoc">A counting semaphore.</div></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="../../d6/dc6/semaphore_8h.html#a757a0c0fcce2468967f8934c19a60742">   99</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/dc6/semaphore_8h.html#a757a0c0fcce2468967f8934c19a60742">semaphore_signal</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aatomic__types_8h_html"><div class="ttname"><a href="../../d4/dcb/atomic__types_8h.html">atomic_types.h</a></div></div>
+<div class="ttc" id="asemaphore_8h_html_a757a0c0fcce2468967f8934c19a60742"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a757a0c0fcce2468967f8934c19a60742">semaphore_signal</a></div><div class="ttdeci">int semaphore_signal(struct Semaphore *s)</div><div class="ttdoc">Increments the semaphore count and wakes a waiting thread, if any.</div></div>
+<div class="ttc" id="asemaphore_8h_html_a7d54d9b06382f8b0a8717d331862556f"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#a7d54d9b06382f8b0a8717d331862556f">semaphore_trywait</a></div><div class="ttdeci">int semaphore_trywait(struct Semaphore *s)</div><div class="ttdoc">Attempts to decrement the semaphore count without blocking.</div></div>
+<div class="ttc" id="asemaphore_8h_html_afcf412ab1c71c10aee678c655e6ac09f"><div class="ttname"><a href="../../d6/dc6/semaphore_8h.html#afcf412ab1c71c10aee678c655e6ac09f">semaphore_wait</a></div><div class="ttdeci">int semaphore_wait(struct Semaphore *s)</div><div class="ttdoc">Decrements the semaphore count, blocking if necessary.</div></div>
+<div class="ttc" id="astructSemaphore_html"><div class="ttname"><a href="../../d7/dee/structSemaphore.html">Semaphore</a></div><div class="ttdoc">A counting semaphore.</div><div class="ttdef"><b>Definition</b> semaphore.h:48</div></div>
+<div class="ttc" id="astructatomic__32_html"><div class="ttname"><a href="../../dc/d44/structatomic__32.html">atomic_32</a></div><div class="ttdoc">Atomic 32-bit unsigned integer type.</div><div class="ttdef"><b>Definition</b> atomic_types.h:61</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

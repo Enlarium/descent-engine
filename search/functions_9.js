@@ -1,15 +1,9 @@
 var searchData=
 [
-  ['parity_5f16_0',['parity_16',['../df/db9/bits_8h.html#adbd6b77080c903412aadb93f3ea8d053',1,'bits.h']]],
-  ['parity_5f32_1',['parity_32',['../df/db9/bits_8h.html#a2dd3878a759024f039912d4ae2486891',1,'bits.h']]],
-  ['parity_5f64_2',['parity_64',['../df/db9/bits_8h.html#a8fd64c69dea7124bebf1d948f0a042ec',1,'bits.h']]],
-  ['parity_5f8_3',['parity_8',['../df/db9/bits_8h.html#a15f8e1380e782997e3d30b51b0defc7a',1,'bits.h']]],
-  ['popcount_5f16_4',['popcount_16',['../df/db9/bits_8h.html#a37149b92571d899bbde944e4df9e0806',1,'bits.h']]],
-  ['popcount_5f32_5',['popcount_32',['../df/db9/bits_8h.html#abafc993c29a42ef4389927287fb23169',1,'bits.h']]],
-  ['popcount_5f64_6',['popcount_64',['../df/db9/bits_8h.html#a9844cfbd8ef9bd4377f28776e749f4a0',1,'bits.h']]],
-  ['popcount_5f8_7',['popcount_8',['../df/db9/bits_8h.html#ad750fcd38c7e89422ed89474ebc199d0',1,'bits.h']]],
-  ['pow2ceil_5f16_8',['pow2ceil_16',['../d2/d35/arithmetic_8h.html#a28fb15288ea65ecc4e864cb60cc1d89c',1,'arithmetic.h']]],
-  ['pow2ceil_5f32_9',['pow2ceil_32',['../d2/d35/arithmetic_8h.html#abe99aae1365dc8027a58cfdac9b41cd2',1,'arithmetic.h']]],
-  ['pow2ceil_5f64_10',['pow2ceil_64',['../d2/d35/arithmetic_8h.html#a8eaa8429a82b3da3dfe80ecb5c4ddf3f',1,'arithmetic.h']]],
-  ['pow2ceil_5f8_11',['pow2ceil_8',['../d2/d35/arithmetic_8h.html#aab7d49be337fb33666df1e54ae9bb08c',1,'arithmetic.h']]]
+  ['mul_5fpartial_5f128_0',['mul_partial_128',['../d2/d35/arithmetic_8h.html#aa549aa3b2a828d4c704dd5c91a010ec9',1,'arithmetic.h']]],
+  ['mutex_5flock_1',['mutex_lock',['../d0/df8/mutex_8h.html#ac2a1cd298db91a6db550e38a064a6805',1,'mutex.h']]],
+  ['mutex_5ftimedlock_2',['mutex_timedlock',['../d0/df8/mutex_8h.html#ae4e1bc70fa6a6f5d0f3e5b976966b495',1,'mutex.h']]],
+  ['mutex_5ftrylock_3',['mutex_trylock',['../d0/df8/mutex_8h.html#ab18f01b473aed531524d7b0de7015210',1,'mutex.h']]],
+  ['mutex_5funlock_4',['mutex_unlock',['../d0/df8/mutex_8h.html#ac481284a3f67dfa6ff677fc515c0df6c',1,'mutex.h']]],
+  ['mutex_5fwait_5',['mutex_wait',['../d0/df8/mutex_8h.html#af01f3060a970948f3e4aa4880c964e56',1,'mutex.h']]]
 ];

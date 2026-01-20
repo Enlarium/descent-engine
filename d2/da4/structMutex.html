@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -80,8 +80,9 @@ $(function() {
 <p><code>#include &lt;<a class="el" href="../../d0/df8/mutex_8h_source.html">mutex.h</a>&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A non-recursive mutex. </p>
-<p>This mutex allows only one thread to hold the lock at a time. It is non-recursive, meaning a thread attempting to lock it multiple times without unlocking will deadlock.</p>
-<dl class="section note"><dt>Note</dt><dd>This mechanism is intra-process only. It cannot be shared between processes. </dd></dl>
+<p>Ensures that only one thread can hold the lock at a time. Recursive locking is not allowed; attempts to re-lock from the owning thread return a deadlock error.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Closing a thread while it owns a mutex leaves the mutex in an undefined state. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This mechanism is intra-process only and cannot be shared between processes. </dd></dl>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/descent/thread/<a class="el" href="../../d0/df8/mutex_8h_source.html">mutex.h</a></li>
 </ul>

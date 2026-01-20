@@ -1,0 +1,14 @@
+<map id="include/descent/utilities/intrin.h" name="include/descent/utilities/intrin.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="95,5,273,45"/>
+<area shape="rect" id="Node000002" href="$df/db9/bits_8h.html" title=" " alt="" coords="136,93,232,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,46,187,79,181,79,181,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,174,88,199"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="165,121,80,169,77,165,162,117"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="113,174,183,199"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="181,120,161,163,157,160,176,118"/>
+<area shape="rect" id="Node000005" href="$de/d03/platform_8h.html" title=" " alt="" coords="182,255,381,280"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="193,117,269,241,265,244,189,120"/>
+<area shape="rect" id="Node000006" href="$dc/d65/api_8h.html" title=" " alt="" coords="259,167,423,207"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="208,116,292,158,290,163,206,121"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="329,209,301,245,296,242,325,205"/>
+</map>

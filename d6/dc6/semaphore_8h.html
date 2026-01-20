@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Descent Engine
+   <div id="projectname">Descent Engine<span id="projectnumber">&#160;0.0.0-dev</span>
    </div>
    <div id="projectbrief">Descent Engine</div>
   </td>
@@ -75,27 +75,27 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">semaphore.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="../../dc/d17/opaque_8h_source.html">../utilities/opaque.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="../../d4/dcb/atomic__types_8h_source.html">descent/thread/atomic_types.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for semaphore.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../de/dc6/semaphore_8h__incl.png" border="0" usemap="#ainclude_2descent_2thread_2semaphore_8h" alt=""/></div>
 <map name="ainclude_2descent_2thread_2semaphore_8h" id="ainclude_2descent_2thread_2semaphore_8h">
-<area shape="rect" title=" " alt="" coords="7,5,178,45"/>
-<area shape="rect" href="../../dc/d17/opaque_8h.html" title=" " alt="" coords="19,93,166,119"/>
-<area shape="poly" title=" " alt="" coords="95,46,95,79,90,79,90,46"/>
-<area shape="rect" title=" " alt="" coords="5,167,76,192"/>
-<area shape="poly" title=" " alt="" coords="86,121,59,157,55,154,82,117"/>
-<area shape="rect" href="../../de/d03/platform_8h.html" title=" " alt="" coords="101,167,191,192"/>
-<area shape="poly" title=" " alt="" coords="104,117,131,154,127,157,99,121"/>
-<area shape="rect" title=" " alt="" coords="47,240,135,265"/>
-<area shape="poly" title=" " alt="" coords="139,194,111,231,106,228,135,191"/>
-<area shape="rect" href="../../de/d3c/macros_8h.html" title=" " alt="" coords="159,240,242,265"/>
-<area shape="poly" title=" " alt="" coords="157,191,186,228,181,231,153,194"/>
+<area shape="rect" title=" " alt="" coords="5,5,176,45"/>
+<area shape="rect" title=" " alt="" coords="6,181,77,207"/>
+<area shape="poly" title=" " alt="" coords="81,47,59,94,50,132,45,167,40,167,44,131,53,92,76,45"/>
+<area shape="rect" href="../../d4/dcb/atomic__types_8h.html" title=" " alt="" coords="68,93,236,133"/>
+<area shape="poly" title=" " alt="" coords="106,44,133,81,128,84,102,47"/>
+<area shape="poly" title=" " alt="" coords="127,136,70,175,67,171,124,131"/>
+<area shape="rect" title=" " alt="" coords="111,181,193,207"/>
+<area shape="poly" title=" " alt="" coords="155,134,155,167,149,167,149,134"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -104,127 +104,112 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="center"><img src="../../d5/d82/semaphore_8h__dep__incl.png" border="0" usemap="#ainclude_2descent_2thread_2semaphore_8hdep" alt=""/></div>
 <map name="ainclude_2descent_2thread_2semaphore_8hdep" id="ainclude_2descent_2thread_2semaphore_8hdep">
 <area shape="rect" title=" " alt="" coords="11,5,182,45"/>
-<area shape="rect" href="../../db/dd5/thread_8h.html" title=" " alt="" coords="5,93,188,119"/>
+<area shape="rect" href="../../dd/dee/include_2descent_2thread_8h.html" title=" " alt="" coords="5,93,188,119"/>
 <area shape="poly" title=" " alt="" coords="99,59,99,93,94,93,94,59"/>
 </map>
 </div>
 </div>
 <p><a href="../../d6/dc6/semaphore_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A counting semaphore.  <a href="../../d7/dee/structSemaphore.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a11694b18a00f7071af8f2725b9f27691" id="r_a11694b18a00f7071af8f2725b9f27691"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc6/semaphore_8h.html#a11694b18a00f7071af8f2725b9f27691">SEMAPHORE_INIT</a>(maximum,  initial)&#160;&#160;&#160;{._maximum = (maximum), ._count = <a class="el" href="../../d3/de8/group__atomic.html#ga7b208150b120d2cc41ace2441560fb67">ATOMIC_INIT</a>(initial)}</td></tr>
+<tr class="memdesc:a11694b18a00f7071af8f2725b9f27691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static semaphore initializer.  <br /></td></tr>
+<tr class="separator:a11694b18a00f7071af8f2725b9f27691"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acdec61669af08ade8f22b7883a674b5a" id="r_acdec61669af08ade8f22b7883a674b5a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc6/semaphore_8h.html#acdec61669af08ade8f22b7883a674b5a">semaphore_init</a> (<a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s, unsigned int initial_count)</td></tr>
-<tr class="memdesc:acdec61669af08ade8f22b7883a674b5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a semaphore.  <br /></td></tr>
-<tr class="separator:acdec61669af08ade8f22b7883a674b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabb6d7a8035bbecb88d8dea83010cddd" id="r_aabb6d7a8035bbecb88d8dea83010cddd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc6/semaphore_8h.html#aabb6d7a8035bbecb88d8dea83010cddd">semaphore_destroy</a> (<a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s)</td></tr>
-<tr class="memdesc:aabb6d7a8035bbecb88d8dea83010cddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy a semaphore.  <br /></td></tr>
-<tr class="separator:aabb6d7a8035bbecb88d8dea83010cddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d062bad60a9a7c0e9d72927f0e47f13" id="r_a5d062bad60a9a7c0e9d72927f0e47f13"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc6/semaphore_8h.html#a5d062bad60a9a7c0e9d72927f0e47f13">semaphore_wait</a> (<a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s)</td></tr>
-<tr class="memdesc:a5d062bad60a9a7c0e9d72927f0e47f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock a semaphore.  <br /></td></tr>
-<tr class="separator:a5d062bad60a9a7c0e9d72927f0e47f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07287bd97e9a8ff58cca28be78c12574" id="r_a07287bd97e9a8ff58cca28be78c12574"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc6/semaphore_8h.html#a07287bd97e9a8ff58cca28be78c12574">semaphore_trywait</a> (<a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s)</td></tr>
-<tr class="memdesc:a07287bd97e9a8ff58cca28be78c12574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to wait (non-blocking) on a semaphore.  <br /></td></tr>
-<tr class="separator:a07287bd97e9a8ff58cca28be78c12574"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3be15d37293a67059e227cbb2cf89d46" id="r_a3be15d37293a67059e227cbb2cf89d46"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc6/semaphore_8h.html#a3be15d37293a67059e227cbb2cf89d46">semaphore_post</a> (<a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s)</td></tr>
-<tr class="memdesc:a3be15d37293a67059e227cbb2cf89d46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post (increment) a semaphore.  <br /></td></tr>
-<tr class="separator:a3be15d37293a67059e227cbb2cf89d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcf412ab1c71c10aee678c655e6ac09f" id="r_afcf412ab1c71c10aee678c655e6ac09f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc6/semaphore_8h.html#afcf412ab1c71c10aee678c655e6ac09f">semaphore_wait</a> (struct <a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s)</td></tr>
+<tr class="memdesc:afcf412ab1c71c10aee678c655e6ac09f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrements the semaphore count, blocking if necessary.  <br /></td></tr>
+<tr class="separator:afcf412ab1c71c10aee678c655e6ac09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d54d9b06382f8b0a8717d331862556f" id="r_a7d54d9b06382f8b0a8717d331862556f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc6/semaphore_8h.html#a7d54d9b06382f8b0a8717d331862556f">semaphore_trywait</a> (struct <a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s)</td></tr>
+<tr class="memdesc:a7d54d9b06382f8b0a8717d331862556f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to decrement the semaphore count without blocking.  <br /></td></tr>
+<tr class="separator:a7d54d9b06382f8b0a8717d331862556f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a757a0c0fcce2468967f8934c19a60742" id="r_a757a0c0fcce2468967f8934c19a60742"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc6/semaphore_8h.html#a757a0c0fcce2468967f8934c19a60742">semaphore_signal</a> (struct <a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *s)</td></tr>
+<tr class="memdesc:a757a0c0fcce2468967f8934c19a60742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the semaphore count and wakes a waiting thread, if any.  <br /></td></tr>
+<tr class="separator:a757a0c0fcce2468967f8934c19a60742"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="aabb6d7a8035bbecb88d8dea83010cddd" name="aabb6d7a8035bbecb88d8dea83010cddd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabb6d7a8035bbecb88d8dea83010cddd">&#9670;&#160;</a></span>semaphore_destroy()</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a11694b18a00f7071af8f2725b9f27691" name="a11694b18a00f7071af8f2725b9f27691"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11694b18a00f7071af8f2725b9f27691">&#9670;&#160;</a></span>SEMAPHORE_INIT</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int semaphore_destroy </td>
+          <td class="memname">#define SEMAPHORE_INIT</td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Destroy a semaphore. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">s</td><td>Pointer to the <a class="el" href="../../d7/dee/structSemaphore.html" title="A counting semaphore.">Semaphore</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, non-zero on failure. </dd></dl>
-
-</div>
-</div>
-<a id="acdec61669af08ade8f22b7883a674b5a" name="acdec61669af08ade8f22b7883a674b5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acdec61669af08ade8f22b7883a674b5a">&#9670;&#160;</a></span>semaphore_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int semaphore_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">maximum, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>initial_count</em>&#160;</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">initial&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td>&#160;&#160;&#160;{._maximum = (maximum), ._count = <a class="el" href="../../d3/de8/group__atomic.html#ga7b208150b120d2cc41ace2441560fb67">ATOMIC_INIT</a>(initial)}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initialize a semaphore. </p>
+<p>Static semaphore initializer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td>Pointer to the <a class="el" href="../../d7/dee/structSemaphore.html" title="A counting semaphore.">Semaphore</a>. </td></tr>
-    <tr><td class="paramname">initial_count</td><td>Initial value of the semaphore counter. </td></tr>
+    <tr><td class="paramname">maximum</td><td>The maximum count of the semaphore </td></tr>
+    <tr><td class="paramname">initial</td><td>The initial count of the semaphore </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, non-zero on failure. </dd></dl>
 
 </div>
 </div>
-<a id="a3be15d37293a67059e227cbb2cf89d46" name="a3be15d37293a67059e227cbb2cf89d46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3be15d37293a67059e227cbb2cf89d46">&#9670;&#160;</a></span>semaphore_post()</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a757a0c0fcce2468967f8934c19a60742" name="a757a0c0fcce2468967f8934c19a60742"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a757a0c0fcce2468967f8934c19a60742">&#9670;&#160;</a></span>semaphore_signal()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int semaphore_post </td>
+          <td class="memname">int semaphore_signal </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Post (increment) a semaphore. </p>
-<p>Increments the semaphore counter, potentially unblocking a thread waiting on it.</p>
+<p>Increments the semaphore count and wakes a waiting thread, if any. </p>
+<p>Increments the semaphore count by one, making an additional unit of the resource available. If one or more threads are blocked waiting on the semaphore, one waiting thread is woken.</p>
+<p>The calling thread does not need to have previously waited on the semaphore.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td>Pointer to the <a class="el" href="../../d7/dee/structSemaphore.html" title="A counting semaphore.">Semaphore</a> structure. </td></tr>
+    <tr><td class="paramname">s</td><td>Pointer to the semaphore. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, non-zero on failure. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li>0: Semaphore successfully signaled.</li>
+<li>DESCENT_ERROR_NULL: <code>s</code> is NULL.</li>
+<li>DESCENT_ERROR_OVERFLOW: Semaphore count would exceed its maximum value. </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
-<a id="a07287bd97e9a8ff58cca28be78c12574" name="a07287bd97e9a8ff58cca28be78c12574"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07287bd97e9a8ff58cca28be78c12574">&#9670;&#160;</a></span>semaphore_trywait()</h2>
+<a id="a7d54d9b06382f8b0a8717d331862556f" name="a7d54d9b06382f8b0a8717d331862556f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d54d9b06382f8b0a8717d331862556f">&#9670;&#160;</a></span>semaphore_trywait()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -232,27 +217,32 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int semaphore_trywait </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Try to wait (non-blocking) on a semaphore. </p>
-<p>Attempts to decrement the semaphore counter without blocking.</p>
+<p>Attempts to decrement the semaphore count without blocking. </p>
+<p>If the semaphore count is greater than zero, it is decremented and the function returns immediately. If the count is zero, the function returns without blocking.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td>Pointer to the <a class="el" href="../../d7/dee/structSemaphore.html" title="A counting semaphore.">Semaphore</a> structure. </td></tr>
+    <tr><td class="paramname">s</td><td>Pointer to the semaphore. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 if the semaphore was successfully decremented, non-zero if the semaphore i already at zero. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li>0: Semaphore successfully acquired.</li>
+<li>THREAD_INFO_BUSY: Semaphore count is zero.</li>
+<li>DESCENT_ERROR_NULL: <code>s</code> is NULL. </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
-<a id="a5d062bad60a9a7c0e9d72927f0e47f13" name="a5d062bad60a9a7c0e9d72927f0e47f13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d062bad60a9a7c0e9d72927f0e47f13">&#9670;&#160;</a></span>semaphore_wait()</h2>
+<a id="afcf412ab1c71c10aee678c655e6ac09f" name="afcf412ab1c71c10aee678c655e6ac09f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcf412ab1c71c10aee678c655e6ac09f">&#9670;&#160;</a></span>semaphore_wait()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,22 +250,27 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int semaphore_wait </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="../../d7/dee/structSemaphore.html">Semaphore</a> *&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Lock a semaphore. </p>
-<p>Decrements the semaphore counter, blocking if the counter is zero until another thread posts to it.</p>
+<p>Decrements the semaphore count, blocking if necessary. </p>
+<p>If the semaphore count is greater than zero, it is decremented and the function returns immediately. If the count is zero, the calling thread blocks until another thread signals the semaphore.</p>
+<p>This function may block indefinitely.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td>Pointer to the <a class="el" href="../../d7/dee/structSemaphore.html" title="A counting semaphore.">Semaphore</a>. </td></tr>
+    <tr><td class="paramname">s</td><td>Pointer to the semaphore. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, non-zero on failure. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li>0: Semaphore successfully acquired.</li>
+<li>DESCENT_ERROR_NULL: <code>s</code> is NULL. </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>

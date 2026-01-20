@@ -1,29 +1,6 @@
 var searchData=
 [
-  ['testbit_5f16_0',['testbit_16',['../df/db9/bits_8h.html#a543b879110f90376f4705ecd1c171398',1,'bits.h']]],
-  ['testbit_5f32_1',['testbit_32',['../df/db9/bits_8h.html#a39534b006337059d71ea51c126e3bf22',1,'bits.h']]],
-  ['testbit_5f64_2',['testbit_64',['../df/db9/bits_8h.html#af6c4bbf0340d26d4337f4908672dae6d',1,'bits.h']]],
-  ['testbit_5f8_3',['testbit_8',['../df/db9/bits_8h.html#a0f1cd97d77825b6ef057983a45696268',1,'bits.h']]],
-  ['thread_5fcreate_4',['thread_create',['../d3/d21/thread_2thread_8h.html#a5ad684cc118f4d23d546c35b1477959f',1,'thread.h']]],
-  ['thread_5fdetach_5',['thread_detach',['../d3/d21/thread_2thread_8h.html#a68a27ff8ba01cfe34a7c4d850723631c',1,'thread.h']]],
-  ['thread_5fequal_6',['thread_equal',['../d3/d21/thread_2thread_8h.html#ad6c7176cf6f59cbefd415e63c22d6770',1,'thread.h']]],
-  ['thread_5fexit_7',['thread_exit',['../d3/d21/thread_2thread_8h.html#a0cd35c5dd19d6a8a18d2e86b60b8b7e7',1,'thread.h']]],
-  ['thread_5fget_5faffinity_8',['thread_get_affinity',['../d3/d21/thread_2thread_8h.html#aeff16f953cdde65c30a28ef0ef8b1376',1,'thread.h']]],
-  ['thread_5fget_5fname_9',['thread_get_name',['../d3/d21/thread_2thread_8h.html#aea52e402e4c38e18ff31b3b04d808e24',1,'thread.h']]],
-  ['thread_5fget_5fpriority_10',['thread_get_priority',['../d3/d21/thread_2thread_8h.html#a044b4b8c5dee20749d631552c32ed7a9',1,'thread.h']]],
-  ['thread_5fjoin_11',['thread_join',['../d3/d21/thread_2thread_8h.html#a058a1bfad77cc64c954adcf8c7e85de5',1,'thread.h']]],
-  ['thread_5fmax_5fconcurrent_12',['thread_max_concurrent',['../d3/d21/thread_2thread_8h.html#a03c7dc99ccd1a9c489be94a221844b59',1,'thread.h']]],
-  ['thread_5fname_13',['thread_name',['../d3/d21/thread_2thread_8h.html#a6bbce8c0d8c944d7211d040e9dcd7bae',1,'thread.h']]],
-  ['thread_5fpause_14',['thread_pause',['../da/dcf/thread_2intrin_8h.html#a8cd9bd25fa54b6108137cbd04833ed9c',1,'intrin.h']]],
-  ['thread_5fself_15',['thread_self',['../d3/d21/thread_2thread_8h.html#afb8ad4213542cdec400bbd9093193463',1,'thread.h']]],
-  ['thread_5fset_5faffinity_16',['thread_set_affinity',['../d3/d21/thread_2thread_8h.html#ae4d26d4a94a64477ba296c638978ce33',1,'thread.h']]],
-  ['thread_5fset_5fname_17',['thread_set_name',['../d3/d21/thread_2thread_8h.html#aa58fa813e7518dab1f5c1c83c8923f2a',1,'thread.h']]],
-  ['thread_5fset_5fpriority_18',['thread_set_priority',['../d3/d21/thread_2thread_8h.html#ae79b24ee40dc7fe146e1e9b0ac57d39a',1,'thread.h']]],
-  ['thread_5fsleep_19',['thread_sleep',['../d3/d21/thread_2thread_8h.html#a3cf5a197b7e08ae5d0dc08bb85bf2cdd',1,'thread.h']]],
-  ['thread_5fsleep_5fgranularity_20',['thread_sleep_granularity',['../d3/d21/thread_2thread_8h.html#a0541d7696609295f9329551ab3e56bbf',1,'thread.h']]],
-  ['thread_5fyield_21',['thread_yield',['../d3/d21/thread_2thread_8h.html#affe2eebf6749bc36765d45ff48c926b1',1,'thread.h']]],
-  ['ticketlock_5finit_22',['ticketlock_init',['../dd/d60/ticket__lock_8h.html#a62e7854810bd77a007b436fd84d28dfd',1,'ticket_lock.h']]],
-  ['ticketlock_5flock_23',['ticketlock_lock',['../dd/d60/ticket__lock_8h.html#a771f7ced7a48e289d86e71ef802a795a',1,'ticket_lock.h']]],
-  ['ticketlock_5ftrylock_24',['ticketlock_trylock',['../dd/d60/ticket__lock_8h.html#ad5a2e203b1896ef980f221b4a7273b7f',1,'ticket_lock.h']]],
-  ['ticketlock_5funlock_25',['ticketlock_unlock',['../dd/d60/ticket__lock_8h.html#ae12b9b2a8ea8b78caa28054aa0c08a68',1,'ticket_lock.h']]]
+  ['qutex_5flock_0',['qutex_lock',['../d3/d0e/qutex_8h.html#abd88f94069e009146bd7a9b8c6ad1e2a',1,'qutex.h']]],
+  ['qutex_5ftrylock_1',['qutex_trylock',['../d3/d0e/qutex_8h.html#a8701ea140095f6addceaad478c7c4482',1,'qutex.h']]],
+  ['qutex_5funlock_2',['qutex_unlock',['../d3/d0e/qutex_8h.html#a6f13be5de3423894146a4d19937429bc',1,'qutex.h']]]
 ];
