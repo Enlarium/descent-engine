@@ -7,94 +7,80 @@
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-lightgrey.svg)]()
 [![Language](https://img.shields.io/badge/language-C-green.svg)]()
 
-**Descent Engine** is an in-development game engine written primarily in C, with support for C++ integration. It's currently in an early stage - only the threading, logging, and CLI systems are functional and undergoing testing.
+**Descent Engine** is an in-development, systems-level game engine written in C. It is currently in an **early stage** with many systems incomplete and under active testing.
 
-The engine is primarily developed and tested on Linux.
-
-> ⚠️ **Work in Progress** - This is not a production-ready engine. Features, APIs, and performance are subject to change.
-
-> 🖼️ **Note:** This repository is currently just a personal showcase project. Contributions, pull requests, and issues are unlikely to be accepted at this time.
+> ⚠️ **Work in Progress:** This engine is not production-ready. APIs, features, and performance may change rapidly.
+  
+> 🖼️ **Note:** This repository is a personal showcase project; contributions, PRs, and issues are not accepted at this time.
 
 ## Project Goals
 
 Descent Engine aims to provide:
+
 - A lightweight, portable foundation for systems-level game engine development.
-- High performance and explicit control over systems and behavior
+- High performance and explicit control over systems and behavior.
 - Clean, consistent C interfaces compatible with C++.
 
-## Core Features
+## Supported Platforms and Compilers
 
-### Threading Library
+Descent Engine is designed to be portable, but not all platforms or compilers are fully supported. Current tested and supported configurations:
 
-- Cross-platform abstraction over POSIX threads and Windows threads.
-- Thread creation, joining, detaching, priorities, and CPU affinity.
-- Thread-local storage.
-- Call-once functions across threads.
-- Atomic operations for 32- and 64-bit types.
-- Intra-process spinlocks, ticket locks, condition variables, mutexes, recursive mutexes, read-write locks, semaphores, and barriers.
+### Platforms
 
-### CLI Library
+Descent Engine supports the following platforms:
 
-- Fully-featured command-line argument parser for C programs.
-- Supports:
-	- Subcommands (nested commands like git commit).
-	- Short options (-v, -a) and long options (--verbose).
-	- Short option chaining (-abc) 
-	- Positional arguments (input.txt output.txt).
-	- Catch-all arguments for unmatched inputs.
-- Robust error reporting:
-	- Detects duplicate options, subcommands, or positionals.
-	- Tracks the argument that caused a parse error.
-- Flexible:
-	- Custom callbacks for each parameter.
-	- Supports complex argument trees.
-	- Thread-safe error tracking.
+- **Linux** (x86, x86_64, ARM32, ARM64)
+- **FreeBSD** (x86_64)
+- **Windows** (x86/x64)
 
-### Logging Library
+### Compilers
 
-- Modular, thread-safe logging for Descent Engine modules.
-- Supports:
-  - Log levels: TRACE, DEBUG, INFO, WARN, ERROR, FATAL.
-  - Module-specific logging: CORE, THREADING, ALLOCATOR, RENDERING, AUDIO, NETWORKING, etc.
-  - Multiple sinks: stdout, stderr, files.
-  - Flexible formatting: minimal, timestamped, module-prefixed, or full format.
-  - Presentation modes: plain, styled, or auto (e.g., ANSI color when terminal supports it).
-- Queue-based logging for thread safety and performance.
-- Compile-time macros to disable logging at certain levels for performance.
-- Easy initialization
-- Handles message truncation and provides warning codes for long messages.
+Descent Engine supports the following compilers:
 
-### Allocation Library (In-Progress)
+- **GCC**
+- **Clang / ICX**
+- **Cygwin GCC**
+- **MinGW GCC**
 
-- Page-aligned, large-scale memory allocation primitives.
+> ⚠️ Note: Descent Engine requires C11 or newer.
 
-## Roadmap
+Unfortunately, MSVC isn't a full-featured C compiler and does not support C11.
 
-Descent Engine's development roadmap covers threading, memory, rendering, and utilities.
+### Architectures
 
-For full details and milestones, see the [Roadmap](./ROADMAP.md).
+Descent Engine supports the following architectures:
+
+- **x86 32-bit**
+- **x86_64 64-bit**
+- **ARM 32-bit**
+- **ARM 64-bit**
+
+> ⚠️ Note: Descent Engine requires two’s complement representation for negative numbers.
 
 ## Building
 
-Descent Engine uses CMake as its primary build system, with CMake presets for common compilers and configurations.
+## Building the Engine
 
-### Quick Start
+Descent Engine uses **CMake** as its build system. You can use the included presets or build manually.
+
+### Quick Start (Recommended)
 
 ```sh
-# From project root, create and enter the build directory
+# From project root, create and enter build folder
 mkdir build && cd build
 
 # Configure using a preset (example: GCC Debug build)
 cmake --preset=gcc-debug .. -DDESCENT_BUILD_EXAMPLES=ON -DDESCENT_BUILD_TESTS=ON
 
-# Enter the generated build folder and compile
+# Build the engine
 cd gcc-debug
 make -j$(nproc)
+
 ```
 
 ### Available Presets
 
-Presets define compiler, build type, and platform settings. To list all available presets:
+Presets define compiler, build type, and platform settings. To list all available presets, run
 
 ```sh
 # From project root
@@ -103,29 +89,21 @@ cmake --list-presets=configure
 
 ### Build Options
 
-You can enable or disable specific subsystems when configuring CMake:
+You can enable or disable features when configuring CMake:
 
-|         Option         | Default |        Description        |
-|:----------------------:|:-------:|:-------------------------:|
-| DESCENT_BUILD_EXAMPLES |   OFF   | Build example executables |
-|  DESCENT_BUILD_TESTS   |   OFF   |     Build test suite      |
+|         Option         | Default |               Description                |
+|:----------------------:|:-------:|:----------------------------------------:|
+|   DESCENT_BUILD_ARM    |   OFF   |       Build for ARM instead of x86       |
+|    DESCENT_BUILD_32    |   OFF   |    Build for 32 bit instead of 64 bit    |
+| DESCENT_BUILD_EXAMPLES |   OFF   |        Build example executables         |
+|  DESCENT_BUILD_TESTS   |   OFF   |             Build test suite             |
+|      DESCENT_IWYU      |   OFF   | Run include-what-you-use while compiling |
 
 ### Manual Build
 
-If you prefer to build manually or integrate Descent Engine into an existing project, you can compile the source directly.
-
-When building manually, define the following platform feature macros:
-
-| Platform |     Required Macros     |
-|:--------:|:-----------------------:|
-|  Linux   |       _GNU_SOURCE       |
-| FreeBSD  | _POSIX_C_SOURCE=200809L |
-|  macOS   |    _DARWIN_C_SOURCE     |
-| Windows  |     *None required*     |
+If you prefer to manually build or integrate Descent Engine into an existing project, you can compile the source directly. Configured files, like the [metadata header](./include/descent/metadata.h) must be copied and updated from the [configuration source](./config/metadata.h.in).
 
 ## Using the project
-
-### Examples
 
 ### Tests
 
@@ -138,9 +116,7 @@ ctest --output-on-failure
 
 ## Documentation
 
-Documentation is in progress.
-
-Public headers use Doxygen-style comments and will be exported to HTML as the engine matures.
+Live HTML documentation is available at: <https://enlarium.github.io/descent-engine/>. Please note that documentation is still in progress.
 
 ## License
 
@@ -158,11 +134,4 @@ Feel free to explore the code and learn from the implementation, but please refr
 
 Only Linux has been tested so far.
 
-Other platforms (Windows, macOS, BSD) are partially implemented and unverified.
-
-## Related Files
-
-- [LICENSE.md](./LICENSE.md) - Project License
-- [ROADMAP.md](./ROADMAP.md) - Full feature and milestone roadmap
-- [CODING_STANDARDS.md](./CODING_STANDARDS.md) - C style guide
-<!-- - [docs/](./docs/) - Engine documentation (WIP) -->
+Other platforms (Windows, BSD) are partially implemented and unverified.
